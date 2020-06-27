@@ -64,6 +64,23 @@ public class SpUtil {
         return mSharedPreferences.getString(key, "");
     }
 
+
+    /**
+     * 保存一个长整型
+     */
+    public void setLongValue(String key, long value) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+
+    /**
+     * 获取一个长整型
+     */
+    public long getLongValue(String key) {
+        return mSharedPreferences.getLong(key, 0);
+    }
+
     /**
      * 保存多个字符串
      */

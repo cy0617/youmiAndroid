@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yunbao.common.R;
@@ -29,7 +30,7 @@ public abstract class AbsActivity extends AppCompatActivity {
     protected String mTag;
     protected Context mContext;
     protected List<LifeCycleListener> mLifeCycleListeners;
-
+    private Toast mToast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +72,25 @@ public abstract class AbsActivity extends AppCompatActivity {
         if (titleView != null) {
             titleView.setText(title);
         }
+    }
+
+
+    public void showToast(final Object message) {
+        if(String.valueOf(message).contains("请求失败")){
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mToast == null) {
+                    mToast = Toast.makeText(mContext, message + "", Toast.LENGTH_SHORT);
+                } else {
+                    mToast.setText(message + "");
+                    mToast.setDuration(Toast.LENGTH_SHORT);
+                }
+                mToast.show();
+            }
+        });
     }
 
 

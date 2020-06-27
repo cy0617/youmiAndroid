@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.umeng.analytics.MobclickAgent;
@@ -62,6 +63,12 @@ public class SettingActivity extends AbsActivity implements OnItemClickListener<
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 List<SettingBean> list = JSON.parseArray(Arrays.toString(info), SettingBean.class);
+                for(int i = 0;i<list.size();i++){
+                    if(list.get(i).getId() == 20){
+                        list.remove(i);
+                        break;
+                    }
+                }
                 SettingBean bean = new SettingBean();
                 bean.setName(WordUtil.getString(R.string.setting_exit));
                 bean.setLast(true);

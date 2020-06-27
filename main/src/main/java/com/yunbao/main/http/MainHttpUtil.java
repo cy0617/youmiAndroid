@@ -1,13 +1,17 @@
 package com.yunbao.main.http;
 
+        import android.util.Log;
+
         import com.alibaba.fastjson.JSON;
         import com.alibaba.fastjson.JSONObject;
+        import com.lzy.okgo.request.GetRequest;
         import com.yunbao.common.CommonAppConfig;
         import com.yunbao.common.bean.GoodsBean;
         import com.yunbao.common.bean.UserBean;
         import com.yunbao.common.http.CommonHttpUtil;
         import com.yunbao.common.http.HttpCallback;
         import com.yunbao.common.http.HttpClient;
+        import com.yunbao.common.http.JsonBean;
         import com.yunbao.common.interfaces.CommonCallback;
         import com.yunbao.common.utils.MD5Util;
         import com.yunbao.common.utils.SpUtil;
@@ -172,6 +176,7 @@ public class MainHttpUtil {
                     @Override
                     public void onSuccess(int code, String msg, String[] info) {
                         if (code == 0 && info.length > 0) {
+                            Log.e("asdqweqweqweq",info[0]);
                             JSONObject obj = JSON.parseObject(info[0]);
                             UserBean bean = JSON.toJavaObject(obj, UserBean.class);
                             CommonAppConfig.getInstance().setUserBean(bean);
@@ -204,6 +209,82 @@ public class MainHttpUtil {
                 CommonAppConfig.getInstance().getToken(),
                 commonCallback);
     }
+
+
+    /**
+     * 用于判断是否有上级
+     */
+    public static void getIsparent(HttpCallback callback) {
+        HttpClient.getInstance().get("User.Isparent", MainHttpConsts.GET_ISPARENT)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .execute(callback);
+    }
+
+
+    /**
+     * 查询商圈列表
+     */
+    public static void getGoodsList(int p,HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Goodslist", MainHttpConsts.GET_GOODS_LIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("p", p)
+                .execute(callback);
+    }
+
+
+    /**
+     * 查询购买记录
+     */
+    public static void getBuyRecordList(int p,String type,HttpCallback callback) {
+        String time = String.valueOf(System.currentTimeMillis() / 1000);
+        String token = CommonAppConfig.getInstance().getToken();
+        String uid = CommonAppConfig.getInstance().getUid();
+        String sign = MD5Util.getMD5(StringUtil.contact("&uid=",uid ,"&token=",token , "type=", type,"time=", time, "p=", String.valueOf(p),"&", SALT));
+        HttpClient.getInstance().get("Youmio.GetGoodsOrderList", MainHttpConsts.GET_BUYRECORD_LIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("type", type)
+                .params("time", time)
+                .params("p", p)
+                .params("sign", sign)
+                .execute(callback);
+    }
+    /**
+     * 查询打赏记录
+     */
+    public static void getRewardRecordList(int p,String type,String keyword,HttpCallback callback) {
+        GetRequest<JsonBean> request = HttpClient.getInstance().get("Youmio.Shengjilist", MainHttpConsts.GET_REWARDRECORD_LIST);
+        request.params("uid", CommonAppConfig.getInstance().getUid());
+        request.params("token", CommonAppConfig.getInstance().getToken());
+        request.params("type", type);
+        request.params("p", p);
+        if(!com.yunbao.main.utils.StringUtil.isEmpty(keyword)){
+            request.params("keyword", keyword);
+        }
+        request.execute(callback);
+    }
+    /**
+     * 用于 指定下级列表
+     */
+    public static void getSubordinate(String ji,HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.GetnXiajiList", MainHttpConsts.GET_SUBORDINATE_LIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("ji", ji)
+                .execute(callback);
+    }
+    /**
+     * 1-7级好友列表
+     */
+    public static void getMyBuddyList(HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.GetXiajicount", MainHttpConsts.GET_BUDDY_LIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .execute(callback);
+    }
+
 
 
     /**
@@ -278,6 +359,17 @@ public class MainHttpUtil {
      */
     public static void updateAvatar(File file, HttpCallback callback) {
         HttpClient.getInstance().post("User.updateAvatar", MainHttpConsts.UPDATE_AVATAR)
+                .isMultipart(true)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("file", file)
+                .execute(callback);
+    }
+    /**
+     * 上传图片，用post
+     */
+    public static void updateImg(File file, HttpCallback callback) {
+        HttpClient.getInstance().post("Youmio.Uploadimg", MainHttpConsts.UPDATE_IMG)
                 .isMultipart(true)
                 .params("uid", CommonAppConfig.getInstance().getUid())
                 .params("token", CommonAppConfig.getInstance().getToken())
@@ -409,6 +501,30 @@ public class MainHttpUtil {
                 .execute(callback);
     }
 
+
+    /**
+     * 获取验证码接口 找回密码用
+     */
+    public static void getFindPwdCode(String mobile, HttpCallback callback) {
+        String sign = MD5Util.getMD5("mobile=" + mobile + "&" + SALT);
+        HttpClient.getInstance().get("Login.getForgetCode", MainHttpConsts.GET_FIND_PWD_CODE)
+                .params("mobile", mobile)
+                .params("sign", sign)
+                .execute(callback);
+    }
+
+
+    /**
+     * 获取验证码接口 绑定手机号用
+     */
+    public static void getBdPhoneCode(String mobile, HttpCallback callback) {
+        String sign = MD5Util.getMD5("mobile=" + mobile + "&" + SALT);
+        HttpClient.getInstance().get("User.GetBindCode", MainHttpConsts.GET_BDPHONE_CODE)
+                .params("mobile", mobile)
+                .params("sign", sign)
+                .execute(callback);
+    }
+
     /**
      * 手机注册接口
      */
@@ -422,6 +538,53 @@ public class MainHttpUtil {
                 .params("source", DEVICE)
                 .execute(callback);
     }
+
+
+    /**
+     * 绑定手机号
+     */
+    public static void bdPhone(String mobile, String code, String pass1, String pass2,HttpCallback callback) {
+        HttpClient.getInstance().get("User.SetMobile", MainHttpConsts.SETMOBILE)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("mobile", mobile)
+                .params("code", code)
+                .params("pass1", pass1)
+                .params("pass2", pass2)
+                .execute(callback);
+    }
+
+    /**
+     * 绑定新手机号
+     */
+    public static void bdPhone(String mobile, String code, HttpCallback callback) {
+        HttpClient.getInstance().get("User.SetMobile", MainHttpConsts.SETMOBILE)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("mobile", mobile)
+                .params("code", code)
+                .execute(callback);
+    }
+    /**
+     * 提交个人资料
+     */
+    public static void submitUinfo(String weixin, String weixin_img,String zfb_img, HttpCallback callback) {
+        GetRequest<JsonBean> myRequest =  HttpClient.getInstance().get("Youmio.Updatexx", MainHttpConsts.SUBMIT_USERINFO);
+        myRequest.params("uid", CommonAppConfig.getInstance().getUid());
+        myRequest.params("token", CommonAppConfig.getInstance().getToken());
+        if(!com.yunbao.main.utils.StringUtil.isEmpty(weixin)){
+            myRequest.params("weixin", weixin);
+        }
+        if(!com.yunbao.main.utils.StringUtil.isEmpty(weixin_img)){
+            myRequest.params("weixin_img", weixin_img);
+        }
+        if(!com.yunbao.main.utils.StringUtil.isEmpty(zfb_img)){
+            myRequest.params("zfb_img", zfb_img);
+        }
+        myRequest.execute(callback);
+    }
+
+
 
     /**
      * 找回密码
@@ -450,16 +613,7 @@ public class MainHttpUtil {
     }
 
 
-    /**
-     * 获取验证码接口 找回密码用
-     */
-    public static void getFindPwdCode(String mobile, HttpCallback callback) {
-        String sign = MD5Util.getMD5("mobile=" + mobile + "&" + SALT);
-        HttpClient.getInstance().get("Login.getForgetCode", MainHttpConsts.GET_FIND_PWD_CODE)
-                .params("mobile", mobile)
-                .params("sign", sign)
-                .execute(callback);
-    }
+
 
 
     /**

@@ -1,13 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yunbao.main">
 
     <application
         android:allowBackup="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.MyUserRenZhenAct"></activity>
+        <activity android:name=".activity.RewardWhActivity" />
+        <activity android:name=".activity.RewardForPromotionAct" />
+        <activity android:name=".activity.MyBuddySubordinateAct" />
+        <activity android:name=".activity.MyBuddyActivity" />
+        <activity android:name=".activity.InputWxNubActivity" />
+        <activity android:name=".activity.UpdatePhoneActivity" />
+        <activity android:name=".activity.MyBountyActivity" />
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.PayActivity" />
+        <activity android:name=".activity.ConfirmOrderActivity" />
+        <activity android:name=".activity.GoodsDetailsActivity" />
+        <activity android:name=".activity.BuyRecordingAct" />
+        <activity android:name=".activity.BdPhoneActivity" />
         <activity
             android:name=".activity.LoginInvalidActivity"
             android:theme="@style/dialog2" />
-
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
@@ -81,7 +95,6 @@
             android:name=".activity.GoodsAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity
             android:name=".activity.ShopActivity"
             android:screenOrientation="portrait" />
@@ -119,6 +132,6 @@
         <activity
             android:name=".activity.AuthWebViewActivity"
             android:screenOrientation="portrait" />
-<!--        <uses-library android:name="org.apache.http.legacy" android:required="false" />-->
     </application>
+
 </manifest>

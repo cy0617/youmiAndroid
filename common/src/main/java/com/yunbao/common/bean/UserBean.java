@@ -25,6 +25,15 @@ public class UserBean implements Parcelable {
     protected String consumption;
     protected String votestotal;
     protected String province;
+    protected String mobile;
+    protected String grade;
+    protected String gxz;
+    protected String weixin;
+    protected String weixin_img;
+    protected String zfb_img;
+    protected String shangjin;
+    protected String sc_score;
+    protected String ky_score;
     protected String city;
     protected String location;//所在地
     protected String birthday;
@@ -42,6 +51,78 @@ public class UserBean implements Parcelable {
     private long videos;
     private long dynamics;
     private long loves;
+
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin;
+    }
+
+    public String getWeixin_img() {
+        return weixin_img;
+    }
+
+    public void setWeixin_img(String weixin_img) {
+        this.weixin_img = weixin_img;
+    }
+
+    public String getZfb_img() {
+        return zfb_img;
+    }
+
+    public void setZfb_img(String zfb_img) {
+        this.zfb_img = zfb_img;
+    }
+
+    public String getGxz() {
+        return gxz;
+    }
+
+    public void setGxz(String gxz) {
+        this.gxz = gxz;
+    }
+
+    public String getShangjin() {
+        return shangjin;
+    }
+
+    public void setShangjin(String shangjin) {
+        this.shangjin = shangjin;
+    }
+
+    public String getSc_score() {
+        return sc_score;
+    }
+
+    public void setSc_score(String sc_score) {
+        this.sc_score = sc_score;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getKy_score() {
+        return ky_score;
+    }
+
+    public void setKy_score(String ky_score) {
+        this.ky_score = ky_score;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getId() {
         return id;

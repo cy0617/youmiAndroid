@@ -39,6 +39,7 @@ import com.yunbao.main.activity.FollowActivity;
 import com.yunbao.main.activity.MyActiveActivity;
 import com.yunbao.main.activity.MyLikeVideoActivity;
 import com.yunbao.main.activity.MyProfitActivity;
+import com.yunbao.main.activity.MyUserRenZhenAct;
 import com.yunbao.main.activity.MyVideoActivity;
 import com.yunbao.main.activity.RealNameViewActivity;
 import com.yunbao.main.activity.SettingActivity;
@@ -281,7 +282,7 @@ public class MainMeViewHolder extends AbsMainViewHolder implements OnItemClickLi
             if (bean.getId() == 8) {//三级分销
                 ThreeDistributActivity.forward(mContext, bean.getName(), url);
             } else if (bean.getId() == 11) {
-                RealNameViewActivity.forward(mContext, url);
+                mContext.startActivity(new Intent(mContext, MyUserRenZhenAct.class));
             } else {
                 WebViewActivity.forward(mContext, url);
             }

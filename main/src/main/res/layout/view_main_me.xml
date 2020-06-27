@@ -51,7 +51,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="6dp"
                     android:src="@mipmap/icon_arrow_right_2"
-                    android:tint="@color/white"/>
+                    android:tint="@color/white"
+                    />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

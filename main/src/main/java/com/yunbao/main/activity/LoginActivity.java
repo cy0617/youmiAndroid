@@ -292,6 +292,7 @@ public class LoginActivity extends AbsActivity implements OnItemClickListener<Mo
         MainHttpUtil.getBaseInfo(new CommonCallback<UserBean>() {
             @Override
             public void callback(UserBean bean) {
+
                 if (mFirstLogin) {
                     RecommendActivity.forward(mContext, mShowInvite);
                 } else {

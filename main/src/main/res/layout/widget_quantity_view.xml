@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_sub"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_quantity"
+        android:button="@null"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@color/view_color_99"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="#F8F8F8"
+        android:text="1"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:textColor="@color/text_color_33"
+        android:textSize="13sp" />
+
+    <CheckBox
+        android:id="@+id/cb_add"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_quantity_right"
+        android:button="@null"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@color/view_color_99"
+        android:textSize="18sp" />
+</LinearLayout>

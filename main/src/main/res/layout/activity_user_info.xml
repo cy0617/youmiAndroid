@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="个人资料"
+            android:textColor="@color/black_text"
+            android:textSize="13sp"
+            />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@mipmap/icon_back"
+            android:tint="@color/textColor"
+            />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ll_phone"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/text_color_66"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_press"
+            ></View>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_wx_num"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="微信号码"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+
+
+            <ImageView
+                android:id="@+id/wx_right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_right_img"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                ></ImageView>
+
+
+            <TextView
+                android:id="@+id/tv_wx_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/wx_right_img"
+                android:layout_marginRight="10dp"
+                ></TextView>
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_press"
+            ></View>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_wx_img"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="微信收款码"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+
+
+            <ImageView
+                android:id="@+id/wx_code_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_right_img"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                ></ImageView>
+
+
+            <TextView
+                android:id="@+id/tv_wx_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未上传"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/wx_code_img"
+                android:layout_marginRight="10dp"
+                ></TextView>
+
+
+            <ImageView
+                android:id="@+id/iv_wx_img"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/wx_code_img"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                ></ImageView>
+
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_press"
+            ></View>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_zfb_img"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付宝收款码"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+
+
+            <ImageView
+                android:id="@+id/zfb_code_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_right_img"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                ></ImageView>
+
+
+            <TextView
+                android:id="@+id/tv_zfb_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未上传"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_33"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/zfb_code_img"
+                android:layout_marginRight="10dp"
+                ></TextView>
+
+
+            <ImageView
+                android:id="@+id/iv_zfb_img"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/zfb_code_img"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                ></ImageView>
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/login_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="77dp"
+        android:gravity="center"
+        android:onClick="bdClick"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        />
+
+
+
+</RelativeLayout>

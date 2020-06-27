@@ -15,9 +15,27 @@ public class UploadBean {
     private File mCompressFile;//压缩后的图片文件
     private String mRemoteFileName;//上传成功后在云存储上的文件名字
     private String mRemoteAccessUrl;//上传成功后在云存储上的访问地址
+    private String avatar_thumb;
+    private String avatar;
     private boolean mSuccess;//是否上传成功了
     private int mType;
     private Object mTag;
+
+    public String getAvatar_thumb() {
+        return avatar_thumb;
+    }
+
+    public void setAvatar_thumb(String avatar_thumb) {
+        this.avatar_thumb = avatar_thumb;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public UploadBean() {
     }

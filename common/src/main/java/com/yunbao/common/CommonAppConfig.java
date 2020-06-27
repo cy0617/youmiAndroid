@@ -71,6 +71,7 @@ public class CommonAppConfig {
     private static String originalXcxId = null;
 
 
+
     private static CommonAppConfig sInstance;
 
     private CommonAppConfig() {
@@ -129,6 +130,8 @@ public class CommonAppConfig {
         }
         return mUid;
     }
+
+
 
     public String getToken() {
         return mToken;

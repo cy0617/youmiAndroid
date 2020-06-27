@@ -8,8 +8,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.yunbao.common.Constants;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.adapter.ViewPagerAdapter;
 import com.yunbao.common.bean.ConfigBean;
+import com.yunbao.common.bean.UserBean;
 import com.yunbao.common.custom.TabButtonGroup;
 import com.yunbao.common.http.CommonHttpConsts;
 import com.yunbao.common.http.HttpCallback;
@@ -53,6 +56,7 @@ import com.yunbao.main.interfaces.MainAppBarLayoutListener;
 import com.yunbao.main.interfaces.MainStartChooseCallback;
 import com.yunbao.main.presenter.CheckLivePresenter;
 import com.yunbao.common.views.AbsMainViewHolder;
+import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.BonusViewHolder;
 import com.yunbao.main.views.MainHomeViewHolder;
 import com.yunbao.main.views.MainMeViewHolder;
@@ -179,9 +183,11 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
         mProcessResultUtil = new ProcessResultUtil(this);
         EventBus.getDefault().register(this);
         checkVersion();
-        if (showInvite) {
-            showInvitationCode();
-        }
+
+
+//        if (showInvite) {
+//            showInvitationCode();
+//        }
         //requestBonus();
         loginIM();
         ImPushUtil.getInstance().resumePush();
@@ -478,7 +484,11 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
 //            if (mActiveViewHolder != null) {
 //                mActiveViewHolder.setUnReadCount(unReadCount);
 //            }
-            setUnReadCount(unReadCount);
+            if(unReadCount.equals("getUserInfo")){
+                getBaseUserInfo();
+            }else{
+                setUnReadCount(unReadCount);
+            }
         }
     }
 
@@ -491,6 +501,17 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
             return;
         }
         super.onBackPressed();
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getBaseUserInfo() {
+        MainHttpUtil.getBaseInfo(new CommonCallback<UserBean>() {
+            @Override
+            public void callback(UserBean bean) {
+            }
+        });
     }
 
 
@@ -547,6 +568,12 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.e("asfqweqweqweqeqw",requestCode+"------------"+resultCode);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

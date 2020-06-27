@@ -1,14 +1,26 @@
 package com.yunbao.main.views;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.yunbao.common.CommonAppConfig;
+import com.yunbao.common.bean.UserBean;
+import com.yunbao.common.http.HttpCallback;
+import com.yunbao.common.interfaces.CommonCallback;
 import com.yunbao.common.utils.DpUtil;
+import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.common.utils.WordUtil;
 import com.yunbao.common.views.AbsMainViewHolder;
 import com.yunbao.main.R;
+import com.yunbao.main.activity.BdPhoneActivity;
+import com.yunbao.main.http.MainHttpUtil;
+import com.yunbao.main.utils.StringUtil;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
@@ -71,6 +83,86 @@ public class MainHomeViewHolder extends AbsMainHomeParentViewHolder {
                 }
             }
         });
+
+        if(CommonAppConfig.getInstance()!=null){
+            if(CommonAppConfig.getInstance().getUserBean()!=null){
+                if(StringUtil.isEmpty(CommonAppConfig.getInstance().getUserBean().getMobile())){
+                    //弹出绑定手机框
+                    showBdPhoneDialog();
+                }
+            }
+        }
+
+        isShowCodeDialog();
+    }
+
+
+    public void isShowCodeDialog(){
+        MainHttpUtil.getIsparent(new HttpCallback() {
+            @Override
+            public void onSuccess(int code, String msg, String[] info) {
+                if (code == 0) {
+                    JSONObject obj = JSON.parseObject(info[0]);
+                    String isparent = obj.getString("isparent");
+                    if(!StringUtil.isEmpty(isparent)){
+                        if(isparent.equals("0")){
+                            //弹出邀请码框
+                            showCodeDialog();
+                        }
+                    }
+                } else {
+                    ToastUtil.show(msg);
+                }
+            }
+            @Override
+            public void onError() {
+            }
+        });
+    }
+
+
+    /**
+     * 手机绑定框
+     */
+    private void showBdPhoneDialog() {
+        BdPhoneDialog liveTypeDialog = new BdPhoneDialog(mContext) {
+            @Override
+            public void ok() {
+                super.ok();
+                dismiss();
+                Intent intent = new Intent(mContext, BdPhoneActivity.class);
+                mContext.startActivity(intent);
+            }
+        };
+        liveTypeDialog.show();
+    }
+
+
+
+
+    /**
+     * 邀请码框
+     */
+    private void showCodeDialog() {
+        YqCodeDialog yqCodeDialog = new YqCodeDialog(mContext) {
+            @Override
+            public void ok(String code) {
+                super.ok(code);
+                dismiss();
+                MainHttpUtil.setDistribut(code, new HttpCallback() {
+                    @Override
+                    public void onSuccess(int code, String msg, String[] info) {
+                        if (code == 0 && info.length > 0) {
+                            ToastUtil.show(JSON.parseObject(info[0]).getString("msg"));
+                        } else {
+                            ToastUtil.show(msg);
+                        }
+                    }
+                });
+
+            }
+        };
+        yqCodeDialog.show();
     }
 
     @Override

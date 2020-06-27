@@ -17,6 +17,12 @@ public class MainHttpConsts {
     public static final String PROFIT_LIST = "profitList";
     public static final String CONSUME_LIST = "consumeList";
     public static final String GET_BASE_INFO = "getBaseInfo";
+    public static final String GET_ISPARENT = "getIsparent";
+    public static final String GET_GOODS_LIST = "getGoodsList";
+    public static final String GET_BUYRECORD_LIST = "getBuyRecordList";
+    public static final String GET_REWARDRECORD_LIST = "getRewardRecordList";
+    public static final String GET_BUDDY_LIST = "getBuddyList";
+    public static final String GET_SUBORDINATE_LIST = "getSubordinate";
     public static final String SET_BLACK = "setBlack";
     public static final String GET_USER_HOME = "getUserHome";
     public static final String GET_SETTING_LIST = "getSettingList";
@@ -24,6 +30,7 @@ public class MainHttpConsts {
     public static final String GET_FOLLOW_LIST = "getFollowList";
     public static final String GET_FANS_LIST = "getFansList";
     public static final String UPDATE_AVATAR = "updateAvatar";
+    public static final String UPDATE_IMG = "updateiMG";
     public static final String UPDATE_FIELDS = "updateFields";
     public static final String GET_MY_IMPRESS = "getMyImpress";
     public static final String GET_PROFIT = "getProfit";
@@ -35,7 +42,11 @@ public class MainHttpConsts {
     public static final String GET_RECOMMEND = "getRecommend";
     public static final String RECOMMEND_FOLLOW = "recommendFollow";
     public static final String GET_REGISTER_CODE = "getRegisterCode";
+    public static final String GET_BDPHONE_CODE = "getBdPhoneCode";
     public static final String REGISTER = "register";
+    public static final String SETMOBILE = "setMobile";
+    public static final String SUBMIT_USERINFO = "submitUserInfo";
+    public static final String GET_UPLOADIMG = "uploadImg";
     public static final String FIND_PWD = "findPwd";
     public static final String GET_FIND_PWD_CODE = "getFindPwdCode";
     public static final String GET_QR_CODE = "getQrCode";

@@ -25,7 +25,7 @@ public class ToastUtil {
 
     private static Toast makeToast() {
         Toast toast = new Toast(CommonAppContext.sInstance);
-        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         View view = LayoutInflater.from(CommonAppContext.sInstance).inflate(R.layout.view_toast, null);
         toast.setView(view);

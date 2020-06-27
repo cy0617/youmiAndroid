@@ -3,6 +3,7 @@ package com.yunbao.common.pay.wx;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -31,13 +32,11 @@ import java.lang.ref.WeakReference;
 public class WxPayBuilder {
 
     private Context mContext;
-    private String mAppId;
     private PayCallback mPayCallback;
     private String mOrderParams;//订单获取订单需要的参数
 
     public WxPayBuilder(Context context, String appId) {
         mContext = context;
-        mAppId = appId;
         WxApiWrapper.getInstance().setAppID(appId);
         EventBus.getDefault().register(this);
     }
@@ -52,35 +51,8 @@ public class WxPayBuilder {
         return this;
     }
 
-    public void pay() {
-        CommonHttpUtil.getWxOrder(mOrderParams, new HttpCallback() {
-            @Override
-            public void onSuccess(int code, String msg, String[] info) {
-                if (code == 0 && info.length > 0) {
-                    JSONObject obj = JSON.parseObject(info[0]);
-                    payHasOrderId(obj);
-                }
-            }
 
-            @Override
-            public boolean showLoadingDialog() {
-                return true;
-            }
-
-            @Override
-            public Dialog createLoadingDialog() {
-                return DialogUitl.loadingDialog(mContext);
-            }
-        });
-    }
-
-    public void payHasOrderId(JSONObject obj) {
-        String partnerId = obj.getString("partnerid");
-        String prepayId = obj.getString("prepayid");
-        String packageValue = obj.getString("package");
-        String nonceStr = obj.getString("noncestr");
-        String timestamp = obj.getString("timestamp");
-        String sign = obj.getString("sign");
+    public void payHasOrderId(String appid,String partnerId,String prepayId,String packageValue,String nonceStr,String timestamp,String sign) {
         if (TextUtils.isEmpty(partnerId) ||
                 TextUtils.isEmpty(prepayId) ||
                 TextUtils.isEmpty(packageValue) ||
@@ -90,8 +62,10 @@ public class WxPayBuilder {
             ToastUtil.show(Constants.PAY_WX_NOT_ENABLE);
             return;
         }
+
+
         PayReq req = new PayReq();
-        req.appId = mAppId;
+        req.appId = appid;
         req.partnerId = partnerId;
         req.prepayId = prepayId;
         req.packageValue = packageValue;

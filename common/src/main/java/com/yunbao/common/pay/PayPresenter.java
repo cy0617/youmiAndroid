@@ -126,7 +126,7 @@ public class PayPresenter {
             ToastUtil.show(Constants.PAY_ALI_NOT_ENABLE);
             return;
         }
-        AliPayBuilder builder = new AliPayBuilder(mActivity, mAliPartner, mAliSellerId, mAliPrivateKey);
+        AliPayBuilder builder = new AliPayBuilder(mActivity, mAliPartner, mAliSellerId, mAliPrivateKey,"");
         builder.setMoney(money);
         builder.setGoodsName(goodsName);
         builder.setCallbackUrl(mAliCallbackUrl);
@@ -153,7 +153,7 @@ public class PayPresenter {
         WxPayBuilder builder = new WxPayBuilder(mActivity, mWxAppID);
         builder.setOrderParams(StringUtil.contact(mServiceNameWx, orderParams));
         builder.setPayCallback(mPayCallback);
-        builder.pay();
+//        builder.pay();
     }
     /**
      * 支付宝支付
@@ -170,7 +170,7 @@ public class PayPresenter {
             ToastUtil.show(Constants.PAY_ALI_NOT_ENABLE);
             return;
         }
-        AliPayBuilder builder = new AliPayBuilder(mActivity, mAliPartner, mAliSellerId, mAliPrivateKey);
+        AliPayBuilder builder = new AliPayBuilder(mActivity, mAliPartner, mAliSellerId, mAliPrivateKey,"");
         builder.setMoney(obj.getString("money"));
         builder.setGoodsName(WordUtil.getString(R.string.auth_fee));
         builder.setCallbackUrl(mAliCallbackUrl);
@@ -194,7 +194,7 @@ public class PayPresenter {
         }
         WxPayBuilder builder = new WxPayBuilder(mActivity, mWxAppID);
         builder.setPayCallback(mPayCallback);
-        builder.payHasOrderId(object.getJSONObject("paramarr2"));
+//        builder.payHasOrderId(object.getJSONObject("paramarr2"));
     }
 
     /**
