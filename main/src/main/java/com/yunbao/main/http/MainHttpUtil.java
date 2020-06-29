@@ -922,14 +922,6 @@ public class MainHttpUtil {
 
     /**
      *
-     */
-//    public static void getGetuserauth(CommonCallback<GetuserauthBean> commonCallback) {
-//        getGetuserauth(CommonAppConfig.getInstance().getUid(),
-//                CommonAppConfig.getInstance().getToken(),
-//                commonCallback);
-//    }
-    /**
-     *
      * 判断用户是否认证成功
      */
     public static void getGetuserauth(HttpCallback callback) {
@@ -939,35 +931,6 @@ public class MainHttpUtil {
                 .params("token",CommonAppConfig.getInstance().getToken())
                 .execute(callback);
     }
-//    /**
-//     *
-//     * 判断用户是否认证成功
-//     */
-//    public static void getGetuserauth(String uid,String token,final CommonCallback<GetuserauthBean> commonCallback) {
-//        HttpClient.getInstance().post("Youmio.Getuserauth",MainHttpConsts.GET_USER_AUTH)
-//                .isMultipart(true)
-//                .params("uid",uid)
-//                .params("token",token)
-//                .execute(new HttpCallback() {
-//                    @Override
-//                    public void onSuccess(int code, String msg, String[] info) {
-//                        Log.e("55555", "onSuccess: "+code );
-//                        Log.e("55555", "onSuccess: "+msg);
-//                        if (code==0&&info.length>0){
-//                            JSONObject obj = JSON.parseObject(info[0]);
-//                            GetuserauthBean bean = JSON.toJavaObject(obj, GetuserauthBean.class);
-//
-//                            String msg1 = bean.getMsg();
-//                            int code1 = bean.getCode();
-//
-//                            if (commonCallback!=null){
-//                                commonCallback.callback(bean);
-//
-//                            }
-//                        }
-//                    }
-//                });
-//    }
 }
 
 

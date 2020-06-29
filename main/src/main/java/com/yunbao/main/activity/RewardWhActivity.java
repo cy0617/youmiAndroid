@@ -1,15 +1,12 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -24,17 +21,17 @@ import com.yunbao.main.R;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.MaxImgDialog;
-import com.yunbao.main.views.PromptDialog;
-import com.yunbao.main.views.TiSshiDialog;
-import com.yunbao.main.views.YqJJDialog;
+import com.yunbao.main.views.TiShiDialog;
 import com.yunbao.mall.http.MallHttpUtil;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RewardWhActivity extends AbsActivity {
 
-    private ImageView btn_back,iv_wx_sk_code,iv_zfb_sk_code,iv_reward_img,avatar,iv_title_bg;
-    private TextView tv_user_name,tv_id,tv_wx_code,tv_phone,tv_hb_money,tv_upload_btn,tv_quxiao,tv_queren;
+    private ImageView btn_back, iv_wx_sk_code, iv_zfb_sk_code, iv_reward_img, avatar, iv_title_bg;
+    private TextView tv_user_name, tv_id, tv_wx_code, tv_phone, tv_hb_money, tv_upload_btn, tv_quxiao, tv_queren, tv_wallet;
     private LinearLayout ll_bottom_btn;
 
     private Dialog mDialog;
@@ -42,8 +39,8 @@ public class RewardWhActivity extends AbsActivity {
     private String jietuImg = "";
     private String restId = "";
     private String status = "";
-    private String wxImgUrl="";
-    private String zfbImgUrl="";
+    private String wxImgUrl = "";
+    private String zfbImgUrl = "";
 
     @Override
     protected int getLayoutId() {
@@ -70,23 +67,23 @@ public class RewardWhActivity extends AbsActivity {
         tv_wx_code = findViewById(R.id.tv_wx_code);
         tv_phone = findViewById(R.id.tv_phone);
         tv_hb_money = findViewById(R.id.tv_hb_money);
-
+        tv_wallet = findViewById(R.id.tv_wallet);
         tv_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //取消打赏
-                showCodeDialog(1,"确认需要取消打赏");
+                showCodeDialog(1, "确认需要取消打赏");
             }
         });
         tv_queren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //确认打赏
-                if(StringUtil.isEmpty(jietuImg)){
+                if (StringUtil.isEmpty(jietuImg)) {
                     ToastUtil.show("请上传打赏截图");
                     return;
                 }
-                showCodeDialog(2,"确认已经打赏给网红");
+                showCodeDialog(2, "确认已经打赏给网红");
             }
         });
 
@@ -94,7 +91,7 @@ public class RewardWhActivity extends AbsActivity {
         iv_wx_sk_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!StringUtil.isEmpty(wxImgUrl)){
+                if (!StringUtil.isEmpty(wxImgUrl)) {
                     showJJDialog(wxImgUrl);
                 }
             }
@@ -102,7 +99,7 @@ public class RewardWhActivity extends AbsActivity {
         iv_zfb_sk_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!StringUtil.isEmpty(zfbImgUrl)){
+                if (!StringUtil.isEmpty(zfbImgUrl)) {
                     showJJDialog(zfbImgUrl);
                 }
             }
@@ -110,7 +107,7 @@ public class RewardWhActivity extends AbsActivity {
         iv_reward_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!StringUtil.isEmpty(jietuImg)){
+                if (!StringUtil.isEmpty(jietuImg)) {
                     showJJDialog(jietuImg);
                 }
             }
@@ -126,7 +123,7 @@ public class RewardWhActivity extends AbsActivity {
         tv_upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(status.equals("0")){
+                if (status.equals("0")) {
                     editAvatar();
                 }
             }
@@ -151,7 +148,7 @@ public class RewardWhActivity extends AbsActivity {
                                 Glide.with(mContext)
                                         .load(jietuImg)
                                         .error(R.mipmap.default_image)
-                                        .placeholder( R.mipmap.default_image)
+                                        .placeholder(R.mipmap.default_image)
                                         .into(iv_reward_img);
                             }
                         }
@@ -201,40 +198,38 @@ public class RewardWhActivity extends AbsActivity {
     }
 
 
-
     /**
      * 提示按钮
      */
-    private void showCodeDialog(final int type , String desc) {
-        TiSshiDialog tiSshiDialog = new TiSshiDialog(mContext) {
+    private void showCodeDialog(final int type, String desc) {
+        TiShiDialog tiShiDialog = new TiShiDialog(mContext) {
             @Override
             public void ok() {
                 super.ok();
                 dismiss();
-                if(type==1){
+                if (type == 1) {
                     //取消打赏
-                    showReward(restId,"2",jietuImg);
-                }else if(type == 2){
+                    showReward(restId, "2", jietuImg);
+                } else if (type == 2) {
                     //确认已打赏
-                    showReward(restId,"1",jietuImg);
+                    showReward(restId, "1", jietuImg);
                 }
             }
         };
-        tiSshiDialog.setTitleStr("提示");
-        tiSshiDialog.setDescStr(desc);
-        tiSshiDialog.show();
+        tiShiDialog.setTitleStr("提示");
+        tiShiDialog.setDescStr(desc);
+        tiShiDialog.show();
     }
 
 
-
-    public void queryData(){
+    public void queryData() {
         MallHttpUtil.getUserSjInfo(new HttpCallback() {
             @Override
-            public void onSuccess(int code, String msg, String[] info) {
+            public void onSuccess(int code, final String msg, String[] info) {
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
-                if ((code == 0||code ==22)&& info.length > 0) {
+                if ((code == 0 || code == 22) && info.length > 0) {
 
                     JSONObject obj = JSON.parseObject(info[0]);
                     restId = obj.getString("id");
@@ -243,61 +238,73 @@ public class RewardWhActivity extends AbsActivity {
                     tv_wx_code.setText(obj.getString("weixin"));
                     tv_phone.setText(obj.getString("mobile"));
                     tv_hb_money.setText(obj.getString("money"));
+                    tv_wallet.setText(obj.getString("qmoney_code"));
                     wxImgUrl = obj.getString("weixin_img");
                     zfbImgUrl = obj.getString("zfb_img");
+
+
                     Glide.with(mContext)
                             .load(obj.getString("weixin_img"))
                             .error(R.mipmap.default_image)
-                            .placeholder( R.mipmap.default_image)
+                            .placeholder(R.mipmap.default_image)
                             .into(iv_wx_sk_code);
                     Glide.with(mContext)
                             .load(obj.getString("zfb_img"))
                             .error(R.mipmap.default_image)
-                            .placeholder( R.mipmap.default_image)
+                            .placeholder(R.mipmap.default_image)
                             .into(iv_zfb_sk_code);
                     Glide.with(mContext)
                             .load(obj.getString("avatar"))
                             .error(R.mipmap.default_image)
-                            .placeholder( R.mipmap.default_image)
+                            .placeholder(R.mipmap.default_image)
                             .into(avatar);
                     Glide.with(mContext)
                             .load(obj.getString("avatar"))
                             .error(R.mipmap.default_image)
-                            .placeholder( R.mipmap.default_image)
+                            .placeholder(R.mipmap.default_image)
                             .into(iv_title_bg);
 
                     status = obj.getString("status");
-                    if(obj.getString("status").equals("0")){
+                    if (obj.getString("status").equals("0")) {
                         tv_upload_btn.setText("上传打赏截图");
                         ll_bottom_btn.setVisibility(View.VISIBLE);
-                    }else if(obj.getString("status").equals("1")){
+                    } else if (obj.getString("status").equals("1")) {
                         tv_upload_btn.setText("等待网红审核");
                         ll_bottom_btn.setVisibility(View.GONE);
                         jietuImg = obj.getString("img");
                         Glide.with(mContext)
                                 .load(obj.getString("img"))
                                 .error(R.mipmap.default_image)
-                                .placeholder( R.mipmap.default_image)
+                                .placeholder(R.mipmap.default_image)
                                 .into(iv_reward_img);
-                    }else{
+                    } else {
                         tv_upload_btn.setText("审核成功");
                         ll_bottom_btn.setVisibility(View.GONE);
                         Glide.with(mContext)
                                 .load(obj.getString("img"))
                                 .error(R.mipmap.default_image)
-                                .placeholder( R.mipmap.default_image)
+                                .placeholder(R.mipmap.default_image)
                                 .into(iv_reward_img);
                     }
                 } else {
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.schedule(task, 2000);//3秒后执行TimeTask的run方法
                     ToastUtil.show(msg);
-                    finish();
                 }
             }
+
             @Override
             public void onError() {
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
+
                 finish();
             }
         });
@@ -307,17 +314,17 @@ public class RewardWhActivity extends AbsActivity {
     /**
      * 用户打赏
      */
-    public void showReward(String id, final String type, String img){
-        MallHttpUtil.getRewardStart(id,type,img,new HttpCallback() {
+    public void showReward(String id, final String type, String img) {
+        MallHttpUtil.getRewardStart(id, type, img, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
                 if (code == 0) {
-                    if(type.equals("1")){
+                    if (type.equals("1")) {
                         queryData();
-                    }else if(type.equals("2")){
+                    } else if (type.equals("2")) {
                         //取消打赏
                         finish();
                     }
@@ -326,6 +333,7 @@ public class RewardWhActivity extends AbsActivity {
                     finish();
                 }
             }
+
             @Override
             public void onError() {
                 if (mDialog != null) {

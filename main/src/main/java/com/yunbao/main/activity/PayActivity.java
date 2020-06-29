@@ -31,7 +31,6 @@ import com.yunbao.common.pay.PayPresenter;
 import com.yunbao.common.pay.ali.AliPayBuilder;
 import com.yunbao.common.pay.wx.WxPayBuilder;
 import com.yunbao.common.utils.DialogUitl;
-import com.yunbao.common.utils.L;
 import com.yunbao.common.utils.MD5Util;
 import com.yunbao.common.utils.StringUtil;
 import com.yunbao.common.utils.ToastUtil;
@@ -65,7 +64,7 @@ import okhttp3.Response;
 import static android.os.Build.VERSION_CODES.M;
 
 
-public class PayActivity extends AbsActivity implements MyClickInterface , DetectCallback, PreCallback {
+public class PayActivity extends AbsActivity implements MyClickInterface, DetectCallback, PreCallback {
 
     private TextView tv_money;
     private TextView tv_name;
@@ -83,8 +82,8 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     private Dialog mDialog;
     private Dialog payDialog;
     private String actType;
-    private String realName="";
-    private String cerNo="";
+    private String realName = "";
+    private String cerNo = "";
 
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
@@ -99,21 +98,22 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     private static final String API_KEY = "XUKr15RvgbZPm9HOCo5EAKHIw1q_boHN";
     private static final String SECRET = "o3zU6YEjYrUT0eTYL_xMo3NBASs20-BJ";
     private MegLiveManager megLiveManager;
+    private boolean isPay = false;
 
 
     private PayCallback mPayCallback = new PayCallback() {
         @Override
         public void onSuccess() {
             ToastUtil.show("支付成功");
-            if(actType.equals("1")){
+            if (actType.equals("1")) {
                 //商圈
                 EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
                 setResult(333);
                 startActivity(new Intent(mContext, BuyRecordingAct.class));
                 finish();
             } else if (actType.equals("2")) {
-
                 //认证
+                isPay = true;
                 buttonType = ACTION_YY;
                 requestCameraPerm();
             }
@@ -136,7 +136,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     protected void main() {
         list = new ArrayList<>();
 
-        megLiveManager= MegLiveManager.getInstance();
+        megLiveManager = MegLiveManager.getInstance();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
         long currtTime = System.currentTimeMillis() / 1000;
@@ -148,7 +148,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         money = getIntent().getStringExtra("money");
         name = getIntent().getStringExtra("name");
         actType = getIntent().getStringExtra("type");
-        if(actType.equals("2")){
+        if (actType.equals("2")) {
             realName = getIntent().getStringExtra("realName");
             cerNo = getIntent().getStringExtra("cerNo");
         }
@@ -162,8 +162,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         tv_name = findViewById(R.id.tv_name);
         tv_money_mili = findViewById(R.id.tv_money_mili);
         recyclerView = findViewById(R.id.recyclerView);
-
-
 
         tv_money.setText(money);
         tv_name.setText(name);
@@ -184,7 +182,12 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPay();
+                if(isPay){
+                    buttonType = ACTION_YY;
+                    requestCameraPerm();
+                }else{
+                    showPay();
+                }
             }
         });
 
@@ -192,6 +195,13 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             mDialog.show();
         }
         queryPayType();
+        if (actType.equals("1")) {
+            //商圈
+            queryShOrderInfo();
+        } else if (actType.equals("2")) {
+            //认证
+            queryRzOrderInfo();
+        }
     }
 
 
@@ -201,11 +211,10 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     private String yuEmoney;
 
 
-
     /**
      * 获取支付方式
      */
-    public void queryPayType(){
+    public void queryPayType() {
         MallHttpUtil.getPayContentPayList(new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
@@ -216,7 +225,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                     JSONObject obj = JSON.parseObject(info[0]);
 
 
-                    tv_money_mili.setText(obj.getString("ky_score"));
                     adapter.setBalance(obj.getString("balance"));
 
                     yuEmoney = obj.getString("balance");
@@ -232,7 +240,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                         list.addAll(payList);
                         adapter.notifyDataSetChanged();
                     }
-                }else {
+                } else {
                     ToastUtil.show(msg);
                 }
             }
@@ -247,6 +255,67 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     }
 
 
+    /**
+     * 获取商圈订单详情
+     */
+    public void queryShOrderInfo() {
+        MallHttpUtil.getPayContentPayList(orderid,new HttpCallback() {
+            @Override
+            public void onSuccess(int code, String msg, String[] info) {
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                }
+                if (code == 0 && info.length > 0) {
+                    JSONObject obj = JSON.parseObject(info[0]);
+                    JSONObject orderInfo = obj.getJSONObject("order_info");
+
+                    tv_money_mili.setText(orderInfo.getString("score_all"));
+                    tv_money.setText(orderInfo.getString("total"));
+                    tv_name.setText(orderInfo.getString("goods_name"));
+                } else {
+                    ToastUtil.show(msg);
+                }
+            }
+
+            @Override
+            public void onError() {
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                }
+            }
+        });
+    }
+    /**
+     * 获取认证订单详情
+     */
+    public void queryRzOrderInfo() {
+        MallHttpUtil.getRzOrderInfo(orderid,new HttpCallback() {
+            @Override
+            public void onSuccess(int code, String msg, String[] info) {
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                }
+                if (code == 0 && info.length > 0) {
+                    JSONObject obj = JSON.parseObject(info[0]);
+                    JSONObject orderInfo = obj.getJSONObject("order_info");
+
+                    tv_money_mili.setText(orderInfo.getString("score"));
+                    tv_money.setText(orderInfo.getString("money"));
+
+                } else {
+                    ToastUtil.show(msg);
+                }
+            }
+
+            @Override
+            public void onError() {
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                }
+            }
+        });
+    }
+
 
     private void showPay() {
         if (TextUtils.isEmpty(orderid)) {
@@ -255,9 +324,8 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         }
 
         GoodsPayBean bean = null;
-        Log.e("asfqweqweq","1111111111111111111");
-        for(int i = 0;i<list.size();i++){
-            if(list.get(i).isChecked()){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).isChecked()) {
                 bean = list.get(i);
             }
         }
@@ -265,34 +333,29 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             showToast("选择支付方式异常");
             return;
         }
-        Log.e("asfqweqweq","22222222222222222");
         String type = bean.getType();
-        Log.e("asfqweqweq", "showPay: "+type );
-        if(type.equals("3")){
-            Log.e("asfqweqweq","33333333333333333");
+        if (type.equals("3")) {
             String[] strs = yuEmoney.split("￥");
-            Log.e("asfqweqweq","4444444444444444444");
-            if(strs.length>=2){
+            if (strs.length >= 2) {
                 int a = new BigDecimal(strs[1]).compareTo(new BigDecimal(tv_money.getText().toString()));
-                if(a == -1){
+                if (a == -1) {
                     //余额小于商品价格
                     showToast("余额不足");
                     return;
                 }
             }
-            Log.e("asfqweqweq","555555555555555555");
-        }else if(type.equals("4")){
-            if(CommonAppConfig.getInstance().getUserBean()==null){
+        } else if (type.equals("4")) {
+            if (CommonAppConfig.getInstance().getUserBean() == null) {
                 showToast("米粒不足");
                 return;
             }
-            if(com.yunbao.main.utils.StringUtil.isEmpty(CommonAppConfig.getInstance().getUserBean().getKy_score())){
+            if (com.yunbao.main.utils.StringUtil.isEmpty(CommonAppConfig.getInstance().getUserBean().getKy_score())) {
                 showToast("米粒不足");
                 return;
             }
 
             int b = new BigDecimal(CommonAppConfig.getInstance().getUserBean().getKy_score()).compareTo(new BigDecimal("0"));
-            if(b == -1){
+            if (b == -1) {
                 //米粒小于0
                 showToast("米粒不足");
                 return;
@@ -301,11 +364,10 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         if (payDialog != null) {
             payDialog.show();
         }
-        if(actType.equals("1")){
-            balancePay(type,bean.getId());
-        }else if(actType.equals("2")){
-            Log.e("asfqweqweq", "showPay: "+actType );
-            balanceRzPay(type,bean.getId());
+        if (actType.equals("1")) {
+            balancePay(type, bean.getId());
+        } else if (actType.equals("2")) {
+            balanceRzPay(type, bean.getId());
         }
     }
 
@@ -321,13 +383,13 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                     payDialog.dismiss();
                 }
                 if (code == 0) {
-                    if(payType.equals("3")||payType.equals("4")){
+                    if (payType.equals("3") || payType.equals("4")) {
                         ToastUtil.show("支付成功");
                         EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
                         setResult(333);
                         startActivity(new Intent(mContext, BuyRecordingAct.class));
                         finish();
-                    }else{
+                    } else {
                         JSONObject obj = JSON.parseObject(info[0]);
                         String time = String.valueOf(System.currentTimeMillis() / 1000);
                         CommonAppConfig appConfig = CommonAppConfig.getInstance();
@@ -344,11 +406,11 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                                 "&type=", payType);
                         switch (id) {
                             case Constants.PAY_TYPE_ALI://支付宝支付
-                                aliPay(obj.getString("orderid"),money, name, orderParams);
+                                aliPay(obj.getString("orderid"), money, name, orderParams);
                                 break;
                             case Constants.PAY_TYPE_WX://微信支付
-                                wxPay(obj.getString("appid"),obj.getString("noncestr"),obj.getString("package")
-                                        ,obj.getString("partnerid"),obj.getString("prepayid"),obj.getString("sign"),obj.getString("timestamp"));
+                                wxPay(obj.getString("appid"), obj.getString("noncestr"), obj.getString("package")
+                                        , obj.getString("partnerid"), obj.getString("prepayid"), obj.getString("sign"), obj.getString("timestamp"));
                                 break;
                         }
                     }
@@ -365,7 +427,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             }
         });
     }
-
 
 
     /**
@@ -379,11 +440,12 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                     payDialog.dismiss();
                 }
                 if (code == 0) {
-                    if(payType.equals("3")||payType.equals("4")){
+                    if (payType.equals("3") || payType.equals("4")) {
                         ToastUtil.show("支付成功");
+                        isPay = true;
                         buttonType = ACTION_YY;
                         requestCameraPerm();
-                    }else{
+                    } else {
                         JSONObject obj = JSON.parseObject(info[0]);
                         String time = String.valueOf(System.currentTimeMillis() / 1000);
                         CommonAppConfig appConfig = CommonAppConfig.getInstance();
@@ -400,11 +462,11 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                                 "&type=", payType);
                         switch (id) {
                             case Constants.PAY_TYPE_ALI://支付宝支付
-                                aliPay(obj.getString("orderid"),money, name, orderParams);
+                                aliPay(obj.getString("orderid"), money, "认证费用", orderParams);
                                 break;
                             case Constants.PAY_TYPE_WX://微信支付
-                                wxPay(obj.getString("appid"),obj.getString("noncestr"),obj.getString("package")
-                                        ,obj.getString("partnerid"),obj.getString("prepayid"),obj.getString("sign"),obj.getString("timestamp"));
+                                wxPay(obj.getString("appid"), obj.getString("noncestr"), obj.getString("package")
+                                        , obj.getString("partnerid"), obj.getString("prepayid"), obj.getString("sign"), obj.getString("timestamp"));
                                 break;
                         }
                     }
@@ -421,7 +483,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             }
         });
     }
-
 
 
     private void requestCameraPerm() {
@@ -457,7 +518,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
 
     private void beginDetect(int type) {
         if (type == ACTION_YY) {
-            getBizToken("still", 1, realName, cerNo, "aaa", null);
+            getBizToken("meglive", 1, realName, cerNo, "aaa", null);
         }
 //        else if (type == ACTION_WY) {
 //            getBizToken("meglive", 0, "", "", UUID.randomUUID().toString(), imageRef);
@@ -478,15 +539,19 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                 try {
                     org.json.JSONObject json = new org.json.JSONObject(responseBody);
                     String bizToken = json.optString("biz_token");
-                    megLiveManager.preDetect(PayActivity.this, bizToken,"zh","https://api.megvii.com", PayActivity.this);
+                    megLiveManager.preDetect(PayActivity.this, bizToken, "zh", "https://api.megvii.com", PayActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressDialogDismiss();
+                    ToastUtil.show("初始化异常");
                 }
             }
 
             @Override
             public void onFailure(int statusCode, byte[] responseBody) {
-                Log.w("onFailure","statusCode="+statusCode+",responseBody"+new String(responseBody));
+                progressDialogDismiss();
+                ToastUtil.show("请填写正确的身份信息");
+                Log.w("onFailure", "statusCode=" + statusCode + ",responseBody" + new String(responseBody));
             }
         });
     }
@@ -495,7 +560,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     /**
      * 微信支付
      */
-    private void wxPay(String appid,String noncestr,String packages,String partnerid,String prepayid,String sign,String timestamp) {
+    private void wxPay(String appid, String noncestr, String packages, String partnerid, String prepayid, String sign, String timestamp) {
 
         if (TextUtils.isEmpty(Constants.MALL_PAY_GOODS_ORDER)) {
             return;
@@ -508,18 +573,17 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             ToastUtil.show(Constants.PAY_WX_NOT_ENABLE);
             return;
         }
-        WxPayBuilder builder = new WxPayBuilder(this,appid);
+        WxPayBuilder builder = new WxPayBuilder(this, appid);
         builder.setPayCallback(mPayCallback);
-        builder.payHasOrderId(appid,partnerid,prepayid,packages,noncestr,timestamp,sign);
-
+        builder.payHasOrderId(appid, partnerid, prepayid, packages, noncestr, timestamp, sign);
     }
 
 
     /**
      * 支付宝支付
      */
-    private void aliPay(String orId,String money, String goodsName, String orderParams) {
-        if (TextUtils.isEmpty(Constants.MALL_PAY_GOODS_ORDER)|| TextUtils.isEmpty(HtmlConfig.ALI_PAY_MALL_ORDER)) {
+    private void aliPay(String orId, String money, String goodsName, String orderParams) {
+        if (TextUtils.isEmpty(Constants.MALL_PAY_GOODS_ORDER) || TextUtils.isEmpty(HtmlConfig.ALI_PAY_MALL_ORDER)) {
             return;
         }
         if (!CommonAppConfig.isAppExist(Constants.PACKAGE_NAME_ALI)) {
@@ -530,31 +594,26 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             ToastUtil.show(Constants.PAY_ALI_NOT_ENABLE);
             return;
         }
-        AliPayBuilder builder = new AliPayBuilder(this, aliapp_partner, aliapp_seller_id, aliapp_key_android,orId);
+
+        AliPayBuilder builder = new AliPayBuilder(this, aliapp_partner, aliapp_seller_id, aliapp_key_android, orId);
         builder.setMoney(money);
         builder.setGoodsName(goodsName);
         builder.setCallbackUrl(HtmlConfig.ALI_PAY_MALL_ORDER);
         builder.setOrderParams(StringUtil.contact(Constants.MALL_PAY_GOODS_ORDER, orderParams));
         builder.setPayCallback(mPayCallback);
         builder.pay();
-        Log.e("asfqweqweq", "aliPay: "+orId );
-        Log.e("asfqweqweq", "aliPay: "+money );
-        Log.e("asfqweqweq", "aliPay: "+goodsName );
-        Log.e("asfqweqweq", "aliPay: "+orderParams );
-
     }
 
 
-
-    public void initSelectImg(){
-        for(int i =0;i<list.size();i++){
+    public void initSelectImg() {
+        for (int i = 0; i < list.size(); i++) {
             list.get(i).setChecked(false);
         }
     }
 
     @Override
     public void myClick(int position, int type) {
-        if(type == 1){
+        if (type == 1) {
             initSelectImg();
             list.get(position).setChecked(true);
             adapter.notifyDataSetChanged();
@@ -568,10 +627,17 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
             public void onSuccess(String responseBody) {
                 progressDialogDismiss();
                 JSONObject obj = JSON.parseObject(responseBody);
-                if(obj.getString("result_code").equals("1000")){
+                if (obj.getString("result_code").equals("1000")) {
                     //识别成功
-                    isRzStatus();
-                }else{
+                    JSONObject verification = obj.getJSONObject("verification");
+                    JSONObject idcard = verification.getJSONObject("idcard");
+                    double confidence = idcard.getDouble("confidence");
+                    if (confidence >= 80) {
+                        isRzStatus();
+                    }else{
+                        ToastUtil.show("识别失败,请按照提示动作重新识别");
+                    }
+                } else {
                     ToastUtil.show("识别失败");
                 }
             }
@@ -588,15 +654,15 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     /**
      * 更改认证状态
      */
-    public void isRzStatus(){
+    public void isRzStatus() {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new  Request.Builder()
+        Request request = new Request.Builder()
                 .get()
-                .url("http://cz56.yczbfx.com/appapi/auth/authsave/?uid="+ CommonAppConfig.getInstance().getUid()+"&token="+CommonAppConfig.getInstance().getToken()+"&real_name="+
-                        realName+"&cer_no="+cerNo
-                        )
+                .url("http://cz56.yczbfx.com/appapi/auth/authsave/?uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken() + "&real_name=" +
+                        realName + "&cer_no=" + cerNo
+                )
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -608,19 +674,19 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     if (mDialog != null) {
                         mDialog.dismiss();
                     }
                     String string = response.body().string();
                     JSONObject obj = JSON.parseObject(string);
                     JSONObject data = obj.getJSONObject("data");
-                    if(data.getString("code").equals("0")){
+                    if (data.getString("code").equals("0")) {
                         //更改认证状态成功
                         EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
                         setResult(333);
                         finish();
-                    }else {
+                    } else {
                         ToastUtil.show(data.getString("msg"));
                     }
                 }
@@ -642,11 +708,11 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         });
     }
 
-    private void showDialogDismiss(){
+    private void showDialogDismiss() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mProgressDialog!=null){
+                if (mProgressDialog != null) {
                     mProgressDialog.show();
                 }
             }
@@ -657,6 +723,8 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
     public void onDetectFinish(String token, int errorCode, String s1, String data) {
         if (errorCode == 1000) {
             verify(token, data.getBytes());
+        } else {
+            ToastUtil.show("识别失败");
         }
     }
 

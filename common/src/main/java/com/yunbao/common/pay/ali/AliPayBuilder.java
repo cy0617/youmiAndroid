@@ -44,7 +44,7 @@ public class AliPayBuilder {
         mPartner = partner;
         mSellerId = sellerId;
         mPrivateKey = privateKey;
-        orId = orId;
+        this.orId = orId;
     }
 
     public AliPayBuilder setMoney(String money) {

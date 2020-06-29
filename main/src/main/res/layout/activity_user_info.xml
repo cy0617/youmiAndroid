@@ -42,16 +42,14 @@
             />
 
     </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/ll_phone"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,19 +59,60 @@
                 android:layout_centerVertical="true"
                 ></TextView>
 
+            <ImageView
+                android:id="@+id/phone_code_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_right_img"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                ></ImageView>
 
             <TextView
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/text_color_66"
+                android:text="未绑定"
+                android:textColor="@color/light_gray_text"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/phone_code_img"
+                android:layout_marginRight="10dp"
                 ></TextView>
 
-
         </RelativeLayout>
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/ll_phone"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:paddingLeft="15dp"-->
+<!--            android:paddingRight="15dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            >-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="手机号码"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/text_color_33"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                ></TextView>-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_phone"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:textColor="@color/text_color_66"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                ></TextView>-->
+
+
+<!--        </RelativeLayout>-->
+
 
 
         <View
@@ -118,7 +157,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:textColor="@color/text_color_33"
+                android:text="未填写"
+                android:textColor="@color/light_gray_text"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/wx_right_img"
                 android:layout_marginRight="10dp"
@@ -222,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:text="未上传"
                 android:textSize="14sp"
-                android:textColor="@color/text_color_33"
+                android:textColor="@color/light_gray_text"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/wx_code_img"
                 android:layout_marginRight="10dp"
@@ -288,7 +328,7 @@
                 android:layout_height="wrap_content"
                 android:text="未上传"
                 android:textSize="14sp"
-                android:textColor="@color/text_color_33"
+                android:textColor="@color/light_gray_text"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/zfb_code_img"
                 android:layout_marginRight="10dp"

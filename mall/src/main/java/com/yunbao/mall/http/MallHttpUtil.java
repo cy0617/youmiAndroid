@@ -254,6 +254,16 @@ public class MallHttpUtil {
                 .params("money", money)
                 .execute(callback);
     }
+    /**
+     * 检测身份证是否存在
+     */
+    public static void getisCerNoExist(String cerNo, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Getsfcz", MallHttpConsts.GET_ISCERNO_EXIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("cer_no", cerNo)
+                .execute(callback);
+    }
 
 
     /**
@@ -287,6 +297,33 @@ public class MallHttpUtil {
                 .params("token", token)
                 .params("time", time)
                 .params("sign", sign)
+                .execute(callback);
+    }
+    /**
+     * 商圈订单详情
+     */
+    public static void getPayContentPayList(String orderid,HttpCallback callback) {
+        String time = String.valueOf(System.currentTimeMillis() / 1000);
+        CommonAppConfig appConfig = CommonAppConfig.getInstance();
+        String uid = appConfig.getUid();
+        String token = appConfig.getToken();
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderid,"&time=", time, "&", SALT));
+        HttpClient.getInstance().get("Youmio.GetGoodsOrderInfo", MallHttpConsts.GET_GOODS_PACKAGE_INFO)
+                .params("uid", uid)
+                .params("token", token)
+                .params("orderid", orderid)
+                .params("time", time)
+                .params("sign", sign)
+                .execute(callback);
+    }
+    /**
+     * 商圈订单详情
+     */
+    public static void getRzOrderInfo(String orderid,HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.GetrzOrderInfo", MallHttpConsts.GET_RZ_ORDERINFO)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("orderid", orderid)
                 .execute(callback);
     }
 

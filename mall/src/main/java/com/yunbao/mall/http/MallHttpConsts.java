@@ -18,6 +18,7 @@ public class MallHttpConsts {
     public static final String GET_PIZHUNUPGRADE = "getPiZhunUpgrade";
     public static final String GET_PACKAGE_ORDER = "getPackageOrder";
     public static final String GET_RZ_ORDER = "getRzOrder";
+    public static final String GET_ISCERNO_EXIST = "getisCerNoExist";
     public static final String GET_CHECKYGGOODSID = "getCheckyggoodsid";
     public static final String GET_SELLER_HOME = "getSellerHome";
     public static final String GET_GOODS_NUM = "getGoodsNum";
@@ -36,6 +37,7 @@ public class MallHttpConsts {
     public static final String BUYER_DELETE_BROWSE_RECORD = "buyerDeleteBrowseRecord";
     public static final String BUYER_CREATE_ORDER = "buyerCreateOrder";
     public static final String GET_BUYER_PAY_LIST = "getBuyerPayList";
+    public static final String GET_RZ_ORDERINFO = "GetRzOrderInfo";
     public static final String BUYER_PAY_ORDER = "buyerPayOrder";
     public static final String BUYER_SQPAY_ORDER = "sqPayOrder";
     public static final String GET_BUYER_ORDER_LIST = "getBuyerOrderList";

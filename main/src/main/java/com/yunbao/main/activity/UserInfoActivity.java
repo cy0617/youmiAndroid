@@ -173,8 +173,7 @@ public class UserInfoActivity extends AbsActivity implements View.OnClickListene
                 }
 
                 if(StringUtil.isEmpty(userBean.getWeixin())){
-                    //未绑定微信名称
-                    tv_wx_code.setText("未绑定");
+
                 }else{
                     tv_wx_code.setText(userBean.getWeixin());
                 }

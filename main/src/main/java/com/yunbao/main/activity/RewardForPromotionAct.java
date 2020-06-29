@@ -2,11 +2,8 @@ package com.yunbao.main.activity;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,23 +12,19 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.adapter.BuyRecordAdapter;
 import com.yunbao.main.adapter.RewardListAdapter;
 import com.yunbao.main.bean.RewardRecordBean;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.utils.MyClickInterface;
-import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.MaxImgDialog;
-import com.yunbao.main.views.TiSshiDialog;
+import com.yunbao.main.views.TiShiDialog;
 import com.yunbao.main.views.refreshlayout.RefreshLayout;
 import com.yunbao.mall.http.MallHttpUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,7 +203,7 @@ public class RewardForPromotionAct extends AbsActivity implements View.OnClickLi
      * 提示按钮
      */
     private void showCodeDialog(String desc, final String id) {
-        TiSshiDialog tiSshiDialog = new TiSshiDialog(mContext) {
+        TiShiDialog tiShiDialog = new TiShiDialog(mContext) {
             @Override
             public void ok() {
                 super.ok();
@@ -221,9 +214,9 @@ public class RewardForPromotionAct extends AbsActivity implements View.OnClickLi
                 approveUpgrade(id);
             }
         };
-        tiSshiDialog.setTitleStr("提示");
-        tiSshiDialog.setDescStr(desc);
-        tiSshiDialog.show();
+        tiShiDialog.setTitleStr("提示");
+        tiShiDialog.setDescStr(desc);
+        tiShiDialog.show();
     }
 
     /**

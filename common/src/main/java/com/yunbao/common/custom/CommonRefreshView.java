@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.umeng.commonsdk.statistics.common.DataHelper;
 import com.yunbao.common.R;
 import com.yunbao.common.adapter.RefreshAdapter;
 import com.yunbao.common.http.HttpCallback;

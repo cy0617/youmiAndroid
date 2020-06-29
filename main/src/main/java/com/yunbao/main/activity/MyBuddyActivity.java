@@ -138,6 +138,8 @@ public class MyBuddyActivity extends AbsActivity implements MyClickInterface {
     @Override
     public void myClick(int position, int type) {
         Intent intent = new Intent(this,MyBuddySubordinateAct.class);
+        String s = list.get(position);
+        Log.e("eeeeeeeee", "myClick: "+s );
         intent.putExtra("leve",list.get(position));
         startActivity(intent);
     }
