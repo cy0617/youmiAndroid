@@ -73,7 +73,6 @@
                 android:id="@+id/icon_home_top_follow"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_home_top_follow"
                 android:visibility="invisible"
                 android:layout_marginTop="35dp"
                 />
@@ -82,7 +81,6 @@
                 android:id="@+id/icon_home_top_live"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_home_top_live"
                 android:visibility="invisible"
                 android:layout_marginTop="35dp"
                 />
@@ -91,7 +89,6 @@
                 android:id="@+id/icon_home_top_video"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_home_top_video"
                 android:visibility="invisible"
                 android:layout_marginTop="35dp"
                 />
@@ -99,7 +96,6 @@
                 android:id="@+id/icon_home_top_near"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_home_top_near"
                 android:visibility="invisible"
                 android:layout_marginTop="35dp"
                 />
@@ -107,7 +103,6 @@
                 android:id="@+id/icon_home_top_active"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_home_top_active"
                 android:visibility="invisible"
                 android:layout_marginTop="35dp"
                 />

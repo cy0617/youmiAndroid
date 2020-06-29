@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: :LiteAVSDK_Professional:@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/563a39b31c6481e19191d6650aa060e7/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/563a39b31c6481e19191d6650aa060e7/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/563a39b31c6481e19191d6650aa060e7/jars/libs/liteavsdk.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/563a39b31c6481e19191d6650aa060e7/jars/libs/okgo-3.0.4.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/563a39b31c6481e19191d6650aa060e7/jars/libs/okserver-2.0.5.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/2243bf519b47c58858c2ac9bab75bf9b/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/2243bf519b47c58858c2ac9bab75bf9b/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/2243bf519b47c58858c2ac9bab75bf9b/jars/libs/liteavsdk.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/2243bf519b47c58858c2ac9bab75bf9b/jars/libs/okgo-3.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LiteAVSDK_Professional.aar/2243bf519b47c58858c2ac9bab75bf9b/jars/libs/okserver-2.0.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

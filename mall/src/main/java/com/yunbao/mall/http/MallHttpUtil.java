@@ -1,6 +1,7 @@
 package com.yunbao.mall.http;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.lzy.okgo.request.GetRequest;
 import com.yunbao.common.CommonAppConfig;

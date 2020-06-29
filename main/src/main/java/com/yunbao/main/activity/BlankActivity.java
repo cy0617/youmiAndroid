@@ -147,6 +147,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
 
                 } else {
                     ToastUtil.show(msg);
+                    Log.e("eeeeeeeeeee", "onSuccess: "+msg );
                 }
             }
             @Override

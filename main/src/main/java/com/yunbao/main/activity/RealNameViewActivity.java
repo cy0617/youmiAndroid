@@ -292,14 +292,6 @@ public class RealNameViewActivity extends AbsActivity implements DetectCallback,
         }
     }
 
-//    private CommonCallback<GetuserauthBean> mCallback = new CommonCallback<GetuserauthBean>() {
-//
-//        @Override
-//        public void callback(GetuserauthBean bean) {
-//            String msg = bean.getMsg();
-//            Log.e("123123", "callback: "+msg );
-//        }
-//    };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

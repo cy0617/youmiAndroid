@@ -46,7 +46,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_toRightOf="@id/btn_back"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="25dp"
             android:layout_below="@id/avatar"
             android:layout_marginTop="10dp"
             >
@@ -378,9 +378,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我要晋级"
-                android:textSize="13sp"
                 android:textColor="@color/text_color_66"
-                ></TextView>
+                android:textSize="13sp"></TextView>
 
         </LinearLayout>
 

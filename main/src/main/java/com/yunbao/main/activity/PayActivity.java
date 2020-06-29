@@ -31,6 +31,7 @@ import com.yunbao.common.pay.PayPresenter;
 import com.yunbao.common.pay.ali.AliPayBuilder;
 import com.yunbao.common.pay.wx.WxPayBuilder;
 import com.yunbao.common.utils.DialogUitl;
+import com.yunbao.common.utils.L;
 import com.yunbao.common.utils.MD5Util;
 import com.yunbao.common.utils.StringUtil;
 import com.yunbao.common.utils.ToastUtil;
@@ -111,6 +112,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
                 startActivity(new Intent(mContext, BuyRecordingAct.class));
                 finish();
             } else if (actType.equals("2")) {
+
                 //认证
                 buttonType = ACTION_YY;
                 requestCameraPerm();
@@ -265,6 +267,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         }
         Log.e("asfqweqweq","22222222222222222");
         String type = bean.getType();
+        Log.e("asfqweqweq", "showPay: "+type );
         if(type.equals("3")){
             Log.e("asfqweqweq","33333333333333333");
             String[] strs = yuEmoney.split("￥");
@@ -301,6 +304,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         if(actType.equals("1")){
             balancePay(type,bean.getId());
         }else if(actType.equals("2")){
+            Log.e("asfqweqweq", "showPay: "+actType );
             balanceRzPay(type,bean.getId());
         }
     }
@@ -453,7 +457,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
 
     private void beginDetect(int type) {
         if (type == ACTION_YY) {
-            getBizToken("meglive", 1, realName, cerNo, "aaa", null);
+            getBizToken("still", 1, realName, cerNo, "aaa", null);
         }
 //        else if (type == ACTION_WY) {
 //            getBizToken("meglive", 0, "", "", UUID.randomUUID().toString(), imageRef);
@@ -507,6 +511,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         WxPayBuilder builder = new WxPayBuilder(this,appid);
         builder.setPayCallback(mPayCallback);
         builder.payHasOrderId(appid,partnerid,prepayid,packages,noncestr,timestamp,sign);
+
     }
 
 
@@ -532,6 +537,11 @@ public class PayActivity extends AbsActivity implements MyClickInterface , Detec
         builder.setOrderParams(StringUtil.contact(Constants.MALL_PAY_GOODS_ORDER, orderParams));
         builder.setPayCallback(mPayCallback);
         builder.pay();
+        Log.e("asfqweqweq", "aliPay: "+orId );
+        Log.e("asfqweqweq", "aliPay: "+money );
+        Log.e("asfqweqweq", "aliPay: "+goodsName );
+        Log.e("asfqweqweq", "aliPay: "+orderParams );
+
     }
 
 

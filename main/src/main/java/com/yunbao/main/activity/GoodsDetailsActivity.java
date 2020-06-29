@@ -25,6 +25,7 @@ import com.yunbao.main.views.QuantityView;
 import com.yunbao.mall.http.MallHttpUtil;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class GoodsDetailsActivity extends AbsActivity {
 
@@ -67,8 +68,13 @@ public class GoodsDetailsActivity extends AbsActivity {
                 Intent intent = new Intent(GoodsDetailsActivity.this,ConfirmOrderActivity.class);
                 intent.putExtra("img",img);
                 intent.putExtra("title",tv_name.getText().toString());
-                intent.putExtra("money",tv_money.getText().toString());
-                intent.putExtra("num",quantityView.getNum());
+                int num = quantityView.getNum();
+                intent.putExtra("num",num);
+                String money = tv_money.getText().toString();
+                DecimalFormat format = new DecimalFormat("#.##");
+                float f = Float.parseFloat(money) * num;
+                String money_sum = format.format(f);
+                intent.putExtra("money",money_sum);
                 intent.putExtra("goodsId",goodsId);
                 startActivityForResult(intent,101);
             }
