@@ -1,5 +1,7 @@
 package com.yunbao.common.http;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lzy.okgo.OkGo;
@@ -227,6 +229,7 @@ public class CommonHttpUtil {
                 .params("token", CommonAppConfig.getInstance().getToken())
                 .params("type", 0)
                 .execute(callback);
+
     }
 
     /**

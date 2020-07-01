@@ -510,6 +510,7 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
         MainHttpUtil.getBaseInfo(new CommonCallback<UserBean>() {
             @Override
             public void callback(UserBean bean) {
+
             }
         });
     }

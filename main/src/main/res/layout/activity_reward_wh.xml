@@ -197,18 +197,23 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/reward_money_img"
-                            ></ImageView>
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@mipmap/reward_money_img"></ImageView>
 
                         <TextView
                             android:id="@+id/tv_wallet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
+                            android:text="lobvf5656dfvi9f65562"
                             android:textColor="@color/white"
                             ></TextView>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@mipmap/fz"></ImageView>
 
 
                     </LinearLayout>
@@ -264,11 +269,11 @@
 
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:overScrollMode="never"-->
+<!--        android:scrollbars="none">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -325,7 +330,7 @@
                         android:layout_width="83dp"
                         android:layout_height="83dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/default_image"
+                        android:background="#DC7F53"
                         ></ImageView>
 
                 </LinearLayout>
@@ -343,7 +348,7 @@
                         android:layout_width="83dp"
                         android:layout_height="83dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/default_image"
+                        android:background="#EAAB4A"
                         ></ImageView>
 
                 </LinearLayout>
@@ -439,7 +444,7 @@
 
 
 
-    </ScrollView>
+<!--    </ScrollView>-->
 
 
 

@@ -162,7 +162,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     mTip1.setText(obj.getString("tip_t"));
                     mTip2.setText(obj.getString("tip_d"));
                     mTip3.setText(obj.getString("tip_f"));
-                    mCoin2.setText(obj.getString("score"));
+                    mCoin2.setText(obj.getString("ky_score"));
                     List<CoinPayBean> payList = JSON.parseArray(obj.getString("paylist"), CoinPayBean.class);
                     if (mPayAdapter != null) {
                         mPayAdapter.setList(payList);

@@ -3,6 +3,7 @@ package com.yunbao.main.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,10 @@ public class RewardListAdapter extends RecyclerView.Adapter<RewardListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
-        viewHolder.tv_id.setText(list.get(position).getPid());
+        viewHolder.tv_id.setText(list.get(position).getUid());
         viewHolder.tv_money.setText("¥"+list.get(position).getMoney());
-        viewHolder.tv_wx_code.setText(list.get(position).getWxCode());
-        viewHolder.tv_phone.setText(list.get(position).getPhone());
+        viewHolder.tv_wx_code.setText(list.get(position).getWeixin());
+        viewHolder.tv_phone.setText(list.get(position).getMobile());
         if(list.get(position).getStatus().equals("0")){
             viewHolder.tv_status.setText("等待打赏");
             viewHolder.tv_status.setTextColor(Color.parseColor("#333333"));
@@ -65,11 +65,11 @@ public class RewardListAdapter extends RecyclerView.Adapter<RewardListAdapter.Vi
             viewHolder.tv_status.setBackgroundResource(R.color.white);
         }
 
-        Glide.with(mContext)
-                .load(list.get(position).getImg())
-                .error(R.mipmap.default_image)
-                .placeholder( R.mipmap.default_image)
-                .into(viewHolder.iv_img);
+//        Glide.with(mContext)
+//                .load(list.get(position).getImg())
+//                .error(R.mipmap.default_image)
+//                .placeholder( R.mipmap.default_image)
+//                .into(viewHolder.iv_img);
 
         viewHolder.tv_status.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +81,14 @@ public class RewardListAdapter extends RecyclerView.Adapter<RewardListAdapter.Vi
 
         });
 
-        viewHolder.iv_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!StringUtil.isEmpty(list.get(position).getImg())){
-                    myClickInterface.myClick(position,2);
-                }
-            }
-        });
+//        viewHolder.iv_img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(!StringUtil.isEmpty(list.get(position).getImg())){
+//                    myClickInterface.myClick(position,2);
+//                }
+//            }
+//        });
 
     }
 

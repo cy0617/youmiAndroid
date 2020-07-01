@@ -127,14 +127,11 @@ public class RealNameViewActivity extends AbsActivity implements DetectCallback,
                     JSONObject obj = JSON.parseObject(info[0]);
                     GetuserauthBean bean = JSON.toJavaObject(obj, GetuserauthBean.class);
 
-                    String msg1 = bean.getMsg();
-                    Log.e("eeeeeee", "onSuccess: " + msg1);
                 }
             }
 
             @Override
             public void onError(Response<JsonBean> response) {
-                Log.e("eeeeeee", "onError: "+response );
             }
         });
         long currtTime = System.currentTimeMillis() / 1000;

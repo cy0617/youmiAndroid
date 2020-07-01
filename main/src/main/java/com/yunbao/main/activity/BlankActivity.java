@@ -1,26 +1,42 @@
 package com.yunbao.main.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.google.gson.jpush.Gson;
 import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.bean.UserBean;
 import com.yunbao.common.http.HttpCallback;
+import com.yunbao.common.http.HttpClient;
 import com.yunbao.common.utils.SpUtil;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
+import com.yunbao.main.bean.GetShiPinBean;
+import com.yunbao.main.bean.GetuserauthBean;
+import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.views.PromptDialog;
 import com.yunbao.main.views.YqJJDialog;
 import com.yunbao.mall.http.MallHttpUtil;
 
+import java.io.IOException;
 import java.util.Date;
+
+import cn.jiguang.net.HttpUtils;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 我的-菜单
@@ -39,6 +55,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
     private TextView tv_wh_id;
     private UserBean userBean;
     private TextView tv_guanyun;
+    private ImageView iv_qiandao;
 
 
     @Override
@@ -73,6 +90,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
         findViewById(R.id.ll_buddy).setOnClickListener(this);
         findViewById(R.id.ll_otc).setOnClickListener(this);
         findViewById(R.id.ll_accelerator).setOnClickListener(this);
+        iv_qiandao = findViewById(R.id.iv_qiandao);
 
         userBean = CommonAppConfig.getInstance().getUserBean();
 
@@ -88,7 +106,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
         tv_mili.setText(userBean.getKy_score());
         tv_up_mili.setText(userBean.getSc_score());
         tv_wh_id.setText(userBean.getLiangNameTip());
-        tv_guanyun.setText(userBean.getVotes());
+        tv_guanyun.setText(userBean.getGygp());
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +156,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
                     //不需要
                 } else if (code == 11) {
                     //需要购买权限包
+
                     JSONObject obj = JSON.parseObject(info[0]);
                     long oneDayTime = new Date().getTime() + 86500000;
                     long savaTime = SpUtil.getInstance().getLongValue("savatimeuser");
@@ -182,7 +201,6 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
                     showCodeDialog(obj.getString("level"), obj.getString("id"));
                 } else {
                     ToastUtil.show(msg);
-                    Log.e("eeeeeeeeee", "onSuccess: "+msg );
                 }
             }
 

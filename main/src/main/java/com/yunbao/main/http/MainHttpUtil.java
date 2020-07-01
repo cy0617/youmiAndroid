@@ -176,7 +176,6 @@ public class MainHttpUtil {
                     @Override
                     public void onSuccess(int code, String msg, String[] info) {
                         if (code == 0 && info.length > 0) {
-                            Log.e("asdqweqweqweq",info[0]);
                             JSONObject obj = JSON.parseObject(info[0]);
                             UserBean bean = JSON.toJavaObject(obj, UserBean.class);
                             CommonAppConfig.getInstance().setUserBean(bean);
@@ -208,6 +207,7 @@ public class MainHttpUtil {
         getBaseInfo(CommonAppConfig.getInstance().getUid(),
                 CommonAppConfig.getInstance().getToken(),
                 commonCallback);
+
     }
 
 
@@ -262,8 +262,10 @@ public class MainHttpUtil {
         request.params("p", p);
         if(!com.yunbao.main.utils.StringUtil.isEmpty(keyword)){
             request.params("keyword", keyword);
+
         }
         request.execute(callback);
+
     }
     /**
      * 用于 指定下级列表
@@ -929,6 +931,19 @@ public class MainHttpUtil {
                 .isMultipart(true)
                 .params("uid",CommonAppConfig.getInstance().getUid())
                 .params("token",CommonAppConfig.getInstance().getToken())
+                .execute(callback);
+
+    }
+
+    public static void getDayQianDao(HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Getdayqiandao",MainHttpConsts.GET_DAY_QIAN_DAO)
+                .params("uid",CommonAppConfig.getInstance().getUid())
+                .params("token",CommonAppConfig.getInstance().getToken())
+                .execute(callback);
+    }
+
+    public static void Getshipin(HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Getshipin",MainHttpConsts.GET_SHI_PIN)
                 .execute(callback);
     }
 }

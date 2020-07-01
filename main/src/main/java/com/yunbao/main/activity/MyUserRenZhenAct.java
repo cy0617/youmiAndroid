@@ -55,7 +55,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     private TextView btn_xiayibu;
     private Dialog mDialog;
     private Dialog subDialog;
-    private String payMoney="";
+    private String payMoney = "";
 
     private String isZf = "10";
 
@@ -83,10 +83,14 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     protected void main() {
         mDialog = DialogUitl.loadingDialog(mContext, "加载中...");
         subDialog = DialogUitl.loadingDialog(mContext, "提交中...");
-        btn_back =  findViewById(R.id.btn_back);
-        edit_name =  findViewById(R.id.edit_name);
-        edit_sfz_num =  findViewById(R.id.edit_sfz_num);
-        btn_xiayibu =  findViewById(R.id.btn_xiayibu);
+        btn_back = findViewById(R.id.btn_back);
+        edit_name = findViewById(R.id.edit_name);
+        edit_sfz_num = findViewById(R.id.edit_sfz_num);
+        btn_xiayibu = findViewById(R.id.btn_xiayibu);
+
+
+
+
 
         megLiveManager = MegLiveManager.getInstance();
         mProgressDialog = new ProgressDialog(this);
@@ -119,33 +123,34 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     /**
      * 提交订单
      */
-    public void submitOrder(){
+    public void submitOrder() {
 
-        if(StringUtil.isEmpty(payMoney)){
+        if (StringUtil.isEmpty(payMoney)) {
             ToastUtil.show("金额异常");
             return;
         }
 
-        MallHttpUtil.getSubmitRzOrder(payMoney,new HttpCallback() {
+        MallHttpUtil.getSubmitRzOrder(payMoney, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (subDialog != null) {
                     subDialog.dismiss();
                 }
-                if (code == 0&& info.length > 0) {
+                if (code == 0 && info.length > 0) {
                     JSONObject obj = JSON.parseObject(info[0]);
-                    Intent intent = new Intent(MyUserRenZhenAct.this,PayActivity.class);
-                    intent.putExtra("orderid",obj.getString("orderid"));
-                    intent.putExtra("money",payMoney);
-                    intent.putExtra("name","");
-                    intent.putExtra("realName",edit_name.getText().toString());
-                    intent.putExtra("cerNo",edit_sfz_num.getText().toString());
-                    intent.putExtra("type","2");
-                    startActivityForResult(intent,101);
+                    Intent intent = new Intent(MyUserRenZhenAct.this, PayActivity.class);
+                    intent.putExtra("orderid", obj.getString("orderid"));
+                    intent.putExtra("money", payMoney);
+                    intent.putExtra("name", "");
+                    intent.putExtra("realName", edit_name.getText().toString());
+                    intent.putExtra("cerNo", edit_sfz_num.getText().toString());
+                    intent.putExtra("type", "2");
+                    startActivityForResult(intent, 101);
                 } else {
                     ToastUtil.show(msg);
                 }
             }
+
             @Override
             public void onError() {
                 if (subDialog != null) {
@@ -156,18 +161,17 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     }
 
 
-
     /**
      * 检测身份证是否存在
      */
-    public void isCerNoExist(){
+    public void isCerNoExist() {
 
-        if(StringUtil.isEmpty(edit_sfz_num.getText().toString())){
+        if (StringUtil.isEmpty(edit_sfz_num.getText().toString())) {
             ToastUtil.show("请填写身份信息");
             return;
         }
 
-        MallHttpUtil.getisCerNoExist(edit_sfz_num.getText().toString(),new HttpCallback() {
+        MallHttpUtil.getisCerNoExist(edit_sfz_num.getText().toString(), new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (subDialog != null) {
@@ -175,10 +179,10 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                 }
                 if (code == 0) {
                     //需要认证
-                    if(isZf.equals("10")){
+                    if (isZf.equals("10")) {
                         buttonType = ACTION_YY;
                         requestCameraPerm();
-                    }else{
+                    } else {
                         if (subDialog != null) {
                             subDialog.show();
                         }
@@ -188,6 +192,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                     ToastUtil.show(msg);
                 }
             }
+
             @Override
             public void onError() {
                 if (subDialog != null) {
@@ -201,12 +206,12 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     /**
      * 检测是否认证
      */
-    public void isRz(){
+    public void isRz() {
 
         OkHttpClient client = new OkHttpClient();
-        Request request = new  Request.Builder()
+        Request request = new Request.Builder()
                 .get()
-                .url("http://cz56.yczbfx.com/appapi/?service=Youmio.Getuserauth&uid="+ CommonAppConfig.getInstance().getUid()+"&token="+CommonAppConfig.getInstance().getToken())
+                .url("http://cz56.yczbfx.com/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -218,14 +223,14 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     if (mDialog != null) {
                         mDialog.dismiss();
                     }
                     String string = response.body().string();
                     JSONObject obj = JSON.parseObject(string);
                     JSONObject data = obj.getJSONObject("data");
-                    if(data.getString("code").equals("0")){
+                    if (data.getString("code").equals("0")) {
                         //未认证成功
                         isZf = data.getString("zf");
                         if (btn_xiayibu != null) {
@@ -237,7 +242,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                             });
                         }
                         payMoney = data.getString("info");
-                    }else if(data.getString("code").equals("1")){
+                    } else if (data.getString("code").equals("1")) {
                         //认证成功
                         final JSONObject info = data.getJSONObject("info");
                         if (btn_xiayibu != null) {
@@ -253,6 +258,9 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                                 @Override
                                 public void run() {
                                     edit_name.setText(info.getString("real_name"));
+                                    edit_name.setEnabled(false);
+                                    edit_name.setFocusableInTouchMode(false);
+
                                 }
                             });
                         }
@@ -262,10 +270,12 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                                 @Override
                                 public void run() {
                                     edit_sfz_num.setText(info.getString("cer_no"));
+                                    edit_sfz_num.setEnabled(false);
+                                    edit_sfz_num.setFocusableInTouchMode(false);
                                 }
                             });
                         }
-                    }else {
+                    } else {
                         ToastUtil.show(data.getString("msg"));
                     }
                 }
@@ -279,8 +289,8 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 101){
-            if(resultCode == 333){
+        if (requestCode == 101) {
+            if (resultCode == 333) {
                 if (mDialog != null) {
                     mDialog.show();
                 }
@@ -406,7 +416,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                     double confidence = idcard.getDouble("confidence");
                     if (confidence >= 80) {
                         isRzStatus();
-                    }else{
+                    } else {
                         ToastUtil.show("识别失败,请按照提示动作重新识别");
                     }
                 } else {
@@ -470,12 +480,8 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                     }
                 }
             }
-
         });
-
-
     }
-
 
     @Override
     public void onPreStart() {

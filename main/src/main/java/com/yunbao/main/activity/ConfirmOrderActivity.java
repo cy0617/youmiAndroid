@@ -21,6 +21,7 @@ import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.QuantityView;
+import com.yunbao.mall.activity.BuyerAddressActivity;
 import com.yunbao.mall.activity.BuyerAddressEditActivity;
 import com.yunbao.mall.bean.BuyerAddressBean;
 import com.yunbao.mall.http.MallHttpUtil;
@@ -68,7 +69,13 @@ public class ConfirmOrderActivity extends AbsActivity {
         tv_goods_sum = findViewById(R.id.tv_goods_sum);
         tv_money_sum = findViewById(R.id.tv_money_sum);
         quantityView = findViewById(R.id.quantityView);
-
+        tv_no_addrs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ConfirmOrderActivity.this, BuyerAddressEditActivity.class));
+//                                    BuyerAddressActivity.forward(mContext);
+            }
+        });
 
         quantityView.setCallBack(new QuantityView.CallBack() {
             @Override
@@ -167,13 +174,7 @@ public class ConfirmOrderActivity extends AbsActivity {
                     for (final BuyerAddressBean bean : addressList) {
                         if (bean.getIsDefault() == 1) {
                             showAddress(bean);
-//                            tv_no_addrs.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    startActivity(new Intent(ConfirmOrderActivity.this, BuyerAddressEditActivity.class));
-//
-//                                }
-//                            });
+
                             break;
                         }
                     }

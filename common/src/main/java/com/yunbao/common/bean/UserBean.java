@@ -51,6 +51,24 @@ public class UserBean implements Parcelable {
     private long videos;
     private long dynamics;
     private long loves;
+    private String gygp;
+    private String qmoney_code;
+
+    public String getQmoney_code() {
+        return qmoney_code;
+    }
+
+    public void setQmoney_code(String qmoney_code) {
+        this.qmoney_code = qmoney_code;
+    }
+
+    public String getGygp() {
+        return gygp;
+    }
+
+    public void setGygp(String gygp) {
+        this.gygp = gygp;
+    }
 
     public String getWeixin() {
         return weixin;
@@ -397,84 +415,6 @@ public class UserBean implements Parcelable {
     }
 
 
-    protected UserBean(Parcel in) {
-        this.id = in.readString();
-        this.userNiceName = in.readString();
-        this.avatar = in.readString();
-        this.avatarThumb = in.readString();
-        this.sex = in.readInt();
-        this.signature = in.readString();
-        this.coin = in.readString();
-        this.votes = in.readString();
-        this.consumption = in.readString();
-        this.votestotal = in.readString();
-        this.province = in.readString();
-        this.city = in.readString();
-        this.location = in.readString();
-        this.birthday = in.readString();
-        this.level = in.readInt();
-        this.levelAnchor = in.readInt();
-        this.lives = in.readInt();
-        this.follows = in.readInt();
-        this.fans = in.readInt();
-        this.vip = in.readParcelable(Vip.class.getClassLoader());
-        this.liang = in.readParcelable(Liang.class.getClassLoader());
-        this.car = in.readParcelable(Car.class.getClassLoader());
-        this.likes=in.readLong();
-        this.videos=in.readLong();
-        this.dynamics=in.readLong();
-        this.loves=in.readLong();
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.userNiceName);
-        dest.writeString(this.avatar);
-        dest.writeString(this.avatarThumb);
-        dest.writeInt(this.sex);
-        dest.writeString(this.signature);
-        dest.writeString(this.coin);
-        dest.writeString(this.votes);
-        dest.writeString(this.consumption);
-        dest.writeString(this.votestotal);
-        dest.writeString(this.province);
-        dest.writeString(this.city);
-        dest.writeString(this.location);
-        dest.writeString(this.birthday);
-        dest.writeInt(this.level);
-        dest.writeInt(this.levelAnchor);
-        dest.writeInt(this.lives);
-        dest.writeInt(this.follows);
-        dest.writeInt(this.fans);
-        dest.writeParcelable(this.vip, flags);
-        dest.writeParcelable(this.liang, flags);
-        dest.writeParcelable(this.car, flags);
-        dest.writeLong(this.likes);
-        dest.writeLong(this.videos);
-        dest.writeLong(this.dynamics);
-        dest.writeLong(this.loves);
-    }
-
-    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
-        @Override
-        public UserBean[] newArray(int size) {
-            return new UserBean[size];
-        }
-
-        @Override
-        public UserBean createFromParcel(Parcel in) {
-            return new UserBean(in);
-        }
-    };
-
-
     public static class Vip implements Parcelable {
         protected int type;
 
@@ -639,4 +579,105 @@ public class UserBean implements Parcelable {
 
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.userNiceName);
+        dest.writeString(this.avatar);
+        dest.writeString(this.avatarThumb);
+        dest.writeInt(this.sex);
+        dest.writeString(this.signature);
+        dest.writeString(this.coin);
+        dest.writeString(this.votes);
+        dest.writeString(this.consumption);
+        dest.writeString(this.votestotal);
+        dest.writeString(this.province);
+        dest.writeString(this.mobile);
+        dest.writeString(this.grade);
+        dest.writeString(this.gxz);
+        dest.writeString(this.weixin);
+        dest.writeString(this.weixin_img);
+        dest.writeString(this.zfb_img);
+        dest.writeString(this.shangjin);
+        dest.writeString(this.sc_score);
+        dest.writeString(this.ky_score);
+        dest.writeString(this.city);
+        dest.writeString(this.location);
+        dest.writeString(this.birthday);
+        dest.writeInt(this.level);
+        dest.writeInt(this.levelAnchor);
+        dest.writeInt(this.lives);
+        dest.writeInt(this.follows);
+        dest.writeInt(this.fans);
+        dest.writeParcelable(this.vip, flags);
+        dest.writeParcelable(this.liang, flags);
+        dest.writeParcelable(this.car, flags);
+        dest.writeInt(this.mIsOpenShop);
+        dest.writeInt(this.mIsOpenPayContent);
+        dest.writeLong(this.likes);
+        dest.writeLong(this.videos);
+        dest.writeLong(this.dynamics);
+        dest.writeLong(this.loves);
+        dest.writeString(this.gygp);
+        dest.writeString(this.qmoney_code);
+    }
+
+    protected UserBean(Parcel in) {
+        this.id = in.readString();
+        this.userNiceName = in.readString();
+        this.avatar = in.readString();
+        this.avatarThumb = in.readString();
+        this.sex = in.readInt();
+        this.signature = in.readString();
+        this.coin = in.readString();
+        this.votes = in.readString();
+        this.consumption = in.readString();
+        this.votestotal = in.readString();
+        this.province = in.readString();
+        this.mobile = in.readString();
+        this.grade = in.readString();
+        this.gxz = in.readString();
+        this.weixin = in.readString();
+        this.weixin_img = in.readString();
+        this.zfb_img = in.readString();
+        this.shangjin = in.readString();
+        this.sc_score = in.readString();
+        this.ky_score = in.readString();
+        this.city = in.readString();
+        this.location = in.readString();
+        this.birthday = in.readString();
+        this.level = in.readInt();
+        this.levelAnchor = in.readInt();
+        this.lives = in.readInt();
+        this.follows = in.readInt();
+        this.fans = in.readInt();
+        this.vip = in.readParcelable(Vip.class.getClassLoader());
+        this.liang = in.readParcelable(Liang.class.getClassLoader());
+        this.car = in.readParcelable(Car.class.getClassLoader());
+        this.mIsOpenShop = in.readInt();
+        this.mIsOpenPayContent = in.readInt();
+        this.likes = in.readLong();
+        this.videos = in.readLong();
+        this.dynamics = in.readLong();
+        this.loves = in.readLong();
+        this.gygp = in.readString();
+        this.qmoney_code = in.readString();
+    }
+
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
 }

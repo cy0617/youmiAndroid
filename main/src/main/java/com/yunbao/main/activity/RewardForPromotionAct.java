@@ -122,11 +122,12 @@ public class RewardForPromotionAct extends AbsActivity implements View.OnClickLi
                     for(int i = 0;i<info.length;i++){
                         JSONObject obj = JSON.parseObject(info[i]);
                         RewardRecordBean rewardRecordBean = new RewardRecordBean();
+                        rewardRecordBean.setUid(obj.getString("uid"));
                         rewardRecordBean.setId(obj.getString("id"));
                         rewardRecordBean.setPid(obj.getString("pid"));
                         rewardRecordBean.setMoney(obj.getString("money"));
-                        rewardRecordBean.setWxCode(obj.getString("weixin"));
-                        rewardRecordBean.setPhone(obj.getString("mobile"));
+                        rewardRecordBean.setWeixin(obj.getString("weixin"));
+                        rewardRecordBean.setMobile(obj.getString("mobile"));
                         rewardRecordBean.setImg(obj.getString("img"));
                         rewardRecordBean.setStatus(obj.getString("status"));
                         list.add(rewardRecordBean);

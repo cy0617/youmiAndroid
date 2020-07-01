@@ -74,4 +74,6 @@ public class MainHttpConsts {
 
 
     public static final String GET_USER_AUTH="getUserAuth";
+    public static final String GET_DAY_QIAN_DAO = "getDayQianDao";
+    public static final String GET_SHI_PIN = "getShiPin";
 }

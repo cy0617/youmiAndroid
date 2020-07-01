@@ -686,6 +686,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
                         setResult(333);
                         finish();
+
                     } else {
                         ToastUtil.show(data.getString("msg"));
                     }
