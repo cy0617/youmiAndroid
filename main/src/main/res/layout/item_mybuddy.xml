@@ -42,18 +42,17 @@
             android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:paddingLeft="6.5dp"
-            android:paddingRight="6.5dp"
-            android:gravity="center"
             android:layout_marginRight="7dp"
-            android:paddingTop="3.5dp"
-            android:paddingBottom="3.5dp"
             android:layout_toLeftOf="@id/iv_right_img"
             android:background="@drawable/buddy_num_bg"
-            ></TextView>
+            android:gravity="center"
+            android:paddingLeft="6.5dp"
+            android:paddingTop="3.5dp"
+            android:paddingRight="6.5dp"
+            android:paddingBottom="3.5dp"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="12sp"></TextView>
 
 
     </RelativeLayout>

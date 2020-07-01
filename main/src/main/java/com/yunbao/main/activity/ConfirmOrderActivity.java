@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -40,6 +41,7 @@ public class ConfirmOrderActivity extends AbsActivity {
     private Dialog mDialog;
     private String addrsId = "";
     private String goodsId;
+    private RelativeLayout rl_add_address;
 
     @Override
     protected int getLayoutId() {
@@ -60,7 +62,7 @@ public class ConfirmOrderActivity extends AbsActivity {
         tv_submit = findViewById(R.id.tv_submit);
         tv_addrs_phone = findViewById(R.id.tv_addrs_phone);
         tv_addrs_text = findViewById(R.id.tv_addrs_text);
-
+        rl_add_address = findViewById(R.id.rl_add_address);
 
         iv_picture = findViewById(R.id.iv_picture);
         tv_name = findViewById(R.id.tv_name);
@@ -69,11 +71,12 @@ public class ConfirmOrderActivity extends AbsActivity {
         tv_goods_sum = findViewById(R.id.tv_goods_sum);
         tv_money_sum = findViewById(R.id.tv_money_sum);
         quantityView = findViewById(R.id.quantityView);
-        tv_no_addrs.setOnClickListener(new View.OnClickListener() {
+        rl_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConfirmOrderActivity.this, BuyerAddressEditActivity.class));
+//                startActivity(new Intent(ConfirmOrderActivity.this, BuyerAddressEditActivity.class));
 //                                    BuyerAddressActivity.forward(mContext);
+                BuyerAddressActivity.forward(mContext);
             }
         });
 

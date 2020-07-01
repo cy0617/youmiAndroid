@@ -1,19 +1,16 @@
 package com.yunbao.main.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -27,7 +24,6 @@ import com.yunbao.common.HtmlConfig;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.pay.PayCallback;
-import com.yunbao.common.pay.PayPresenter;
 import com.yunbao.common.pay.ali.AliPayBuilder;
 import com.yunbao.common.pay.wx.WxPayBuilder;
 import com.yunbao.common.utils.DialogUitl;
@@ -36,13 +32,11 @@ import com.yunbao.common.utils.StringUtil;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.im.event.ImUnReadCountEvent;
 import com.yunbao.main.R;
-import com.yunbao.main.adapter.BuyRecordAdapter;
 import com.yunbao.main.adapter.PayTypeAdapter;
 import com.yunbao.main.facerecognition.GenerateSign;
 import com.yunbao.main.facerecognition.HttpRequestCallBack;
 import com.yunbao.main.facerecognition.HttpRequestManager;
 import com.yunbao.main.utils.MyClickInterface;
-import com.yunbao.mall.adapter.GoodsPayAdapter;
 import com.yunbao.mall.bean.GoodsPayBean;
 import com.yunbao.mall.http.MallHttpUtil;
 
@@ -53,7 +47,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;

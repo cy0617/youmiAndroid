@@ -67,6 +67,7 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
 
     @Override
     public void init() {
+
         mClassRecyclerView = findViewById(R.id.recyclerView_class);
         mClassRecyclerView.setHasFixedSize(true);
         mClassRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -80,6 +81,7 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
                 videoClassList.addAll(list);
             }
         }
+
         mClassAdapter = new MainHomeVideoClassAdapter(mContext, videoClassList);
         mClassAdapter.setOnItemClickListener(new OnItemClickListener<VideoClassBean>() {
             @Override
@@ -98,6 +100,7 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
         ItemDecoration decoration = new ItemDecoration(mContext, 0x00000000, 5, 0);
         decoration.setOnlySetItemOffsetsButNoDraw(true);
         mRefreshView.setItemDecoration(decoration);
+
         mRefreshView.setDataHelper(new CommonRefreshView.DataHelper<VideoBean>() {
             @Override
             public RefreshAdapter<VideoBean> getAdapter() {
@@ -109,12 +112,15 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
                         public void onScrollYChanged(int scrollY) {
                             if (mClassRecyclerView != null) {
                                 mClassRecyclerView.setTranslationY(scrollY);
+
                             }
                         }
                     });
                 }
                 return mAdapter;
+
             }
+
 
             @Override
             public void loadData(int p, HttpCallback callback) {
@@ -134,11 +140,12 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
             @Override
             public void onRefreshSuccess(List<VideoBean> list, int listCount) {
                 VideoStorge.getInstance().put(Constants.VIDEO_HOME, list);
+                VideoStorge.getInstance().putDataHelper(Constants.VIDEO_HOME, mVideoScrollDataHelper);
+                VideoPlayActivity.forward(mContext, positions, Constants.VIDEO_HOME, 0);
             }
 
             @Override
             public void onRefreshFailure() {
-
             }
 
             @Override
@@ -151,7 +158,9 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
 
             }
         });
+
         EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -180,9 +189,10 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
             }
         }
     }
-
+    private int positions;
     @Override
     public void onItemClick(VideoBean bean, int position) {
+        positions=position;
         int page = 1;
         if (mRefreshView != null) {
             page = mRefreshView.getPageCount();

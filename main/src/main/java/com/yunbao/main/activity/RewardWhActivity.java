@@ -1,8 +1,8 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.os.Handler;
-import android.util.Log;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,10 +30,10 @@ import java.util.TimerTask;
 
 public class RewardWhActivity extends AbsActivity {
 
-    private ImageView btn_back, iv_wx_sk_code, iv_zfb_sk_code, iv_reward_img, avatar, iv_title_bg;
+    private ImageView btn_back, iv_wx_sk_code, iv_zfb_sk_code, iv_reward_img, avatar, iv_title_bg,iv_copy;
     private TextView tv_user_name, tv_id, tv_wx_code, tv_phone, tv_hb_money, tv_upload_btn, tv_quxiao, tv_queren, tv_wallet;
     private LinearLayout ll_bottom_btn;
-
+    private ClipboardManager clipboardManager;
     private Dialog mDialog;
     private ProcessImageUtil mImageUtil;
     private String jietuImg = "";
@@ -41,6 +41,7 @@ public class RewardWhActivity extends AbsActivity {
     private String status = "";
     private String wxImgUrl = "";
     private String zfbImgUrl = "";
+
 
     @Override
     protected int getLayoutId() {
@@ -68,6 +69,7 @@ public class RewardWhActivity extends AbsActivity {
         tv_phone = findViewById(R.id.tv_phone);
         tv_hb_money = findViewById(R.id.tv_hb_money);
         tv_wallet = findViewById(R.id.tv_wallet);
+        iv_copy = findViewById(R.id.iv_copy);
         tv_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +226,10 @@ public class RewardWhActivity extends AbsActivity {
 
     public void queryData() {
         MallHttpUtil.getUserSjInfo(new HttpCallback() {
+
+            private ClipData clip;
+            private String wallet_address;
+
             @Override
             public void onSuccess(int code, final String msg, String[] info) {
                 if (mDialog != null) {
@@ -265,6 +271,8 @@ public class RewardWhActivity extends AbsActivity {
                             .into(iv_title_bg);
 
                     status = obj.getString("status");
+
+
                     if (obj.getString("status").equals("0")) {
                         tv_upload_btn.setText("上传打赏截图");
                         ll_bottom_btn.setVisibility(View.VISIBLE);
@@ -297,6 +305,16 @@ public class RewardWhActivity extends AbsActivity {
                     timer.schedule(task, 2000);//3秒后执行TimeTask的run方法
                     ToastUtil.show(msg);
                 }
+                iv_copy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        wallet_address = tv_wallet.getText().toString();
+                        clip = ClipData.newPlainText("text", wallet_address);
+                        clipboardManager.setPrimaryClip(clip);
+                        ToastUtil.show(wallet_address+"已复制");
+                    }
+                });
             }
 
             @Override

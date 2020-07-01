@@ -54,7 +54,9 @@ public class MyBuddyAdapter extends RecyclerView.Adapter<MyBuddyAdapter.ViewHold
                 myClickInterface.myClick(position,1);
             }
         });
-
+        if (viewHolder.tv_num.getText().toString().equals("0")){
+            viewHolder.tv_num.setVisibility(View.GONE);
+        }
     }
 
     @Override

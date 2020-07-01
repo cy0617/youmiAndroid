@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
 import com.megvii.meglive_sdk.listener.DetectCallback;
 import com.megvii.meglive_sdk.listener.PreCallback;
 import com.megvii.meglive_sdk.manager.MegLiveManager;
@@ -211,7 +208,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .get()
-                .url("http://cz56.yczbfx.com/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
+                .url(" http://youmi.telemsoft.net/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

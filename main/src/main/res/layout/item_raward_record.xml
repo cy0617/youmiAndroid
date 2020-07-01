@@ -26,18 +26,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ID:"
                     android:textColor="@color/text_color_33"
-                    android:textStyle="bold"
                     android:textSize="15sp"
-                    ></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tv_id"
@@ -46,15 +44,14 @@
                     android:text="I123456"
                     android:textColor="@color/text_color_33"
                     android:textSize="15sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
-                <ImageView
+               <ImageView
+                   android:id="@+id/iv_chat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/yellow_info_img"
+                    android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
-                    ></ImageView>
-
+                    android:src="@mipmap/yellow_info_img"/>
 
             </LinearLayout>
 

@@ -1,11 +1,8 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,18 +10,14 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.adapter.MyBountyAdapter;
 import com.yunbao.main.adapter.SubordinateAdapter;
 import com.yunbao.main.bean.SubordinateBean;
 import com.yunbao.main.http.MainHttpUtil;
-import com.yunbao.main.utils.StringUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +76,6 @@ public class MyBuddySubordinateAct extends AbsActivity {
                     mDialog.dismiss();
                 }
                 if (code == 0) {
-                    Log.e("asfdqweqweqw",info[0]);
                     for(int i = 0;i<info.length;i++){
                         JSONObject obj = JSON.parseObject(info[i]);
                         SubordinateBean goodsBeanTwo = new SubordinateBean();

@@ -1,37 +1,31 @@
 package com.yunbao.main.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
-import com.google.gson.jpush.Gson;
 import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.bean.UserBean;
 import com.yunbao.common.http.HttpCallback;
-import com.yunbao.common.http.HttpClient;
 import com.yunbao.common.utils.SpUtil;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.bean.GetShiPinBean;
-import com.yunbao.main.bean.GetuserauthBean;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.views.PromptDialog;
 import com.yunbao.main.views.YqJJDialog;
 import com.yunbao.mall.http.MallHttpUtil;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-import cn.jiguang.net.HttpUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
