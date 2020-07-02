@@ -2,35 +2,25 @@ package com.yunbao.main.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.bean.UserBean;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.adapter.BuyRecordAdapter;
 import com.yunbao.main.adapter.MyBuddyAdapter;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.utils.MyClickInterface;
 import com.yunbao.main.utils.StringUtil;
-import com.yunbao.main.views.refreshlayout.RefreshLayout;
-import com.yunbao.mall.http.MallHttpUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +73,7 @@ public class MyBuddyActivity extends AbsActivity implements MyClickInterface {
                 .error(R.mipmap.default_image)
                 .placeholder( R.mipmap.default_image)
                 .into(iv_title_bg);
+
         Glide.with(mContext)
                 .load(userBean.getAvatar())
                 .error(R.mipmap.default_image)
@@ -138,8 +129,8 @@ public class MyBuddyActivity extends AbsActivity implements MyClickInterface {
     @Override
     public void myClick(int position, int type) {
         Intent intent = new Intent(this,MyBuddySubordinateAct.class);
-        String s = list.get(position);
-        intent.putExtra("leve",list.get(position));
+        intent.putExtra("type",type);
+        intent.putExtra("leve",String.valueOf((position+1)));
         startActivity(intent);
     }
 }

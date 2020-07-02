@@ -1,7 +1,6 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.yunbao.im.event.ImUnReadCountEvent;
 import com.yunbao.main.R;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.utils.StringUtil;
+import com.yunbao.main.views.TiShiDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -169,50 +169,132 @@ public class UserInfoActivity extends AbsActivity implements View.OnClickListene
                         .into(iv_zfb_img);
             }
         }
+//        tv_weixin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(UserInfoActivity.this);
+//                builder.setTitle("提示");
+//                builder.setMessage("是否要删除？？");
+//                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//                builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//                builder.show();
+//            }
+//        });
         tv_weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(UserInfoActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("是否要删除？？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+                deleteweixin(1,"确认删除收款码");
             }
         });
         tv_zhifubao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(UserInfoActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("是否要删除？？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+                deletezfb(1,"确认删除收款码");
             }
         });
     }
+    /**
+     * 删除微信收款码
+     */
+    private void deleteweixin(final int type, String desc) {
+        TiShiDialog tiShiDialog = new TiShiDialog(mContext) {
+            @Override
+            public void ok() {
+                super.ok();
+                dismiss();
+                if (type == 1) {
+                    //取消打赏
+                    MainHttpUtil.submitUinfo(tv_wx_code.getText().toString(), "", userBean.getZfb_img(), new HttpCallback() {
+                        @Override
+                        public void onSuccess(int code, String msg, String[] info) {
+                            if (code == 0) {
+                                if (mDialog != null) {
+                                    mDialog.dismiss();
+                                }
+                                ToastUtil.show(JSON.parseObject(info[0]).getString("msg"));
+                                EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
+                                finish();
+                            } else {
+                                if (mDialog != null) {
+                                    mDialog.dismiss();
+                                }
+                                ToastUtil.show(msg);
+                            }
+                        }
 
+                        @Override
+                        public void onError() {
+                            if (mDialog != null) {
+                                mDialog.dismiss();
+                            }
+                        }
+                    });
+                    ToastUtil.show("删除成功");
+                } else if (type == 2) {
+                    //确认已打赏
+                    ToastUtil.show("取消");
+                }
+            }
+        };
+        tiShiDialog.setTitleStr("提示");
+        tiShiDialog.setDescStr(desc);
+        tiShiDialog.show();
+    }
+    /**
+     * 删除支付宝收款码
+     */
+    private void deletezfb(final int type, String desc) {
+        TiShiDialog tiShiDialog = new TiShiDialog(mContext) {
+            @Override
+            public void ok() {
+                super.ok();
+                dismiss();
+                if (type == 1) {
+                    MainHttpUtil.submitUinfo(tv_wx_code.getText().toString(), "", "", new HttpCallback() {
+                        @Override
+                        public void onSuccess(int code, String msg, String[] info) {
+                            if (code == 0) {
+                                if (mDialog != null) {
+                                    mDialog.dismiss();
+                                }
+                                ToastUtil.show(JSON.parseObject(info[0]).getString("msg"));
+                                EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
+                                finish();
+                            } else {
+                                if (mDialog != null) {
+                                    mDialog.dismiss();
+                                }
+                                ToastUtil.show(msg);
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+                            if (mDialog != null) {
+                                mDialog.dismiss();
+                            }
+                        }
+                    });
+                    ToastUtil.show("删除成功");
+                } else if (type == 2) {
+                    ToastUtil.show("取消");
+                }
+            }
+        };
+        tiShiDialog.setTitleStr("提示");
+        tiShiDialog.setDescStr(desc);
+        tiShiDialog.show();
+    }
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ll_phone) {

@@ -40,15 +40,13 @@ public class MyBuddySubordinateAct extends AbsActivity {
     protected void main() {
 
         String leve = getIntent().getStringExtra("leve");
-
         list = new ArrayList<>();
         mDialog = DialogUitl.loadingDialog(mContext, "加载中...");
         btn_back = findViewById(R.id.btn_back);
         tv_title = findViewById(R.id.tv_title);
         recyclerView = findViewById(R.id.recyclerView);
 
-        tv_title.setText(leve+"网红");
-
+        tv_title.setText(leve + "网红");
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +58,6 @@ public class MyBuddySubordinateAct extends AbsActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubordinateAdapter(this, list);
         recyclerView.setAdapter(adapter);
-
         if (mDialog != null) {
             mDialog.show();
         }
@@ -68,18 +65,21 @@ public class MyBuddySubordinateAct extends AbsActivity {
 
     }
 
-    public void queryData(String leve){
-        MainHttpUtil.getSubordinate(leve,new HttpCallback() {
+
+    public void queryData(final String leve) {
+        MainHttpUtil.getSubordinate(leve, new HttpCallback() {
+
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
                 if (code == 0) {
-                    for(int i = 0;i<info.length;i++){
+                    for (int i = 0; i < info.length; i++) {
                         JSONObject obj = JSON.parseObject(info[i]);
                         SubordinateBean goodsBeanTwo = new SubordinateBean();
                         goodsBeanTwo.setId(obj.getString("id"));
+                        String id = obj.getString("id");
                         goodsBeanTwo.setGrade(obj.getString("grade"));
                         goodsBeanTwo.setMobile(obj.getString("mobile"));
                         goodsBeanTwo.setWeixin(obj.getString("weixin"));
@@ -90,6 +90,7 @@ public class MyBuddySubordinateAct extends AbsActivity {
                     ToastUtil.show(msg);
                 }
             }
+
             @Override
             public void onError() {
                 if (mDialog != null) {
@@ -98,7 +99,6 @@ public class MyBuddySubordinateAct extends AbsActivity {
             }
         });
     }
-
 
 
 }

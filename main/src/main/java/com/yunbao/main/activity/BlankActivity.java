@@ -1,6 +1,8 @@
 package com.yunbao.main.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,16 +17,13 @@ import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.SpUtil;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.bean.GetShiPinBean;
 import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.views.PromptDialog;
 import com.yunbao.main.views.YqJJDialog;
 import com.yunbao.mall.http.MallHttpUtil;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -112,7 +111,18 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
         queryUserLeveTwo();
 
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==100){
+            Bundle extras = data.getExtras();
+            String code1 = extras.getString("code");
+            String msg1 = extras.getString("msg");
+            if (Integer.valueOf(code1)==0){
+                ToastUtil.show(msg1);
+            }
+        }
+    }
 
     @Override
     public void onClick(View view) {

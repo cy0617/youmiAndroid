@@ -312,7 +312,7 @@ public class RewardWhActivity extends AbsActivity {
                         wallet_address = tv_wallet.getText().toString();
                         clip = ClipData.newPlainText("text", wallet_address);
                         clipboardManager.setPrimaryClip(clip);
-                        ToastUtil.show(wallet_address+"已复制");
+                        ToastUtil.show("复制成功");
                     }
                 });
             }

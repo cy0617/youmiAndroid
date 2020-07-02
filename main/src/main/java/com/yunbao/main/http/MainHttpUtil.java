@@ -1,23 +1,21 @@
 package com.yunbao.main.http;
 
-        import android.util.Log;
-
         import com.alibaba.fastjson.JSON;
-        import com.alibaba.fastjson.JSONObject;
-        import com.lzy.okgo.request.GetRequest;
-        import com.yunbao.common.CommonAppConfig;
-        import com.yunbao.common.bean.GoodsBean;
-        import com.yunbao.common.bean.UserBean;
-        import com.yunbao.common.http.CommonHttpUtil;
-        import com.yunbao.common.http.HttpCallback;
-        import com.yunbao.common.http.HttpClient;
-        import com.yunbao.common.http.JsonBean;
-        import com.yunbao.common.interfaces.CommonCallback;
-        import com.yunbao.common.utils.MD5Util;
-        import com.yunbao.common.utils.SpUtil;
-        import com.yunbao.common.utils.StringUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.lzy.okgo.request.GetRequest;
+import com.yunbao.common.CommonAppConfig;
+import com.yunbao.common.bean.GoodsBean;
+import com.yunbao.common.bean.UserBean;
+import com.yunbao.common.http.CommonHttpUtil;
+import com.yunbao.common.http.HttpCallback;
+import com.yunbao.common.http.HttpClient;
+import com.yunbao.common.http.JsonBean;
+import com.yunbao.common.interfaces.CommonCallback;
+import com.yunbao.common.utils.MD5Util;
+import com.yunbao.common.utils.SpUtil;
+import com.yunbao.common.utils.StringUtil;
 
-        import java.io.File;
+import java.io.File;
 
 /**
  * Created by cxf on 2018/9/17.
@@ -944,6 +942,13 @@ public class MainHttpUtil {
 
     public static void Getshipin(HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.Getshipin",MainHttpConsts.GET_SHI_PIN)
+                .execute(callback);
+    }
+
+    public static void getQianDao(HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Qiandao",MainHttpConsts.GET_QIAN_DAO)
+                .params("uid",CommonAppConfig.getInstance().getUid())
+                .params("token",CommonAppConfig.getInstance().getToken())
                 .execute(callback);
     }
 }

@@ -20,8 +20,13 @@
             android:layout_height="match_parent"
             android:src="@mipmap/bg_me_top"
             android:scaleType="fitXY"
+            android:background="#80000000"
             ></ImageView>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            ></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,9 +67,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="10dp"
                 >
 
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -98,7 +102,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ID："
                             android:textSize="13sp"
                             android:textColor="@color/white"
                             ></TextView>
