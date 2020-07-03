@@ -9,8 +9,11 @@ ext {
     ]
 
     manifestPlaceholders = [
-            //服务器地址
-            serverHost       : "http://cz56.yczbfx.com",
+
+
+            //服务器地址(域名)
+//            serverHost       : "http://cz56.yczbfx.com",
+            serverHost       : "https://youmi.telemsoft.net",
 
             //极光推送 IM
             jpushAppKey      : "24d6810380d3ab90ba066d9a",

@@ -7,14 +7,15 @@ import android.view.View;
 
 import com.yunbao.common.Constants;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.video.R;
-import com.yunbao.video.adapter.VideoChooseAdapter;
-import com.yunbao.video.bean.VideoChooseBean;
 import com.yunbao.common.custom.ItemDecoration;
 import com.yunbao.common.interfaces.CommonCallback;
 import com.yunbao.common.interfaces.OnItemClickListener;
-import com.yunbao.video.utils.VideoLocalUtil;
+import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.common.utils.WordUtil;
+import com.yunbao.video.R;
+import com.yunbao.video.adapter.VideoChooseAdapter;
+import com.yunbao.video.bean.VideoChooseBean;
+import com.yunbao.video.utils.VideoLocalUtil;
 
 import java.util.List;
 
@@ -72,11 +73,17 @@ public class VideoChooseActivity extends AbsActivity implements OnItemClickListe
 //            ToastUtil.show(R.string.video_duration_error);
 //            return;
 //        }
-        Intent intent = new Intent();
-        intent.putExtra(Constants.VIDEO_PATH, bean.getVideoPath());
-        intent.putExtra(Constants.VIDEO_DURATION, bean.getDuration());
-        setResult(RESULT_OK, intent);
-        finish();
+        long duration = bean.getDuration();
+        if (duration > 60000) {
+            ToastUtil.show("视频限制60秒");
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra(Constants.VIDEO_PATH, bean.getVideoPath());
+            intent.putExtra(Constants.VIDEO_DURATION, bean.getDuration());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
     }
 
     @Override

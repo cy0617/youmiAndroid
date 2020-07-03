@@ -3,9 +3,6 @@ package com.yunbao.main.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +20,6 @@ import com.yunbao.main.R;
 import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.QuantityView;
 import com.yunbao.mall.activity.BuyerAddressActivity;
-import com.yunbao.mall.activity.BuyerAddressEditActivity;
 import com.yunbao.mall.bean.BuyerAddressBean;
 import com.yunbao.mall.http.MallHttpUtil;
 
@@ -74,9 +70,8 @@ public class ConfirmOrderActivity extends AbsActivity {
         rl_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(ConfirmOrderActivity.this, BuyerAddressEditActivity.class));
-//                                    BuyerAddressActivity.forward(mContext);
-                BuyerAddressActivity.forward(mContext);
+                startActivityForResult(new Intent(ConfirmOrderActivity.this, BuyerAddressActivity.class),101);
+//                BuyerAddressActivity.forward(mContext);
             }
         });
 
@@ -160,6 +155,7 @@ public class ConfirmOrderActivity extends AbsActivity {
         tv_addrs_name.setText(bean.getName());
         tv_addrs_phone.setText(bean.getPhoneNum());
         tv_addrs_text.setText(bean.getProvince() + bean.getCity() + bean.getZone() + bean.getAddress());
+
     }
 
     /**
@@ -177,7 +173,6 @@ public class ConfirmOrderActivity extends AbsActivity {
                     for (final BuyerAddressBean bean : addressList) {
                         if (bean.getIsDefault() == 1) {
                             showAddress(bean);
-
                             break;
                         }
                     }
@@ -237,6 +232,14 @@ public class ConfirmOrderActivity extends AbsActivity {
             if (resultCode == 333) {
                 setResult(333);
                 finish();
+            }else if(resultCode == 334){
+
+                String name = data.getStringExtra("name");
+                String phonenum = data.getStringExtra("phonenum");
+                String address = data.getStringExtra("address");
+                tv_addrs_name.setText(name);
+                tv_addrs_phone.setText(phonenum);
+                tv_addrs_text.setText(address);
             }
         }
 

@@ -208,7 +208,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .get()
-                .url(" http://cz56.yczbfx.com/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
+                .url(" https://youmi.telemsoft.net/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -439,7 +439,7 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
 
         Request request = new Request.Builder()
                 .get()
-                .url("http://cz56.yczbfx.com/appapi/auth/authsave/?uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken() + "&real_name=" +
+                .url("https://youmi.telemsoft.net/appapi/auth/authsave/?uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken() + "&real_name=" +
                         edit_name.getText().toString() + "&cer_no=" + edit_sfz_num.getText().toString()
                 )
                 .build();

@@ -234,6 +234,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         adapter.notifyDataSetChanged();
                     }
                 } else {
+                    Log.e("eeeeeeeeeeeeee", "222222222222" );
                     ToastUtil.show(msg);
                 }
             }
@@ -266,6 +267,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     tv_money.setText(orderInfo.getString("total"));
                     tv_name.setText(orderInfo.getString("goods_name"));
                 } else {
+                    Log.e("eeeeeeeeeeeeee", "33333333333333" );
                     ToastUtil.show(msg);
                 }
             }
@@ -296,6 +298,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     tv_money.setText(orderInfo.getString("money"));
 
                 } else {
+
                     ToastUtil.show(msg);
                 }
             }
@@ -653,7 +656,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
 
         Request request = new Request.Builder()
                 .get()
-                .url("http://cz56.yczbfx.com/appapi/auth/authsave/?uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken() + "&real_name=" +
+                .url("https://youmi.telemsoft.net/appapi/auth/authsave/?uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken() + "&real_name=" +
                         realName + "&cer_no=" + cerNo
                 )
                 .build();

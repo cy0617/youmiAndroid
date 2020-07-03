@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yunbao.common.adapter.RefreshAdapter;
@@ -38,6 +39,8 @@ public class BuyerAddressAdapter extends RefreshAdapter<BuyerAddressBean> {
                 }
             }
         };
+
+
     }
 
     public void setActionListener(ActionListener actionListener) {
@@ -57,6 +60,7 @@ public class BuyerAddressAdapter extends RefreshAdapter<BuyerAddressBean> {
 
     class Vh extends RecyclerView.ViewHolder {
 
+        LinearLayout mLlCheckAddress;
         TextView mName;
         TextView mAddress;
         View mTagDefault;
@@ -64,6 +68,7 @@ public class BuyerAddressAdapter extends RefreshAdapter<BuyerAddressBean> {
 
         public Vh(@NonNull View itemView) {
             super(itemView);
+            mLlCheckAddress = itemView.findViewById(R.id.ll_check_address);
             mName = itemView.findViewById(R.id.name);
             mAddress = itemView.findViewById(R.id.address);
             mTagDefault = itemView.findViewById(R.id.tag_default);
@@ -94,5 +99,7 @@ public class BuyerAddressAdapter extends RefreshAdapter<BuyerAddressBean> {
         void onItemClick(BuyerAddressBean bean);
 
         void onEditClick(BuyerAddressBean bean);
+
+
     }
 }

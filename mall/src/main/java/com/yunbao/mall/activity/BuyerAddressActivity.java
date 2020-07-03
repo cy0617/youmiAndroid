@@ -122,18 +122,24 @@ public class BuyerAddressActivity extends AbsActivity implements View.OnClickLis
         super.onDestroy();
     }
 
+    /***
+     * eeeeeeeeeeeeeeeeeeeeeeeeeee
+     * @param bean
+     */
     @Override
     public void onItemClick(BuyerAddressBean bean) {
-        if (mSetBuyerAddress) {
             Intent intent = new Intent();
             intent.putExtra(Constants.MALL_BUYER_ADDRESS, bean);
-            setResult(RESULT_OK, intent);
+            intent.putExtra("name",bean.getName());
+            intent.putExtra("phonenum",bean.getPhoneNum());
+            intent.putExtra("address",bean.getProvince() + bean.getCity() + bean.getZone() + bean.getAddress());
+            setResult(334, intent);
             finish();
-        }
     }
 
     @Override
     public void onEditClick(BuyerAddressBean bean) {
         forwardEditAddress(bean);
     }
+
 }

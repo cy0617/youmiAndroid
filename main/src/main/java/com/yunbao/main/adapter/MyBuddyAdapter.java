@@ -35,25 +35,25 @@ public class MyBuddyAdapter extends RecyclerView.Adapter<MyBuddyAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //设置自适应布局
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mybuddy, parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mybuddy, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        viewHolder.tv_leve.setText((position+1)+"网红");
+        viewHolder.tv_leve.setText((position + 1) + "网红");
         viewHolder.tv_num.setText(list.get(position));
         String s = list.get(position);
 
         viewHolder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myClickInterface.myClick(position,1);
+                myClickInterface.myClick(position, 1);
             }
         });
-//        if (viewHolder.tv_num.getText().toString().equals("0")){
+        if (viewHolder.tv_num.getText().toString().equals("0")) {
             viewHolder.tv_num.setVisibility(View.GONE);
-//        }
+        }
     }
 
     @Override
