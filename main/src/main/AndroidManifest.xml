@@ -7,6 +7,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".activity.QianDaoPlayActivity"
+            android:hardwareAccelerated="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" ></activity>
         <activity android:name=".activity.ShangQuanActivity" />

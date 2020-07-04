@@ -36,6 +36,7 @@ dependencies {
     compile rootProject.ext.dependencies["recyclerview-v7"]
     //common
     compile project(':common')
+    implementation 'cn.jzvd:jiaozivideoplayer:7.0.3'
     //萌颜
     compile project(':beauty')
 }

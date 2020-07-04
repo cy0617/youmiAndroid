@@ -1,7 +1,6 @@
 package com.yunbao.mall.http;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.lzy.okgo.request.GetRequest;
 import com.yunbao.common.CommonAppConfig;
@@ -229,9 +228,10 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact(
-                "addressid=", addressid, "&goodsid=", goodsid, "&nums=", nums, "&message=", message,
-                "&time=", time, "&uid=", uid, "&token=", token, "&", SALT));
+        String sign = MD5Util.getMD5(StringUtil.contact("time=", time, "&uid=", uid, "&token=", token,"&", SALT));
+//        String sign = MD5Util.getMD5(StringUtil.contact(
+//                "addressid=", addressid, "&goodsid=", goodsid, "&nums=", nums, "&message=", message,
+//                "&time=", time, "&uid=", uid, "&token=", token, "&", SALT));
 
         HttpClient.getInstance().get("Youmio.CreateGoodsOrder", MallHttpConsts.GET_PACKAGE_ORDER)
                 .params("uid", uid)
@@ -307,7 +307,8 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderid,"&time=", time, "&", SALT));
+//        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderid,"&time=", time, "&", SALT));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=",token,"&time=", time));
         HttpClient.getInstance().get("Youmio.GetGoodsOrderInfo", MallHttpConsts.GET_GOODS_PACKAGE_INFO)
                 .params("uid", uid)
                 .params("token", token)
@@ -355,7 +356,8 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderId, "&type=", payType, "&time=", time, "&", SALT));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token,  "&time=", time));
+//        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderId, "&type=", payType, "&time=", time, "&", SALT));
         HttpClient.getInstance().get("Youmio.GoodsOrderPay", MallHttpConsts.BUYER_SQPAY_ORDER)
                 .params("uid", uid)
                 .params("token", token)

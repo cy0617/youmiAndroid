@@ -84,6 +84,9 @@ public class BuyerAddressEditActivity extends AbsActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        /**
+         * 这里是填写完信息之后点击提交的监听
+         */
         if (id == R.id.btn_submit) {
             if (mBean != null) {
                 modifyAddress();

@@ -58,6 +58,7 @@ public class VideoPlayActivity extends AbsVideoPlayActivity  {
     @Override
     protected void main() {
         super.main();
+
         Intent intent = getIntent();
         mVideoKey = intent.getStringExtra(Constants.VIDEO_KEY);
         if (TextUtils.isEmpty(mVideoKey)) {

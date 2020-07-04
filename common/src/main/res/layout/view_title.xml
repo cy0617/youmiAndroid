@@ -20,7 +20,6 @@
             android:gravity="center"
             android:textColor="@color/textColor"
             android:textSize="18sp"
-            android:textStyle="bold"
             />
 
         <ImageView

@@ -267,7 +267,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     tv_money.setText(orderInfo.getString("total"));
                     tv_name.setText(orderInfo.getString("goods_name"));
                 } else {
-                    Log.e("eeeeeeeeeeeeee", "33333333333333" );
                     ToastUtil.show(msg);
                 }
             }
@@ -391,8 +390,10 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         CommonAppConfig appConfig = CommonAppConfig.getInstance();
                         String uid = appConfig.getUid();
                         String token = appConfig.getToken();
-                        String sign = MD5Util.getMD5(StringUtil.contact("orderid=", obj.getString("orderid"), "&time=", time,
-                                "&token=", token, "&type=", payType, "&uid=", uid, "&", MallHttpUtil.SALT));
+//                        String sign = MD5Util.getMD5(StringUtil.contact("orderid=", obj.getString("orderid"), "&time=", time,
+//                                "&token=", token, "&type=", payType, "&uid=", uid, "&", MallHttpUtil.SALT));
+                        String sign = MD5Util.getMD5(StringUtil.contact( "time=", time,
+                                "&token=", token,  "&uid=", uid, "&", MallHttpUtil.SALT));
                         String orderParams = StringUtil.contact(
                                 "&uid=", uid,
                                 "&token=", token,

@@ -3,6 +3,7 @@ package com.yunbao.main.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,10 @@ public class ConfirmOrderActivity extends AbsActivity {
         tv_addrs_phone = findViewById(R.id.tv_addrs_phone);
         tv_addrs_text = findViewById(R.id.tv_addrs_text);
         rl_add_address = findViewById(R.id.rl_add_address);
+
+//        ll_addrs.setVisibility(View.VISIBLE);
+//        tv_no_addrs.setVisibility(View.GONE);
+
 
         iv_picture = findViewById(R.id.iv_picture);
         tv_name = findViewById(R.id.tv_name);
@@ -143,12 +148,13 @@ public class ConfirmOrderActivity extends AbsActivity {
         if (mDialog != null) {
             mDialog.show();
         }
-        queryAddrsData();
 
+        queryAddrsData();
     }
 
 
     public void showAddress(BuyerAddressBean bean) {
+        Log.e("eeeeeeeeeeeeeeeeeeeee", "showAddress: 隐藏");
         ll_addrs.setVisibility(View.VISIBLE);
         tv_no_addrs.setVisibility(View.GONE);
         addrsId = bean.getId();
@@ -229,14 +235,20 @@ public class ConfirmOrderActivity extends AbsActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101) {
+            //支付成功333
             if (resultCode == 333) {
                 setResult(333);
                 finish();
-            }else if(resultCode == 334){
-
+            }else if(resultCode == RESULT_OK){
+                ll_addrs.setVisibility(View.VISIBLE);
+                tv_no_addrs.setVisibility(View.GONE);
                 String name = data.getStringExtra("name");
                 String phonenum = data.getStringExtra("phonenum");
                 String address = data.getStringExtra("address");
+                String addressid = data.getStringExtra("addressid");
+                //把地址id赋值给当前页面的地址id,提交数据的时候就有值
+                addrsId = addressid;
+                Log.e("address", "onActivityResult: "+address);
                 tv_addrs_name.setText(name);
                 tv_addrs_phone.setText(phonenum);
                 tv_addrs_text.setText(address);
@@ -244,4 +256,7 @@ public class ConfirmOrderActivity extends AbsActivity {
         }
 
     }
+
 }
+
+

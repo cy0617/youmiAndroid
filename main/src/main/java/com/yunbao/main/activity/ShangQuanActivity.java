@@ -1,13 +1,9 @@
 package com.yunbao.main.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
@@ -50,7 +46,7 @@ public class ShangQuanActivity extends AbsActivity implements MyClickInterface {
         iv_title_right = findViewById(R.id.iv_title_right);
         refreshLayout = findViewById(R.id.refreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
-
+        setTitle("优米商城");
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new GoodsRingAdapter(mContext, list, this);

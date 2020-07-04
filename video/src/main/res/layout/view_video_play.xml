@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     >
 
+<!--    <com.tencent.rtmp.ui.TXCloudVideoView-->
+<!--        android:id="@+id/video_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        />-->
+
     <com.tencent.rtmp.ui.TXCloudVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerInParent="true" />
 
     <View
         android:id="@+id/video_cover"
