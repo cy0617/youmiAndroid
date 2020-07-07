@@ -33,12 +33,6 @@ public class VideoStorge {
         return sInstance;
     }
 
-    public void put(String key, List<VideoBean> list) {
-        if (mMap != null) {
-            mMap.put(key, list);
-        }
-    }
-
 
     public List<VideoBean> get(String key) {
         if (mMap != null) {
@@ -66,6 +60,12 @@ public class VideoStorge {
     public void putDataHelper(String key, VideoScrollDataHelper helper) {
         if (mHelperMap != null) {
             mHelperMap.put(key, helper);
+        }
+    }
+
+    public void put(String key, List<VideoBean> list) {
+        if (mMap != null) {
+            mMap.put(key, list);
         }
     }
 

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
@@ -27,14 +28,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.Constants;
-import com.yunbao.common.HtmlConfig;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.ConfigBean;
 import com.yunbao.common.bean.UserBean;
 import com.yunbao.common.glide.ImgLoader;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.mob.MobShareUtil;
-import com.yunbao.common.mob.ShareData;
 import com.yunbao.common.utils.BitmapUtil;
 import com.yunbao.common.utils.DpUtil;
 import com.yunbao.common.utils.L;
@@ -80,11 +78,11 @@ public class ThreeDistributActivity extends AbsActivity implements View.OnClickL
         Intent intent = getIntent();
         setTitle(intent.getStringExtra(Constants.TIP));
         mContainer = findViewById(R.id.share_container);
-        ImageView mAppIcon = findViewById(R.id.app_icon);
-        TextView mAppName = findViewById(R.id.app_name);
+//        ImageView mAppIcon = findViewById(R.id.app_icon);
+//        TextView mAppName = findViewById(R.id.app_name);
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
-        mAppIcon.setImageResource(appConfig.getAppIconRes());
-        mAppName.setText(appConfig.getAppName());
+//        mAppIcon.setImageResource(appConfig.getAppIconRes());
+//        mAppName.setText(appConfig.getAppName());
         ImageView avatar = findViewById(R.id.avatar);
         TextView name = findViewById(R.id.name);
         TextView idVal = findViewById(R.id.id_val);
@@ -334,6 +332,7 @@ public class ThreeDistributActivity extends AbsActivity implements View.OnClickL
                 }
                 mShareImageFile = new File(dir, Constants.SHARE_QR_CODE_FILE);
                 boolean result = BitmapUtil.getInstance().saveBitmap(bitmap, mShareImageFile);
+                Log.e("eeeeeeeeeeeeeeeeeeeee", "run: "+mShareImageFile );
                 if (result) {
                     if (bitmap != null && !bitmap.isRecycled()) {
                         bitmap.recycle();

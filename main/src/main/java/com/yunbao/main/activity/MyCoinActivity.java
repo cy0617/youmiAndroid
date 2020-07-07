@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -121,6 +122,8 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
         mPayRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false));
         mPayAdapter = new CoinPayAdapter(mContext);
         mPayRecyclerView.setAdapter(mPayAdapter);
+
+
         mPayPresenter = new PayPresenter(this);
         mPayPresenter.setServiceNameAli(Constants.PAY_BUY_COIN_ALI);
         mPayPresenter.setServiceNameWx(Constants.PAY_BUY_COIN_WX);
@@ -162,7 +165,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     mTip1.setText(obj.getString("tip_t"));
                     mTip2.setText(obj.getString("tip_d"));
                     mTip3.setText(obj.getString("tip_f"));
-                    mCoin2.setText(obj.getString("ky_score"));
+                    mCoin2.setText(obj.getString("score"));
                     List<CoinPayBean> payList = JSON.parseArray(obj.getString("paylist"), CoinPayBean.class);
                     if (mPayAdapter != null) {
                         mPayAdapter.setList(payList);
@@ -176,6 +179,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     mPayPresenter.setAliSellerId(obj.getString("aliapp_seller_id"));
                     mPayPresenter.setAliPrivateKey(obj.getString("aliapp_key_android"));
                     mPayPresenter.setWxAppID(obj.getString("wx_appid"));
+                    Log.e("eeeeeeeeeeeeeeeeeeee", "onSuccess: "+obj.getString("wx_appid") );
                 }
             }
 
@@ -211,6 +215,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     "&money=", money,
                     "&changeid=", bean.getId(),
                     "&coin=", bean.getCoin());
+            Log.e("eeeeeeeeeeeee", "onItemClick: "+money );
             mPayPresenter.pay(coinPayBean.getId(), money, goodsName, orderParams);
         } else {
             Intent intent = new Intent();

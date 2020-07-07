@@ -292,6 +292,9 @@ public class MyUserRenZhenAct extends AbsActivity implements DetectCallback, Pre
                     mDialog.show();
                 }
                 isRz();
+            }else if (resultCode == 334) {
+
+                isRz();
             }
         }
     }

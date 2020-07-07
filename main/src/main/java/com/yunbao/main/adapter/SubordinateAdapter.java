@@ -31,15 +31,21 @@ public class SubordinateAdapter extends RecyclerView.Adapter<SubordinateAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subordinate, parent, false);
+//        ViewHolder viewHolder = new ViewHolder(view);
+//        int parentHeight = parent.getHeight();
+//        parent.getWidth();
+//        ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
+//        layoutParams.height = (parentHeight / 10);
         //设置自适应布局
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subordinate, parent,false));
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         viewHolder.tv_id.setText(list.get(position).getId());
-        viewHolder.tv_leve.setText(list.get(position).getGrade()+"级");
+        viewHolder.tv_leve.setText(list.get(position).getGrade() + "级");
         viewHolder.tv_phone.setText(list.get(position).getMobile());
         viewHolder.tv_wx_code.setText(list.get(position).getWeixin());
 
@@ -69,6 +75,21 @@ public class SubordinateAdapter extends RecyclerView.Adapter<SubordinateAdapter.
 
         }
 
+    }
+
+    //下面两个方法提供给页面刷新和加载时调用
+    public void add(List<SubordinateBean> addMessageList) {
+        //增加数据
+        int position = list.size();
+        list.addAll(position, addMessageList);
+        notifyItemInserted(position);
+    }
+
+    public void refresh(List<SubordinateBean> newList) {
+        //刷新数据
+        list.removeAll(list);
+        list.addAll(newList);
+        notifyDataSetChanged();
     }
 
 }

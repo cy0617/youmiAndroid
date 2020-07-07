@@ -54,6 +54,7 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
     private MainHomeVideoClassAdapter mClassAdapter;
     private static final int ID_RECOMMEND = -1;
     private int mVideoClassId = ID_RECOMMEND;
+    private List<VideoBean> list;
 
 
     public MainHomeVideoViewHolder(Context context, ViewGroup parentView) {
@@ -140,6 +141,7 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
             @Override
             public void onRefreshSuccess(List<VideoBean> list, int listCount) {
                 VideoStorge.getInstance().put(Constants.VIDEO_HOME, list);
+                list=list;
                 VideoStorge.getInstance().putDataHelper(Constants.VIDEO_HOME, mVideoScrollDataHelper);
                 VideoPlayActivity.forward(mContext, positions, Constants.VIDEO_HOME, 1);
             }
@@ -215,9 +217,11 @@ public class MainHomeVideoViewHolder extends AbsMainHomeChildViewHolder implemen
                 }
             };
         }
+//        VideoStorge.getInstance().put(Constants.VIDEO_HOME, list);
         VideoStorge.getInstance().putDataHelper(Constants.VIDEO_HOME, mVideoScrollDataHelper);
 //        VideoPlayActivity.forward(mContext, position, Constants.VIDEO_HOME, page);
-        VideoPlayActivity.forwardSingle(mContext, bean);
+//        VideoPlayActivity.forwardSingle(mContext,position, bean,page);
+        VideoPlayActivity.forwardSingle(mContext ,bean);
     }
 
     @Override

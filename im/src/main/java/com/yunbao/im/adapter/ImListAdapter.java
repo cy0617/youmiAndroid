@@ -1,5 +1,9 @@
 package com.yunbao.im.adapter;
 
+/**
+ * Created by cxf on 2018/10/24.
+ */
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +15,9 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.Constants;
-import com.yunbao.common.bean.LevelBean;
 import com.yunbao.common.custom.ItemSlideHelper;
 import com.yunbao.common.glide.ImgLoader;
-import com.yunbao.common.utils.CommonIconUtil;
 import com.yunbao.common.utils.DpUtil;
 import com.yunbao.im.R;
 import com.yunbao.im.bean.ImUserBean;
@@ -25,11 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-/**
- * Created by cxf on 2018/10/24.
- */
-
 public class ImListAdapter extends RecyclerView.Adapter implements ItemSlideHelper.Callback {
 
     private static final int HEAD = -1;

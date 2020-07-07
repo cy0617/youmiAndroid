@@ -102,9 +102,9 @@ public class PayPresenter {
 
     public void payHasOrderId(int payType, JSONObject object) {
         switch (payType) {
-//            case 1://支付宝支付
-//                aliPayHasOrderId(object);
-//                break;
+            case 1://支付宝支付
+                aliPayHasOrderId(object);
+                break;
             case 2://微信支付
                 wxPayHasOrderId(object);
                 break;
@@ -153,7 +153,7 @@ public class PayPresenter {
         WxPayBuilder builder = new WxPayBuilder(mActivity, mWxAppID);
         builder.setOrderParams(StringUtil.contact(mServiceNameWx, orderParams));
         builder.setPayCallback(mPayCallback);
-//        builder.pay();
+        builder.pay();
     }
     /**
      * 支付宝支付
@@ -194,7 +194,7 @@ public class PayPresenter {
         }
         WxPayBuilder builder = new WxPayBuilder(mActivity, mWxAppID);
         builder.setPayCallback(mPayCallback);
-//        builder.payHasOrderId(object.getJSONObject("paramarr2"));
+        builder.payHasOrderId(object.getJSONObject("paramarr2"));
     }
 
     /**

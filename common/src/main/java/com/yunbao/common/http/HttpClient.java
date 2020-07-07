@@ -24,12 +24,12 @@ public class HttpClient {
 //        mUrl = CommonAppConfig.HOST + "/appapi/?service=";
 //        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("http");
         mUrl = CommonAppConfig.HOST + "/appapi/?service=";
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("https");
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("http");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BASIC);
         mBuilder = new OkHttpBuilder();
         mOkHttpClient = mBuilder
                 .setHost(CommonAppConfig.HOST)
-                .setTimeout(10000)
+                .setTimeout(60000)
                 .setLoggingInterceptor(loggingInterceptor)
                 .build(CommonAppContext.sInstance);
     }

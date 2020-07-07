@@ -106,8 +106,74 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
                 finish();
             }
         });
+        iv_qiandao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainHttpUtil.getDayQianDao(new HttpCallback() {
+                    @Override
+                    public void onSuccess(int code, String msg, String[] info) {
+                        if (code == 0) {
+                            OkHttpClient client = new OkHttpClient();
+                            Request request = new Request.Builder()
+                                    .get()
+                                    .url("https://youmi.telemsoft.net/appapi/?service=Youmio.Getuserauth&uid=" + CommonAppConfig.getInstance().getUid() + "&token=" + CommonAppConfig.getInstance().getToken())
+                                    .build();
+                            client.newCall(request).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                }
+
+                                @Override
+                                public void onResponse(final Call call, Response response) throws IOException {
+                                    String string = response.body().string();
+                                    JSONObject obj = JSON.parseObject(string);
+                                    final JSONObject data = obj.getJSONObject("data");
+                                    if (data.getString("code").equals("0")) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ToastUtil.show("请先实名认证");
+                                            }
+                                        });
+                                    } else if (data.getString("code").equals("1")) {
+                                        OkHttpClient client1 = new OkHttpClient();
+                                        Request request1 = new Request.Builder()
+                                                .get()
+                                                .url("https://youmi.telemsoft.net/appapi/?service=Youmio.Getshipin")
+                                                .build();
+                                        client1.newCall(request1)
+                                                .enqueue(new Callback() {
+                                                    @Override
+                                                    public void onFailure(Call call, IOException e) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(Call call, Response response) throws IOException {
+                                                        String string = response.body().string();
+                                                        JSONObject obj = JSON.parseObject(string);
+                                                        JSONObject data = obj.getJSONObject("data");
+                                                        JSONObject date = data.getJSONObject("data");
+                                                        Intent intent = new Intent(BlankActivity.this, QianDaoPlayActivity.class);
+                                                        intent.putExtra("min",date.getString("min"));
+                                                        intent.putExtra("thumb",date.getString("thumb"));
+                                                        startActivityForResult(intent,1);
 
 
+                                                    }
+                                                });
+
+                                    }
+
+                                }
+                            });
+                        } else {
+                            ToastUtil.show(msg);
+                        }
+                    }
+                });
+            }
+        });
         queryUserLeveTwo();
 
     }

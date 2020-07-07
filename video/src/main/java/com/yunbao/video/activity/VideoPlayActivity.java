@@ -30,20 +30,33 @@ public class VideoPlayActivity extends AbsVideoPlayActivity  {
     }
 
 
-    public static void forwardSingle(Context context, VideoBean videoBean) {
-        if (videoBean == null) {
-            return;
-        }
-        List<VideoBean> list = new ArrayList<>();
-        list.add(videoBean);
-        VideoStorge.getInstance().put(Constants.VIDEO_SINGLE, list);
-        Intent intent = new Intent(context, VideoPlayActivity.class);
-        intent.putExtra(Constants.VIDEO_POSITION, 0);
-        intent.putExtra(Constants.VIDEO_KEY, Constants.VIDEO_SINGLE);
-        intent.putExtra(Constants.VIDEO_PAGE, 1);
-        context.startActivity(intent);
+//    public static void forwardSingle(Context context, int position, VideoBean videoBean, int page) {
+//        if (videoBean == null) {
+//            return;
+//        }
+//        List<VideoBean> list = new ArrayList<>();
+//
+//        list.add(videoBean);
+//        VideoStorge.getInstance().put(Constants.VIDEO_HOME, list);
+//        Intent intent = new Intent(context, VideoPlayActivity.class);
+//        intent.putExtra(Constants.VIDEO_POSITION, position);
+//        intent.putExtra(Constants.VIDEO_KEY, Constants.VIDEO_HOME);
+//        intent.putExtra(Constants.VIDEO_PAGE, page);
+//        context.startActivity(intent);
+//    }
+public static void forwardSingle(Context context, VideoBean videoBean) {
+    if (videoBean == null) {
+        return;
     }
-
+    List<VideoBean> list = new ArrayList<>();
+    list.add(videoBean);
+    VideoStorge.getInstance().put(Constants.VIDEO_SINGLE, list);
+    Intent intent = new Intent(context, VideoPlayActivity.class);
+    intent.putExtra(Constants.VIDEO_POSITION, 0);
+    intent.putExtra(Constants.VIDEO_KEY, Constants.VIDEO_SINGLE);
+    intent.putExtra(Constants.VIDEO_PAGE, 1);
+    context.startActivity(intent);
+}
 
     @Override
     protected int getLayoutId() {

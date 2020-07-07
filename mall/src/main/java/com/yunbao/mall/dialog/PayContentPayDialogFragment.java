@@ -21,7 +21,6 @@ import com.yunbao.common.http.CommonHttpConsts;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.pay.PayCallback;
 import com.yunbao.common.pay.PayPresenter;
-import com.yunbao.common.utils.L;
 import com.yunbao.common.utils.MD5Util;
 import com.yunbao.common.utils.StringUtil;
 import com.yunbao.common.utils.ToastUtil;
@@ -89,7 +88,7 @@ public class PayContentPayDialogFragment extends AbsDialogFragment implements Vi
         findViewById(R.id.btn_close).setOnClickListener(this);
         findViewById(R.id.btn_pay).setOnClickListener(this);
 
-        MallHttpUtil.getPayContentPayList(new HttpCallback() {
+        MallHttpUtil.getPayContentPayList("",new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {

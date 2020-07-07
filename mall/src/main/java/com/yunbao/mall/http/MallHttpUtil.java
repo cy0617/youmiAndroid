@@ -228,7 +228,7 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact("time=", time, "&uid=", uid, "&token=", token,"&", SALT));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=",uid, "&token=", token,"&time=", time));
 //        String sign = MD5Util.getMD5(StringUtil.contact(
 //                "addressid=", addressid, "&goodsid=", goodsid, "&nums=", nums, "&message=", message,
 //                "&time=", time, "&uid=", uid, "&token=", token, "&", SALT));
@@ -286,7 +286,7 @@ public class MallHttpUtil {
     /**
      * 购买付费内容 获取付款方式列表
      */
-    public static void getPayContentPayList(HttpCallback callback) {
+    public static void getPayContentPayList(String type,HttpCallback callback) {
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
@@ -296,13 +296,14 @@ public class MallHttpUtil {
                 .params("uid", uid)
                 .params("token", token)
                 .params("time", time)
+                .params("type", type)
                 .params("sign", sign)
                 .execute(callback);
     }
     /**
      * 商圈订单详情
      */
-    public static void getPayContentPayList(String orderid,HttpCallback callback) {
+    public static void getPayOrderInfo(String orderid,HttpCallback callback) {
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
@@ -368,7 +369,7 @@ public class MallHttpUtil {
                 .execute(callback);
     }
     /**
-     * 商圈支付第一步
+     * 认证支付第一步
      */
     public static void rzPayOrder(String orderId, String payType, HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.RzOrderPay", MallHttpConsts.BUYER_SQPAY_ORDER)

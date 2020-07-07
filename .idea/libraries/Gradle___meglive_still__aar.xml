@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: :meglive_still:@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/9aeeddcbcf41f761740b9d0c5f911f04/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/4939cd736aaf3ee4c4bd0b522ec6ad54/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/9aeeddcbcf41f761740b9d0c5f911f04/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/9aeeddcbcf41f761740b9d0c5f911f04/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/4939cd736aaf3ee4c4bd0b522ec6ad54/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meglive_still.aar/4939cd736aaf3ee4c4bd0b522ec6ad54/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: __local_aars__:D./companyproject/youmiAndroid/im/libs/jpush-android-3.1.8.jar:unspecified@jar">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/im/libs/jpush-android-3.1.8.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -34,6 +34,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class MainHomeMessageChildViewHolder extends AbsMainViewHolder implements
     private TextView mSystemTime;
     private HttpCallback mSystemMsgCallback;
     private boolean mPriMsgSwitchOpen;//私信开关是否开启
+    private ArrayList<ImUserBean> imUserBeans;
 
     public MainHomeMessageChildViewHolder(Context context, ViewGroup parentView) {
         super(context, parentView);
@@ -64,6 +66,7 @@ public class MainHomeMessageChildViewHolder extends AbsMainViewHolder implements
         mRecyclerView = (RecyclerView) findViewById(com.yunbao.im.R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        imUserBeans = new ArrayList<>();
         mAdapter = new ImListAdapter(mContext);
         mAdapter.setActionListener(this);
         mRecyclerView.setAdapter(mAdapter);

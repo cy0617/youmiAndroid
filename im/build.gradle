@@ -36,6 +36,7 @@ repositories {
     }
 }
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies["appcompat-v7"]
     //极光核心库
@@ -48,4 +49,7 @@ dependencies {
     compile project(':common')
     //百度语音
     compile project(':baidu')
+//    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+//    implementation 'com.mcxiaoke.volley:library:1.0.19'
+//    testCompile 'junit:junit:4.12'
 }

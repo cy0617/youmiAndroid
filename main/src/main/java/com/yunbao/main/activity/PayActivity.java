@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -64,6 +65,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
     private TextView tv_money_mili;
     private TextView btn_submit;
     private ImageView btn_back;
+    private LinearLayout ll_mili;
 
     private String orderid;
     private String money;
@@ -107,6 +109,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
             } else if (actType.equals("2")) {
                 //认证
                 isPay = true;
+                setResult(334);
                 buttonType = ACTION_YY;
                 requestCameraPerm();
             }
@@ -118,6 +121,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
             ToastUtil.show(com.yunbao.mall.R.string.mall_367);
         }
     };
+    private LinearLayout rz_money;
 
 
     @Override
@@ -154,8 +158,9 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         tv_money = findViewById(R.id.tv_money);
         tv_name = findViewById(R.id.tv_name);
         tv_money_mili = findViewById(R.id.tv_money_mili);
+        ll_mili = findViewById(R.id.ll_mili);
         recyclerView = findViewById(R.id.recyclerView);
-
+        rz_money = findViewById(R.id.rz_money);
         tv_money.setText(money);
         tv_name.setText(name);
 
@@ -175,10 +180,10 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPay){
+                if (isPay) {
                     buttonType = ACTION_YY;
                     requestCameraPerm();
-                }else{
+                } else {
                     showPay();
                 }
             }
@@ -187,13 +192,20 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         if (mDialog != null) {
             mDialog.show();
         }
-        queryPayType();
+
         if (actType.equals("1")) {
             //商圈
+            queryPayType("");
             queryShOrderInfo();
+            ll_mili.setVisibility(View.VISIBLE);
+            rz_money.setVisibility(View.GONE);
         } else if (actType.equals("2")) {
             //认证
+            queryPayType("rz");
+
             queryRzOrderInfo();
+            ll_mili.setVisibility(View.GONE);
+            rz_money.setVisibility(View.VISIBLE);
         }
     }
 
@@ -202,13 +214,17 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
     private String aliapp_seller_id;
     private String aliapp_key_android;
     private String yuEmoney;
+    private String orId;
 
 
     /**
      * 获取支付方式
      */
-    public void queryPayType() {
-        MallHttpUtil.getPayContentPayList(new HttpCallback() {
+    public void queryPayType(String type) {
+        MallHttpUtil.getPayContentPayList(type,new HttpCallback() {
+
+            private String mOrId;
+
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
@@ -225,7 +241,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     aliapp_partner = obj.getString("aliapp_partner");
                     aliapp_seller_id = obj.getString("aliapp_seller_id");
                     aliapp_key_android = obj.getString("aliapp_key_android");
-
+                    orId = obj.getString("orId");
 
                     List<GoodsPayBean> payList = JSON.parseArray(obj.getString("paylist"), GoodsPayBean.class);
                     if (payList != null && payList.size() > 0) {
@@ -234,7 +250,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Log.e("eeeeeeeeeeeeee", "222222222222" );
+                    Log.e("eeeeeeeeeeeeee", "222222222222");
                     ToastUtil.show(msg);
                 }
             }
@@ -253,7 +269,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
      * 获取商圈订单详情
      */
     public void queryShOrderInfo() {
-        MallHttpUtil.getPayContentPayList(orderid,new HttpCallback() {
+        MallHttpUtil.getPayOrderInfo(orderid, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
@@ -279,11 +295,12 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
             }
         });
     }
+
     /**
      * 获取认证订单详情
      */
     public void queryRzOrderInfo() {
-        MallHttpUtil.getRzOrderInfo(orderid,new HttpCallback() {
+        MallHttpUtil.getRzOrderInfo(orderid, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
@@ -390,10 +407,9 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         CommonAppConfig appConfig = CommonAppConfig.getInstance();
                         String uid = appConfig.getUid();
                         String token = appConfig.getToken();
-//                        String sign = MD5Util.getMD5(StringUtil.contact("orderid=", obj.getString("orderid"), "&time=", time,
-//                                "&token=", token, "&type=", payType, "&uid=", uid, "&", MallHttpUtil.SALT));
-                        String sign = MD5Util.getMD5(StringUtil.contact( "time=", time,
-                                "&token=", token,  "&uid=", uid, "&", MallHttpUtil.SALT));
+                        String sign = MD5Util.getMD5(StringUtil.contact("orderid=", obj.getString("orderid"), "&time=", time,
+                                "&token=", token, "&type=", payType, "&uid=", uid, "&", MallHttpUtil.SALT));
+
                         String orderParams = StringUtil.contact(
                                 "&uid=", uid,
                                 "&token=", token,
@@ -440,6 +456,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     if (payType.equals("3") || payType.equals("4")) {
                         ToastUtil.show("支付成功");
                         isPay = true;
+                        setResult(334);
                         buttonType = ACTION_YY;
                         requestCameraPerm();
                     } else {
@@ -572,7 +589,8 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         }
         WxPayBuilder builder = new WxPayBuilder(this, appid);
         builder.setPayCallback(mPayCallback);
-        builder.payHasOrderId(appid, partnerid, prepayid, packages, noncestr, timestamp, sign);
+        builder.renZhengpayHasOrderId(appid, partnerid, prepayid, packages, noncestr, timestamp, sign);
+        builder.pay();
     }
 
 
@@ -631,7 +649,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                     double confidence = idcard.getDouble("confidence");
                     if (confidence >= 80) {
                         isRzStatus();
-                    }else{
+                    } else {
                         ToastUtil.show("识别失败,请按照提示动作重新识别");
                     }
                 } else {

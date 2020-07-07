@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yunbao.main.R;
 import com.yunbao.main.bean.RewardRecordBean;
 import com.yunbao.main.utils.MyClickInterface;
+import com.yunbao.main.utils.StringUtil;
 
 import java.util.List;
 
@@ -54,17 +56,22 @@ public class RewardListAdapter extends RecyclerView.Adapter<RewardListAdapter.Vi
             viewHolder.tv_status.setText("批准");
             viewHolder.tv_status.setTextColor(Color.parseColor("#ffffff"));
             viewHolder.tv_status.setBackgroundResource(R.mipmap.min_btn_img);
+            Glide.with(mContext)
+                    .load(list.get(position).getImg())
+                    .error(R.mipmap.default_image)
+                    .placeholder(R.mipmap.default_image)
+                    .into(viewHolder.iv_img);
         } else if (list.get(position).getStatus().equals("2")) {
             viewHolder.tv_status.setText("已晋级");
             viewHolder.tv_status.setTextColor(Color.parseColor("#333333"));
             viewHolder.tv_status.setBackgroundResource(R.color.white);
+            Glide.with(mContext)
+                    .load(list.get(position).getImg())
+                    .error(R.mipmap.default_image)
+                    .placeholder(R.mipmap.default_image)
+                    .into(viewHolder.iv_img);
         }
 
-//        Glide.with(mContext)
-//                .load(list.get(position).getImg())
-//                .error(R.mipmap.default_image)
-//                .placeholder( R.mipmap.default_image)
-//                .into(viewHolder.iv_img);
 
         viewHolder.tv_status.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +88,14 @@ public class RewardListAdapter extends RecyclerView.Adapter<RewardListAdapter.Vi
 //                mContext.startActivity(new Intent(mContext, ChatRoomViewHolder.class));
             }
         });
-//        viewHolder.iv_img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(!StringUtil.isEmpty(list.get(position).getImg())){
-//                    myClickInterface.myClick(position,2);
-//                }
-//            }
-//        });
+        viewHolder.iv_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!StringUtil.isEmpty(list.get(position).getImg())) {
+                    myClickInterface.myClick(position, 2);
+                }
+            }
+        });
 
     }
 

@@ -90,27 +90,37 @@ public class AliPayBuilder {
         mPayInfo = orderInfo + "&sign=\"" + sign + "\"&" + signType;
         invokeAliPay();
 
-//        CommonHttpUtil.getAliOrder(mOrderParams, new HttpCallback() {
-//            @Override
-//            public void onSuccess(int code, String msg, String[] info) {
-//                if (code == 0 && info.length > 0) {
-//                    JSONObject obj = JSON.parseObject(info[0]);
-//
-//                }
-//            }
-//
-//            @Override
-//            public boolean showLoadingDialog() {
-//                return true;
-//            }
-//
-//            @Override
-//            public Dialog createLoadingDialog() {
-//                return DialogUitl.loadingDialog(mActivity);
-//            }
-//
-//
-//        });
+        CommonHttpUtil.getAliOrder(mOrderParams, new HttpCallback() {
+            @Override
+            public void onSuccess(int code, String msg, String[] info) {
+                if (code == 0 && info.length > 0) {
+                    JSONObject obj = JSON.parseObject(info[0]);
+                    String orderInfo = createAliOrder(obj.getString("orderid"));//商品信息
+                    String sign = getOrderSign(orderInfo);//订单签名
+                    if (TextUtils.isEmpty(sign)) {
+                        ToastUtil.show("商户私钥错误，订单签名失败");
+                        return;
+                    }
+                    sign = urlEncode(sign);
+                    String signType = "sign_type=\"RSA\"";//签名类型
+                    mPayInfo = orderInfo + "&sign=\"" + sign + "\"&" + signType;
+                    L.e("支付宝订单信息----->" + mPayInfo);
+                    invokeAliPay();
+                }
+            }
+
+            @Override
+            public boolean showLoadingDialog() {
+                return true;
+            }
+
+            @Override
+            public Dialog createLoadingDialog() {
+                return DialogUitl.loadingDialog(mActivity);
+            }
+
+
+        });
     }
     public void hasOrderPay(JSONObject obj) {
         String orderInfo = createAliOrder(obj.getString("orderid"));//商品信息

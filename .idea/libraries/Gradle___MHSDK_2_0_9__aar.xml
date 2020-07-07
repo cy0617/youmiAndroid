@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: :MHSDK-2.0.9:@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/14e31aa8006baa7bbea0efa795b940f6/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/fa77071e804892792cb245cacb777741/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/14e31aa8006baa7bbea0efa795b940f6/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/14e31aa8006baa7bbea0efa795b940f6/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/fa77071e804892792cb245cacb777741/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MHSDK-2.0.9.aar/fa77071e804892792cb245cacb777741/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

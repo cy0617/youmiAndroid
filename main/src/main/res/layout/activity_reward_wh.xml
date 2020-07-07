@@ -327,11 +327,10 @@
 
                     <ImageView
                         android:id="@+id/iv_wx_sk_code"
-                        android:layout_width="83dp"
+                        android:layout_width="74dp"
                         android:layout_height="83dp"
-                        android:scaleType="fitXY"
                         android:background="#DC7F53"
-                        ></ImageView>
+                        android:scaleType="fitXY"></ImageView>
 
                 </LinearLayout>
 
@@ -385,8 +384,8 @@
 
                 <ImageView
                     android:id="@+id/iv_reward_img"
-                    android:layout_width="100dp"
-                    android:layout_height="160dp"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
                     android:scaleType="fitXY"
                     ></ImageView>
 

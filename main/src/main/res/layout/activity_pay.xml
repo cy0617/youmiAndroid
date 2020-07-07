@@ -79,6 +79,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_mili"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -103,7 +104,24 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rz_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="认证所需费用"
+                android:layout_marginLeft="3dp"
+                android:textColor="#969696"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_name"

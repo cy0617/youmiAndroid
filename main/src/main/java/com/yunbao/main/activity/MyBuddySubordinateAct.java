@@ -1,6 +1,7 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,10 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
@@ -29,7 +34,9 @@ public class MyBuddySubordinateAct extends AbsActivity {
     private TextView tv_title;
     private Dialog mDialog;
     private SubordinateAdapter adapter;
-
+    private SmartRefreshLayout refreshlayout;
+    private boolean refreshType;
+    private int page;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_buddy_subordinate;
@@ -39,13 +46,13 @@ public class MyBuddySubordinateAct extends AbsActivity {
     @Override
     protected void main() {
 
-        String leve = getIntent().getStringExtra("leve");
+        final String leve = getIntent().getStringExtra("leve");
         list = new ArrayList<>();
         mDialog = DialogUitl.loadingDialog(mContext, "加载中...");
         btn_back = findViewById(R.id.btn_back);
         tv_title = findViewById(R.id.tv_title);
         recyclerView = findViewById(R.id.recyclerView);
-
+        refreshlayout = findViewById(R.id.refreshLayout);
         tv_title.setText(leve + "网红");
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +65,41 @@ public class MyBuddySubordinateAct extends AbsActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubordinateAdapter(this, list);
         recyclerView.setAdapter(adapter);
+
+        refreshlayout.setEnableAutoLoadMore(true);
+        refreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        list.clear();
+                        refreshType=true;
+                        page=1;
+                        queryData(leve);
+                        refreshLayout.finishRefresh();
+                        refreshLayout.resetNoMoreData();
+                    }
+                },2000);
+            }
+        });
+
+        refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshType = false;
+                        page++;
+                        queryData(leve);
+                        refreshLayout.setEnableLoadMore(true);
+                        refreshLayout.finishLoadMore();
+                    }
+                }, 2000);
+            }
+        });
+        refreshlayout.autoRefresh();
         if (mDialog != null) {
             mDialog.show();
         }

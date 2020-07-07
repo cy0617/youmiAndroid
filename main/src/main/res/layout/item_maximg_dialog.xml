@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/iv_max_img"
             android:layout_width="204dp"
-            android:layout_height="327dp"
+            android:layout_height="204dp"
             android:scaleType="fitXY"
             android:src="@mipmap/default_image"
             ></ImageView>

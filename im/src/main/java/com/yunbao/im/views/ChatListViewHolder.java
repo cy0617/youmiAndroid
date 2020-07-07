@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,6 +62,7 @@ public class ChatListViewHolder extends AbsViewHolder implements View.OnClickLis
     private View mBtnBack;
     private String mLiveUid;//主播的uid
     private boolean mPriMsgSwitchOpen;//私信开关是否开启
+    private ArrayList<ImUserBean> imUserBeans;
 
     public ChatListViewHolder(Context context, ViewGroup parentView, int type) {
         super(context, parentView, type);
@@ -81,6 +83,7 @@ public class ChatListViewHolder extends AbsViewHolder implements View.OnClickLis
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        imUserBeans = new ArrayList<>();
         mAdapter = new ImListAdapter(mContext);
         mAdapter.setActionListener(this);
         mRecyclerView.setAdapter(mAdapter);
