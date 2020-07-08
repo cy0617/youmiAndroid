@@ -1,8 +1,6 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,18 +9,15 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.adapter.BuyRecordAdapter;
 import com.yunbao.main.adapter.MyBountyAdapter;
+import com.yunbao.main.bean.BountyBean;
 import com.yunbao.main.http.MainHttpUtil;
-import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.refreshlayout.RefreshLayout;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +32,7 @@ public class MyBountyActivity extends AbsActivity {
     private RecyclerView recyclerView;
     private ImageView btn_back;
     private Dialog mDialog;
-    private List<String> list;
+    private List<BountyBean> list;
     private MyBountyAdapter adapter;
     @Override
     protected int getLayoutId() {
@@ -59,10 +54,10 @@ public class MyBountyActivity extends AbsActivity {
         recyclerView.setAdapter(adapter);
 
 
-//        if (mDialog != null) {
-//            mDialog.show();
-//        }
-//        queryData();
+        if (mDialog != null) {
+            mDialog.show();
+        }
+        queryData();
 
 
         refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
@@ -89,7 +84,7 @@ public class MyBountyActivity extends AbsActivity {
     }
 
     public void queryData(){
-        MainHttpUtil.getBuyRecordList(refreshLayout.pageNumber,"all",new HttpCallback() {
+        MainHttpUtil.getShangJin(refreshLayout.pageNumber,new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
@@ -101,6 +96,11 @@ public class MyBountyActivity extends AbsActivity {
                     }
                     for(int i = 0;i<info.length;i++){
                         JSONObject obj = JSON.parseObject(info[i]);
+                        BountyBean bountyBean = new BountyBean();
+                        bountyBean.setMoney(obj.getString("money"));
+                        bountyBean.setCreatetime(obj.getString("createtime"));
+                        bountyBean.setUid(obj.getString("uid"));
+                        list.add(bountyBean);
                     }
                     adapter.notifyDataSetChanged();
                 } else {

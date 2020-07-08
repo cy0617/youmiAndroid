@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -49,6 +50,7 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
     private UserBean userBean;
     private TextView tv_guanyun;
     private ImageView iv_qiandao;
+    private LinearLayout my_shangjin;
 
 
     @Override
@@ -77,12 +79,14 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
         tv_mili = findViewById(R.id.tv_mili);
         tv_up_mili = findViewById(R.id.tv_up_mili);
         tv_guanyun = findViewById(R.id.tv_guanyun);
+        findViewById(R.id.ll_shangjin).setOnClickListener(this);
         findViewById(R.id.ll_personal_information).setOnClickListener(this);
         findViewById(R.id.ll_advance).setOnClickListener(this);
         findViewById(R.id.ll_reward_promotion).setOnClickListener(this);
         findViewById(R.id.ll_buddy).setOnClickListener(this);
         findViewById(R.id.ll_otc).setOnClickListener(this);
         findViewById(R.id.ll_accelerator).setOnClickListener(this);
+        findViewById(R.id.ll_suocang).setOnClickListener(this);
         iv_qiandao = findViewById(R.id.iv_qiandao);
 
         userBean = CommonAppConfig.getInstance().getUserBean();
@@ -211,6 +215,12 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
             //otc
         } else if (view.getId() == R.id.ll_accelerator) {
             //加速器
+        }else if (view.getId()==R.id.ll_shangjin){
+            //赏金
+            startActivity(new Intent(BlankActivity.this,MyBountyActivity.class));
+        }else if (view.getId()==R.id.ll_suocang){
+            //锁仓米粒
+            startActivity(new Intent(BlankActivity.this,LockRiceActivity.class));
         }
     }
 

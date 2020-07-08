@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yunbao.common.Constants;
@@ -224,6 +225,7 @@ public class ImListAdapter extends RecyclerView.Adapter implements ItemSlideHelp
 
     class Vh extends RecyclerView.ViewHolder {
 
+        private RelativeLayout rl;
         ImageView mAvatar;
         TextView mName;
 //        ImageView mSex;
@@ -243,6 +245,7 @@ public class ImListAdapter extends RecyclerView.Adapter implements ItemSlideHelp
             mTime = (TextView) itemView.findViewById(R.id.time);
             mRedPoint = (TextView) itemView.findViewById(R.id.red_point);
             mBtnDelete = itemView.findViewById(R.id.btn_delete);
+            rl = itemView.findViewById(R.id.rl_move);
             itemView.setOnClickListener(mOnClickListener);
             mBtnDelete.setOnClickListener(mOnDeleteClickListener);
         }
@@ -264,6 +267,7 @@ public class ImListAdapter extends RecyclerView.Adapter implements ItemSlideHelp
 //                    }
 //                }
             }
+
             mMsg.setText(bean.getLastMessage());
             mTime.setText(bean.getLastTime());
             if (bean.getUnReadCount() > 0) {
@@ -379,7 +383,6 @@ public class ImListAdapter extends RecyclerView.Adapter implements ItemSlideHelp
 
     @Override
     public void onLeftScroll(RecyclerView.ViewHolder holder) {
-
     }
 
     public interface ActionListener {

@@ -268,10 +268,11 @@ public class MainHttpUtil {
     /**
      * 用于 指定下级列表
      */
-    public static void getSubordinate(String ji,HttpCallback callback) {
+    public static void getSubordinate(int p,String ji,HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.GetnXiajiList", MainHttpConsts.GET_SUBORDINATE_LIST)
                 .params("uid", CommonAppConfig.getInstance().getUid())
                 .params("token", CommonAppConfig.getInstance().getToken())
+                .params("p",p)
                 .params("ji", ji)
                 .execute(callback);
     }
@@ -949,6 +950,14 @@ public class MainHttpUtil {
         HttpClient.getInstance().get("Youmio.Qiandao",MainHttpConsts.GET_QIAN_DAO)
                 .params("uid",CommonAppConfig.getInstance().getUid())
                 .params("token",CommonAppConfig.getInstance().getToken())
+                .execute(callback);
+    }
+
+    public static void getShangJin(int p, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Getshangjin", MainHttpConsts.GET_SHANGJIN)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("p", p)
                 .execute(callback);
     }
 }

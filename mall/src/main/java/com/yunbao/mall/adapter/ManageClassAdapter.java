@@ -42,7 +42,7 @@ public class ManageClassAdapter extends RefreshAdapter<ManageClassBean> {
                     bean.setChecked(false);
                     notifyItemChanged(position, Constants.PAYLOAD);
                 } else {
-                    if (getCheckedCount() < 3) {
+                    if (getCheckedCount() < 5) {
                         bean.setChecked(true);
                         notifyItemChanged(position, Constants.PAYLOAD);
                     } else {

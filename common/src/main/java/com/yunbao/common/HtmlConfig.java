@@ -25,6 +25,10 @@ public class HtmlConfig {
     public static final String LUCK_GIFT_TIP = CommonAppConfig.HOST + "/portal/page/index?id=26";
     //直播间道具礼物说明
     public static final String DAO_GIFT_TIP = CommonAppConfig.HOST + "/portal/page/index?id=39";
+    //支付宝商圈支付回调地址
+    public static final String ALI_PAY_MALL_SQ = CommonAppConfig.HOST + "/Appapi/Shoppay/youminotify_ali";
+    //支付宝认证支付回调地址
+    public static final String ALI_PAY_MALL_RZ = CommonAppConfig.HOST + "/Appapi/Rzpay/notify_ali";
     //在线商城
     public static final String SHOP = CommonAppConfig.HOST + "/Appapi/Mall/index";
     //我的明细

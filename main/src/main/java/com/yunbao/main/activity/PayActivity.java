@@ -419,7 +419,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                                 "&type=", payType);
                         switch (id) {
                             case Constants.PAY_TYPE_ALI://支付宝支付
-                                aliPay(obj.getString("orderid"), money, name, orderParams);
+                                aliPay(obj.getString("orderid"), money, name, orderParams,1);
                                 break;
                             case Constants.PAY_TYPE_WX://微信支付
                                 wxPay(obj.getString("appid"), obj.getString("noncestr"), obj.getString("package")
@@ -476,7 +476,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                                 "&type=", payType);
                         switch (id) {
                             case Constants.PAY_TYPE_ALI://支付宝支付
-                                aliPay(obj.getString("orderid"), money, "认证费用", orderParams);
+                                aliPay(obj.getString("orderid"), money, "认证费用", orderParams,2);
                                 break;
                             case Constants.PAY_TYPE_WX://微信支付
                                 wxPay(obj.getString("appid"), obj.getString("noncestr"), obj.getString("package")
@@ -597,7 +597,7 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
     /**
      * 支付宝支付
      */
-    private void aliPay(String orId, String money, String goodsName, String orderParams) {
+    private void aliPay(String orId, String money, String goodsName, String orderParams,int zfbBack) {
         if (TextUtils.isEmpty(Constants.MALL_PAY_GOODS_ORDER) || TextUtils.isEmpty(HtmlConfig.ALI_PAY_MALL_ORDER)) {
             return;
         }
@@ -613,7 +613,13 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         AliPayBuilder builder = new AliPayBuilder(this, aliapp_partner, aliapp_seller_id, aliapp_key_android, orId);
         builder.setMoney(money);
         builder.setGoodsName(goodsName);
-        builder.setCallbackUrl(HtmlConfig.ALI_PAY_MALL_ORDER);
+        if(zfbBack == 1){
+            builder.setCallbackUrl(HtmlConfig.ALI_PAY_MALL_SQ);
+
+        }else if(zfbBack == 2){
+            builder.setCallbackUrl(HtmlConfig.ALI_PAY_MALL_RZ);
+        }
+
         builder.setOrderParams(StringUtil.contact(Constants.MALL_PAY_GOODS_ORDER, orderParams));
         builder.setPayCallback(mPayCallback);
         builder.pay();

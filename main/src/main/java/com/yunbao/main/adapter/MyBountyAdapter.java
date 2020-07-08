@@ -5,14 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.utils.TimeUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.utils.MyClickInterface;
+import com.yunbao.main.bean.BountyBean;
 
 import java.util.List;
 
@@ -25,9 +22,9 @@ public class MyBountyAdapter extends RecyclerView.Adapter<MyBountyAdapter.ViewHo
 
 
     private Context mContext;
-    private List<String> list;
+    private List<BountyBean> list;
 
-    public MyBountyAdapter(Context mContext, List<String> list) {
+    public MyBountyAdapter(Context mContext, List<BountyBean> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -36,13 +33,16 @@ public class MyBountyAdapter extends RecyclerView.Adapter<MyBountyAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //设置自适应布局
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_bounty, parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_bounty, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
-
+        viewHolder.iv.setText(list.get(position).getUid());
+        viewHolder.money.setText(list.get(position).getMoney());
+        long dateByString = TimeUtil.getDateByString(list.get(position).getCreatetime());
+        String comTime = TimeUtil.getComTime(dateByString);
+        viewHolder.time.setText(comTime);
     }
 
     @Override
@@ -54,10 +54,15 @@ public class MyBountyAdapter extends RecyclerView.Adapter<MyBountyAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
+        private TextView iv;
+        private TextView money;
+        private TextView time;
+
         public ViewHolder(View v) {
             super(v);
-
-
+            iv = itemView.findViewById(R.id.id);
+            money = itemView.findViewById(R.id.money);
+            time = itemView.findViewById(R.id.time);
         }
 
     }

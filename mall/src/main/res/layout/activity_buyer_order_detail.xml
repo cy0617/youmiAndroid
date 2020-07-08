@@ -418,82 +418,82 @@
                 android:layout_height="1dp"
                 android:background="@color/background" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@color/white">-->
 
-                <FrameLayout
-                    android:id="@+id/btn_kefu"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="orderDetailClick">
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/btn_kefu"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:onClick="orderDetailClick">-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center_vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center_vertical">-->
 
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:src="@mipmap/shop_03"
-                            android:tint="@color/textColor2" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="18dp"-->
+<!--                            android:layout_height="18dp"-->
+<!--                            android:src="@mipmap/shop_03"-->
+<!--                            android:tint="@color/textColor2" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:text="@string/mall_248"
-                            android:textColor="@color/textColor"
-                            android:textSize="14sp" />
-
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <FrameLayout
-                    android:id="@+id/btn_call_phone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="orderDetailClick">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:src="@mipmap/buyer_18"
-                            android:tint="@color/textColor2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:text="@string/mall_249"
-                            android:textColor="@color/textColor"
-                            android:textSize="14sp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginLeft="12dp"-->
+<!--                            android:text="@string/mall_248"-->
+<!--                            android:textColor="@color/textColor"-->
+<!--                            android:textSize="14sp" />-->
 
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                </FrameLayout>
+<!--                </FrameLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="1dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:background="@color/background" />-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/btn_call_phone"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:onClick="orderDetailClick">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center_vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="18dp"-->
+<!--                            android:layout_height="18dp"-->
+<!--                            android:src="@mipmap/buyer_18"-->
+<!--                            android:tint="@color/textColor2" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginLeft="12dp"-->
+<!--                            android:text="@string/mall_249"-->
+<!--                            android:textColor="@color/textColor"-->
+<!--                            android:textSize="14sp" />-->
 
 
-            </LinearLayout>
+<!--                    </LinearLayout>-->
+
+<!--                </FrameLayout>-->
+
+
+<!--            </LinearLayout>-->
 
 
             <LinearLayout

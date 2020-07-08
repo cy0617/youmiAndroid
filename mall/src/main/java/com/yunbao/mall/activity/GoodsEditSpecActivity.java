@@ -51,6 +51,7 @@ public class GoodsEditSpecActivity extends AbsActivity implements View.OnClickLi
         MallHttpUtil.getGoodsInfo(mGoodsId, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
+
                 if (code == 0 && info.length > 0) {
                     JSONObject obj = JSON.parseObject(info[0]);
                     JSONObject goodsInfo = obj.getJSONObject("goods_info");

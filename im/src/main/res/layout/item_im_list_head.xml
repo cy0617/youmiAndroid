@@ -88,15 +88,4 @@
         android:layout_marginRight="15dp"
         />
     </RelativeLayout>
-    <TextView
-        android:id="@+id/tv_delete"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:background="#FFF55030"
-        android:gravity="center"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:text="@string/delete"
-        android:textColor="#FFFFFFFF"
-        android:textSize="14sp" />
 </LinearLayout>

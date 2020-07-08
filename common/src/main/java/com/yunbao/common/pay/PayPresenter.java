@@ -132,7 +132,7 @@ public class PayPresenter {
         builder.setCallbackUrl(mAliCallbackUrl);
         builder.setOrderParams(StringUtil.contact(mServiceNameAli, orderParams));
         builder.setPayCallback(mPayCallback);
-        builder.pay();
+        builder.payCz();
     }
 
     /**

@@ -218,7 +218,7 @@ public class TimeUtil {
         }
         return time / 1000;
     }
-
+    //将2012-10-03 23:41:31转为15945465165456
     public static long getDateByString(String timeStr) {
         long time = 0;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

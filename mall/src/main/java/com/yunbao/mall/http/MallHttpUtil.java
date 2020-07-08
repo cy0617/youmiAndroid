@@ -465,12 +465,12 @@ public class MallHttpUtil {
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
         String sign = MD5Util.getMD5(StringUtil.contact("time=", time, "&token=", token, "&uid=", uid, "&", SALT));
-        HttpClient.getInstance().get("Buyer.getGoodsOrderInfo", MallHttpConsts.GET_BUYER_ORDER_DETAIL)
-                .params("uid", uid)
-                .params("token", token)
+        HttpClient.getInstance().get("Youmio.GetGoodsOrderInfo", MallHttpConsts.GET_BUYER_ORDER_DETAIL)
                 .params("time", time)
-                .params("sign", sign)
+                .params("token", token)
+                .params("uid", uid)
                 .params("orderid", orderId)
+                .params("sign", sign)
                 .execute(callback);
     }
 
@@ -1564,4 +1564,51 @@ public class MallHttpUtil {
                 .execute(callback);
     }
 
+    /**
+     * 测试接口
+     * @param callback
+     */
+    public static void getTest(HttpCallback callback) {
+        String time = String.valueOf(System.currentTimeMillis() / 1000);
+        CommonAppConfig appConfig = CommonAppConfig.getInstance();
+        String uid = appConfig.getUid();
+        String token = appConfig.getToken();
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&time=", time, "&", SALT));
+        HttpClient.getInstance().get("Agent.Getsign", MallHttpConsts.TEST_SIGN)
+                .params("uid", uid)
+                .params("token", token)
+                .params("time", time)
+                .params("sign", sign)
+                .execute(callback);
+    }
+
+    public static void getYoumioOrderDetail(String orderId, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Goodsdetail", MallHttpConsts.GET_GOODS_DETAIL)
+                .params("id",orderId)
+                .execute(callback);
+    }
+
+    /**
+     * U币流水
+     * @param callback
+     */
+    public static void GetUbrecoredList(int p,HttpCallback callback) {
+        CommonAppConfig appConfig = CommonAppConfig.getInstance();
+        String uid = appConfig.getUid();
+        String token = appConfig.getToken();
+        HttpClient.getInstance().get("Youmio.UbrecoredList", MallHttpConsts.GET_UBRECORED_LIST)
+                .params("uid", uid)
+                .params("token", token)
+                .params("p", p)
+                .execute(callback);
+    }
+
+    public static void getScoreList(int p,String type, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.GetscoreList", MallHttpConsts.GET_SCORE_LIST)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("type", type)
+                .params("p", p)
+                .execute(callback);
+    }
 }

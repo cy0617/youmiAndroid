@@ -6,7 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -63,6 +62,8 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
     private TextView mTip2;
     private TextView mTip3;
     private TextView mCoin2;
+//    private LinearLayout ll_my_ub;
+//    private LinearLayout ll_my_mili;
 
 
     @Override
@@ -77,6 +78,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
         mTip2 = findViewById(R.id.tip_2);
         mTip3 = findViewById(R.id.tip_3);
         mCoin2 = findViewById(R.id.coin_2);
+
         mRefreshLayout = findViewById(R.id.refreshLayout);
         mRefreshLayout.setColorSchemeResources(com.yunbao.video.R.color.global);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -85,6 +87,8 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                 loadData();
             }
         });
+
+
         mCoinName = CommonAppConfig.getInstance().getCoinName();
         TextView scoreName = findViewById(R.id.score_name);
         scoreName.setText(CommonAppConfig.getInstance().getScoreName());
@@ -109,11 +113,16 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
         coinNameTextView.setText(String.format(WordUtil.getString(R.string.wallet_coin_name), mCoinName));
         mBalance = findViewById(R.id.coin);
 
+
+
         mAdapter = new CoinAdapter(mContext, mCoinName);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setContactView(findViewById(R.id.top));
         mRecyclerView.setAdapter(mAdapter);
         findViewById(R.id.btn_tip).setOnClickListener(this);
+        findViewById(R.id.ll_my_ub).setOnClickListener(this);
+        findViewById(R.id.ll_my_mili).setOnClickListener(this);
+
         View headView = mAdapter.getHeadView();
         mPayRecyclerView = headView.findViewById(R.id.pay_recyclerView);
         ItemDecoration decoration2 = new ItemDecoration(mContext, 0x00000000, 14, 10);
@@ -141,6 +150,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
 
             }
         });
+
         EventBus.getDefault().register(this);
     }
 
@@ -179,7 +189,6 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     mPayPresenter.setAliSellerId(obj.getString("aliapp_seller_id"));
                     mPayPresenter.setAliPrivateKey(obj.getString("aliapp_key_android"));
                     mPayPresenter.setWxAppID(obj.getString("wx_appid"));
-                    Log.e("eeeeeeeeeeeeeeeeeeee", "onSuccess: "+obj.getString("wx_appid") );
                 }
             }
 
@@ -215,7 +224,7 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
                     "&money=", money,
                     "&changeid=", bean.getId(),
                     "&coin=", bean.getCoin());
-            Log.e("eeeeeeeeeeeee", "onItemClick: "+money );
+
             mPayPresenter.pay(coinPayBean.getId(), money, goodsName, orderParams);
         } else {
             Intent intent = new Intent();
@@ -238,6 +247,8 @@ public class MyCoinActivity extends AbsActivity implements OnItemClickListener<C
         int i = v.getId();
         if (i == R.id.btn_tip) {
             WebViewActivity.forward(mContext, HtmlConfig.CHARGE_PRIVCAY);
+        }else if(i==R.id.ll_my_ub){
+            startActivity(new Intent(MyCoinActivity.this,MyUbActivity.class));
         }
     }
 

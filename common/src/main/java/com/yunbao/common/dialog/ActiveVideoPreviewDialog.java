@@ -238,7 +238,6 @@ public class ActiveVideoPreviewDialog extends AbsDialogFragment implements View.
         super.onDestroy();
     }
 
-
     public void setActionListener(ActionListener actionListener) {
         mActionListener = actionListener;
     }

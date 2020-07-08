@@ -37,6 +37,7 @@ public class MyBuddySubordinateAct extends AbsActivity {
     private SmartRefreshLayout refreshlayout;
     private boolean refreshType;
     private int page;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_buddy_subordinate;
@@ -73,14 +74,14 @@ public class MyBuddySubordinateAct extends AbsActivity {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        refreshType = true;
                         list.clear();
-                        refreshType=true;
-                        page=1;
-                        queryData(leve);
+                        adapter.notifyDataSetChanged();
+                        queryData(leve,page);
                         refreshLayout.finishRefresh();
                         refreshLayout.resetNoMoreData();
                     }
-                },2000);
+                }, 2000);
             }
         });
 
@@ -90,11 +91,15 @@ public class MyBuddySubordinateAct extends AbsActivity {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshType = false;
-                        page++;
-                        queryData(leve);
+                        if (page>1){
+                            queryData(leve,page++);
+                            adapter.notifyDataSetChanged();
+                            refreshLayout.finishLoadMore();
+                        }else {
+                            refreshLayout.finishLoadMore();
+                        }
                         refreshLayout.setEnableLoadMore(true);
-                        refreshLayout.finishLoadMore();
+
                     }
                 }, 2000);
             }
@@ -103,13 +108,13 @@ public class MyBuddySubordinateAct extends AbsActivity {
         if (mDialog != null) {
             mDialog.show();
         }
-        queryData(leve);
+        queryData(leve,page);
 
     }
 
 
-    public void queryData(final String leve) {
-        MainHttpUtil.getSubordinate(leve, new HttpCallback() {
+    public void queryData(final String leve, int page) {
+        MainHttpUtil.getSubordinate(page, leve, new HttpCallback() {
 
             @Override
             public void onSuccess(int code, String msg, String[] info) {

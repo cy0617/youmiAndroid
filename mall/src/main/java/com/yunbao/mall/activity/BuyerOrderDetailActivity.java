@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,7 @@ public class BuyerOrderDetailActivity extends AbsActivity {
         mPostage = findViewById(R.id.postage);
         mMoney = findViewById(R.id.money);
         mOrderNo = findViewById(R.id.order_no);
+        mOrderNo = findViewById(R.id.order_no);
         mOrderMakeTime = findViewById(R.id.order_make_time);
         mOrderPayType = findViewById(R.id.order_pay_type);
         mOrderPayTime = findViewById(R.id.order_pay_time);
@@ -113,17 +115,20 @@ public class BuyerOrderDetailActivity extends AbsActivity {
         mOrderId = getIntent().getStringExtra(Constants.MALL_ORDER_ID);
         mMoneySymbol = WordUtil.getString(R.string.money_symbol);
 
+
         getData();
     }
 
 
     private void getData() {
+
         MallHttpUtil.getBuyerOrderDetail(mOrderId, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {
                     JSONObject obj = JSON.parseObject(info[0]);
                     JSONObject orderInfo = obj.getJSONObject("order_info");
+
                     mOrderInfo = orderInfo;
                     JSONObject shopInfo = obj.getJSONObject("shop_info");
                     mShopInfo = shopInfo;
@@ -131,6 +136,7 @@ public class BuyerOrderDetailActivity extends AbsActivity {
                     mOrderStatus = orderStatus;
                     if (mStatusName != null) {
                         mStatusName.setText(orderInfo.getString("status_name"));
+                        Log.e("eeeeeee", "onSuccess: " + orderInfo.getString("status_name"));
                     }
                     if (mStatusTip != null) {
                         mStatusTip.setText(orderInfo.getString("status_desc"));
@@ -171,7 +177,7 @@ public class BuyerOrderDetailActivity extends AbsActivity {
                         }
                     }
                     if (mShopName != null) {
-                        mShopName.setText(shopInfo.getString("name"));
+                        mShopName.setText(orderInfo.getString("name"));
                     }
                     if (mGoodsThumb != null) {
                         ImgLoader.display(mContext, orderInfo.getString("spec_thumb_format"), mGoodsThumb);

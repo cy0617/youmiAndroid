@@ -21,8 +21,6 @@ public class HttpClient {
     private OkHttpBuilder mBuilder;
 //https://youmi.telemsoft.net/appapi
     private HttpClient() {
-//        mUrl = CommonAppConfig.HOST + "/appapi/?service=";
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("http");
         mUrl = CommonAppConfig.HOST + "/appapi/?service=";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("http");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BASIC);

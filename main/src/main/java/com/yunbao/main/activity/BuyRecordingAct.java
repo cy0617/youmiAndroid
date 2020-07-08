@@ -1,33 +1,25 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.bean.BuyRecordBean;
-import com.yunbao.common.bean.GoodsBeanTwo;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.adapter.BuyRecordAdapter;
-import com.yunbao.main.adapter.GoodsRingAdapter;
 import com.yunbao.main.http.MainHttpUtil;
-import com.yunbao.main.utils.GridItemDecoration;
 import com.yunbao.main.utils.MyClickInterface;
 import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.refreshlayout.RefreshLayout;
+import com.yunbao.mall.activity.BuyerOrderDetailActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -58,7 +50,6 @@ public class BuyRecordingAct extends AbsActivity implements MyClickInterface {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BuyRecordAdapter(this, list, this);
         recyclerView.setAdapter(adapter);
-
 
         refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
@@ -135,6 +126,10 @@ public class BuyRecordingAct extends AbsActivity implements MyClickInterface {
 
     @Override
     public void myClick(int position, int type) {
+//        Intent intent = new Intent(mContext, BuyerOrderDetailActivity.class);
+////        intent.putExtra("orderId",)
+//        mContext.startActivity(intent);
+        BuyerOrderDetailActivity.forward(mContext,String.valueOf(list.get(position).getId()));
 
     }
 }

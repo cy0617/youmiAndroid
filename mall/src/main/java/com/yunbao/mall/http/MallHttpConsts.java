@@ -48,7 +48,7 @@ public class MallHttpConsts {
     public static final String GET_WULIU_LIST = "getWuliuList";
     public static final String SELLER_SEND_ORDER = "sellerSendOrder";
     public static final String BUYER_CONFIRM_RECEIVE = "buyerConfirmReceive";
-    public static final String GET_BUYER_ORDER_DETAIL = "getBuyerOrderDetail";
+    public static final String GET_BUYER_ORDER_DETAIL = "getYoumioOrderDetail";
     public static final String BUYER_SET_COMMENT = "buyerSetComment";
     public static final String BUYER_APPEND_COMMENT = "buyerAppendComment";
     public static final String SELLER_DELETE_ORDER = "sellerDeleteOrder";
@@ -82,4 +82,8 @@ public class MallHttpConsts {
     public static final String GET_ORDER_MSG_LIST = "getOrderMsgList";
     public static final String SET_ORDER_CLICK = "setOrderClick";
 
+    public static final String TEST_SIGN = "getSign";
+    public static final String GET_GOODS_DETAIL = "goodsDetail";
+    public static final String GET_UBRECORED_LIST = "getUbrcoredList";
+    public static final String GET_SCORE_LIST = "getCoreList";
 }

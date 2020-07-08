@@ -56,6 +56,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:text="用户ID"
             android:textColor="@color/text_color_66"
@@ -78,12 +79,10 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="时间"
-            android:gravity="right"
+            android:gravity="center"
             android:textColor="@color/text_color_66"
             android:textSize="14sp"
             ></TextView>
-
-
 
     </LinearLayout>
 

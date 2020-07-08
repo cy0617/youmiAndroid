@@ -77,4 +77,5 @@ public class MainHttpConsts {
     public static final String GET_DAY_QIAN_DAO = "getDayQianDao";
     public static final String GET_SHI_PIN = "getShiPin";
     public static final String GET_QIAN_DAO = "getQianDao";
+    public static final String GET_SHANGJIN = "getShangJIn";
 }

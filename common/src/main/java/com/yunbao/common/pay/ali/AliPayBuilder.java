@@ -89,7 +89,13 @@ public class AliPayBuilder {
         String signType = "sign_type=\"RSA\"";//签名类型
         mPayInfo = orderInfo + "&sign=\"" + sign + "\"&" + signType;
         invokeAliPay();
-
+    } /**
+     * 从服务器端获取订单号,即下单
+     */
+    public void payCz() {
+        if (TextUtils.isEmpty(mOrderParams) || TextUtils.isEmpty(mMoney) || TextUtils.isEmpty(mGoodsName)|| TextUtils.isEmpty(mCallbackUrl)) {
+            return;
+        }
         CommonHttpUtil.getAliOrder(mOrderParams, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
@@ -118,10 +124,11 @@ public class AliPayBuilder {
             public Dialog createLoadingDialog() {
                 return DialogUitl.loadingDialog(mActivity);
             }
-
-
         });
+
     }
+
+
     public void hasOrderPay(JSONObject obj) {
         String orderInfo = createAliOrder(obj.getString("orderid"));//商品信息
         String sign = getOrderSign(orderInfo);//订单签名

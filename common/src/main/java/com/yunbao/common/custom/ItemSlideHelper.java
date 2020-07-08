@@ -77,9 +77,9 @@ public class ItemSlideHelper implements RecyclerView.OnItemTouchListener, Gestur
                 mLastY = (int) e.getY();
 
                 /*
-                 * 如果之前有一个已经打开的项目，当此次点击事件没有发生在右侧的菜单中则返回TRUE，
-                 * 如果点击的是右侧菜单那么返回FALSE这样做的原因是因为菜单需要响应Onclick
-                 * */
+                * 如果之前有一个已经打开的项目，当此次点击事件没有发生在右侧的菜单中则返回TRUE，
+                * 如果点击的是右侧菜单那么返回FALSE这样做的原因是因为菜单需要响应Onclick
+                * */
                 if (mTargetView != null) {
                     return !inView(x, y);
                 }
@@ -103,8 +103,8 @@ public class ItemSlideHelper implements RecyclerView.OnItemTouchListener, Gestur
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 /*
-                 * 走这是因为没有发生过拦截事件
-                 * */
+                * 走这是因为没有发生过拦截事件
+                * */
                 if (isExpanded()) {
 
                     if (inView(x, y)) {
@@ -139,9 +139,9 @@ public class ItemSlideHelper implements RecyclerView.OnItemTouchListener, Gestur
     }
 
     /*
-     * 根据targetView的scrollX计算出targetView的偏移，这样能够知道这个point
-     * 是在右侧的菜单中
-     * */
+    * 根据targetView的scrollX计算出targetView的偏移，这样能够知道这个point
+    * 是在右侧的菜单中
+    * */
     private boolean inView(int x, int y) {
 
         if (mTargetView == null)
@@ -209,7 +209,7 @@ public class ItemSlideHelper implements RecyclerView.OnItemTouchListener, Gestur
      */
     private void horizontalDrag(int delta) {
         if (mCallback != null && !mCallback.useLeftScroll()) {
-            if (delta > 0) {
+            if(delta > 0){
                 RecyclerView.ViewHolder viewHolder = mCallback.getChildViewHolder(mTargetView);
                 mCallback.onLeftScroll(viewHolder);
             }

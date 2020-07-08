@@ -41,6 +41,7 @@ public class OrderMessageAdapter extends RefreshAdapter<OrderMsgBean> {
                         BuyerRefundDetailActivity.forward(mContext,bean.getOrderId());
                     }else{
                         BuyerOrderDetailActivity.forward(mContext,bean.getOrderId());
+
                     }
                 }else{
                     if(bean.getStatus()== Constants.MALL_ORDER_STATUS_REFUND){
