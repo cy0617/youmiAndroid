@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yunbao.common.utils.TimeUtil;
+import com.yunbao.common.utils.DateUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.bean.LockRiceBean;
 import com.yunbao.main.utils.MyClickInterface;
@@ -37,14 +37,14 @@ public class LockRiceAdapter extends RecyclerView.Adapter<LockRiceAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull LockRiceAdapter.ViewHolder viewHolder, int i) {
         viewHolder.memo.setText(list.get(i).getMemo());
-        viewHolder.time.setText(TimeUtil.getTime(Long.valueOf(list.get(i).getTime())));
+        viewHolder.time.setText(DateUtil.getCurrentTime2(Long.valueOf(list.get(i).getTime())));
         viewHolder.money.setText(list.get(i).getAfter());
         String score = list.get(i).getScore();
-        viewHolder.score.setText(list.get(i).getScore()+"米粒");
+        viewHolder.score.setText(list.get(i).getScore());
         Double aDouble = Double.valueOf(score);
-        if (aDouble>0){
+        if (aDouble > 0) {
             viewHolder.jiajian.setText("+");
-        }else if (aDouble<0){
+        } else if (aDouble < 0) {
             viewHolder.jiajian.setText("");
         }
 
@@ -52,15 +52,16 @@ public class LockRiceAdapter extends RecyclerView.Adapter<LockRiceAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list== null ? 0 : list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView money;
-        private  TextView time;
+        private TextView time;
         private TextView memo;
         private TextView jiajian;
         private TextView score;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.time);

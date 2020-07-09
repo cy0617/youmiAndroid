@@ -65,7 +65,7 @@ public class LockRiceActivity extends AbsActivity implements MyClickInterface {
     }
 
     private void getData() {
-        MallHttpUtil.getScoreList(refreshLayout.pageNumber, "1", new HttpCallback() {
+        MallHttpUtil.getScoreList(refreshLayout.pageNumber, "2", new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (mDialog != null) {
@@ -80,7 +80,7 @@ public class LockRiceActivity extends AbsActivity implements MyClickInterface {
                         LockRiceBean lockRiceBean = new LockRiceBean();
                         lockRiceBean.setMemo(obj.getString("memo"));
                         lockRiceBean.setTime(obj.getString("time"));
-                        mType = obj.getString("type");
+//                        mType = obj.getString("type");
                         lockRiceBean.setType(obj.getString("type"));
                         lockRiceBean.setScore(obj.getString("score"));
                         lockRiceBean.setAfter(obj.getString("after"));
@@ -105,6 +105,6 @@ public class LockRiceActivity extends AbsActivity implements MyClickInterface {
 
     @Override
     public void myClick(int position, int type) {
-
+        mType = list.get(position).getType();
     }
 }

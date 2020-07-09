@@ -11,12 +11,10 @@ import com.yunbao.common.adapter.RefreshAdapter;
 import com.yunbao.mall.R;
 import com.yunbao.mall.bean.GoodsClassBean;
 
-import java.util.List;
-
 public class GoodsClassRightAdapter extends RefreshAdapter<GoodsClassBean> {
 
     private View.OnClickListener mOnClickListener;
-
+    private int mPosition;
     public GoodsClassRightAdapter(Context context) {
         super(context);
         mOnClickListener = new View.OnClickListener() {
@@ -24,10 +22,13 @@ public class GoodsClassRightAdapter extends RefreshAdapter<GoodsClassBean> {
             public void onClick(View v) {
                 Object tag = v.getTag();
                 if (tag != null && mOnItemClickListener != null) {
+
+//                    GoodsClassBean goodsClassBean = mList.get(mPosition);
                     mOnItemClickListener.onItemClick((GoodsClassBean) tag, 0);
                 }
             }
         };
+
     }
 
 
@@ -51,6 +52,7 @@ public class GoodsClassRightAdapter extends RefreshAdapter<GoodsClassBean> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, int position) {
         ((Vh) vh).setData(mList.get(position));
+        mPosition=position;
     }
 
     class Vh extends RecyclerView.ViewHolder {
@@ -60,18 +62,23 @@ public class GoodsClassRightAdapter extends RefreshAdapter<GoodsClassBean> {
         public Vh(@NonNull View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.text);
+            itemView.setOnClickListener(mOnClickListener);
         }
 
-        void setData(GoodsClassBean bean) {
+        void setData(final GoodsClassBean bean) {
             mTextView.setText(bean.getName());
+            itemView.setTag(bean);
+
+
         }
     }
+
 
     class NormalVh extends Vh {
 
         public NormalVh(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(mOnClickListener);
+
         }
 
         void setData(GoodsClassBean bean) {

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yunbao.common.utils.TimeUtil;
+import com.yunbao.common.utils.DateUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.bean.MyUbBean;
 import com.yunbao.main.utils.MyClickInterface;
@@ -38,9 +38,9 @@ public class MyUbAdapter extends RecyclerView.Adapter<MyUbAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         String type = list.get(i).getType();
         if (type.equals("0")){
-            viewHolder.type.setText("-");
+            viewHolder.type.setText("－");
         }else if (type.equals("1")){
-            viewHolder.type.setText("+");
+            viewHolder.type.setText("＋");
         }
         String action = list.get(i).getAction();
         if (action.equals("1")){
@@ -60,8 +60,8 @@ public class MyUbAdapter extends RecyclerView.Adapter<MyUbAdapter.ViewHolder> {
         }else if (action.equals("8")){
             viewHolder.action.setText("发送红包");
         }
-        viewHolder.totalcoin.setText(list.get(i).getTotalcoin()+"U币");
-        viewHolder.addtime.setText(TimeUtil.getTimeYMDHMTwo(Long.valueOf(list.get(i).getAddtime())));
+        viewHolder.totalcoin.setText(list.get(i).getTotalcoin());
+        viewHolder.addtime.setText(DateUtil.getCurrentTime2(Long.valueOf(list.get(i).getAddtime())));
     }
 
     @Override

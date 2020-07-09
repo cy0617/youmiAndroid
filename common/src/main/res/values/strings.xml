@@ -298,7 +298,8 @@
     <string name="link_mic_refuse_pk">对方主播拒绝了您的PK请求</string>
     <string name="link_mic_anchor_close">对方主播退出连麦</string>
     <string name="link_mic_pk_accpet">对方主播接受了您的连麦请求，开始连麦</string>
-    <string name="link_mic_apply_waiting">您已申请，请稍等</string>
+    <string name="link_mic_apply_waiting">您已
+        申请，请稍等</string>
     <string name="link_mic_anchor_accept">主播接受了您的连麦请求，开始连麦</string>
     <string name="link_mic_anchor_accept_2">对方主播接受了您的连麦请求，开始连麦</string>
     <string name="link_mic_anchor_accept_pk">主播接受了您的PK请求，开始PK</string>

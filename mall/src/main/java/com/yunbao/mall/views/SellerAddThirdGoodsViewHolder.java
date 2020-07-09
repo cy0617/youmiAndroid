@@ -22,6 +22,4 @@ public class SellerAddThirdGoodsViewHolder extends AbsSellerAddGoodsViewHolder {
         mEtGoodLinks=findViewById(R.id.et_link);
     }
 
-
-
 }

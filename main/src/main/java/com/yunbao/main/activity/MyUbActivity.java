@@ -34,6 +34,7 @@ public class MyUbActivity extends AbsActivity implements MyClickInterface {
 
     @Override
     protected void main() {
+
         list = new ArrayList<>();
         mDialog = DialogUitl.loadingDialog(mContext, "加载中...");
         setTitle("U币流水");

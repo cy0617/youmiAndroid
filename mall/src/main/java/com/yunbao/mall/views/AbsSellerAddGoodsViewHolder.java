@@ -336,6 +336,7 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
      * 选择商品类型
      */
     private void chooseGoodsClass() {
+
         Intent intent = new Intent(mContext, ChooseGoodsClassActivity.class);
         mImageUtil.startActivityForResult(intent, new ActivityResultCallback() {
             @Override
@@ -344,6 +345,7 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
                     mGoodsClassBean = intent.getParcelableExtra(Constants.MALL_GOODS_CLASS);
                     if (mGoodsClassName != null) {
                         mGoodsClassName.setText(mGoodsClassBean.getName());
+                        String name = mGoodsClassBean.getName();
                     }
                 }
             }

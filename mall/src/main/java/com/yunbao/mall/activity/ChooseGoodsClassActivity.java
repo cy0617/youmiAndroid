@@ -3,6 +3,7 @@ package com.yunbao.mall.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -11,7 +12,6 @@ import com.yunbao.common.Constants;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.interfaces.OnItemClickListener;
-import com.yunbao.common.utils.L;
 import com.yunbao.common.utils.WordUtil;
 import com.yunbao.mall.R;
 import com.yunbao.mall.adapter.GoodsClassLeftAdapter;
@@ -38,7 +38,6 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
     protected int getLayoutId() {
         return R.layout.activity_choose_goods_class;
     }
-
     @Override
     protected void main() {
         setTitle(WordUtil.getString(R.string.mall_077));
@@ -50,6 +49,10 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
         mRecyclerViewRight.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
 
         MallHttpUtil.getGoodsClass(new HttpCallback() {
+
+
+
+
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {
@@ -120,6 +123,8 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
     @Override
     public void onItemClick(GoodsClassBean bean, int position) {
         Intent intent = new Intent();
+        String name = bean.getName();
+        Log.e("eeeeeeeeeeee", "onItemClick: "+name );
         intent.putExtra(Constants.MALL_GOODS_CLASS, bean);
         setResult(RESULT_OK, intent);
         finish();
