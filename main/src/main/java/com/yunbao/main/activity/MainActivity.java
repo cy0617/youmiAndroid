@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,6 +39,7 @@ import com.yunbao.common.utils.ScreenDimenUtil;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.common.utils.VersionUtil;
 import com.yunbao.common.utils.WordUtil;
+import com.yunbao.common.views.AbsMainViewHolder;
 import com.yunbao.im.activity.ChatActivity;
 import com.yunbao.im.event.ImUnReadCountEvent;
 import com.yunbao.im.utils.ImMessageUtil;
@@ -55,8 +57,6 @@ import com.yunbao.main.http.MainHttpUtil;
 import com.yunbao.main.interfaces.MainAppBarLayoutListener;
 import com.yunbao.main.interfaces.MainStartChooseCallback;
 import com.yunbao.main.presenter.CheckLivePresenter;
-import com.yunbao.common.views.AbsMainViewHolder;
-import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.BonusViewHolder;
 import com.yunbao.main.views.MainHomeViewHolder;
 import com.yunbao.main.views.MainMeViewHolder;
@@ -514,7 +514,7 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
             }
         });
     }
-
+    private FragmentManager fragmentManager;
 
     private void loadPageData(int position, boolean needlLoadData) {
         if (mViewHolders == null) {

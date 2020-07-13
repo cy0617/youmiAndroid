@@ -228,7 +228,7 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact("uid=",uid, "&token=", token,"&time=", time));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&time=", time));
 //        String sign = MD5Util.getMD5(StringUtil.contact(
 //                "addressid=", addressid, "&goodsid=", goodsid, "&nums=", nums, "&message=", message,
 //                "&time=", time, "&uid=", uid, "&token=", token, "&", SALT));
@@ -244,6 +244,7 @@ public class MallHttpUtil {
                 .params("sign", sign)
                 .execute(callback);
     }
+
     /**
      * 认证提交订单
      */
@@ -254,6 +255,7 @@ public class MallHttpUtil {
                 .params("money", money)
                 .execute(callback);
     }
+
     /**
      * 检测身份证是否存在
      */
@@ -286,7 +288,7 @@ public class MallHttpUtil {
     /**
      * 购买付费内容 获取付款方式列表
      */
-    public static void getPayContentPayList(String type,HttpCallback callback) {
+    public static void getPayContentPayList(String type, HttpCallback callback) {
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
@@ -300,16 +302,17 @@ public class MallHttpUtil {
                 .params("sign", sign)
                 .execute(callback);
     }
+
     /**
      * 商圈订单详情
      */
-    public static void getPayOrderInfo(String orderid,HttpCallback callback) {
+    public static void getPayOrderInfo(String orderid, HttpCallback callback) {
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
 //        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderid,"&time=", time, "&", SALT));
-        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=",token,"&time=", time));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&time=", time));
         HttpClient.getInstance().get("Youmio.GetGoodsOrderInfo", MallHttpConsts.GET_GOODS_PACKAGE_INFO)
                 .params("uid", uid)
                 .params("token", token)
@@ -318,10 +321,11 @@ public class MallHttpUtil {
                 .params("sign", sign)
                 .execute(callback);
     }
+
     /**
      * 商圈订单详情
      */
-    public static void getRzOrderInfo(String orderid,HttpCallback callback) {
+    public static void getRzOrderInfo(String orderid, HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.GetrzOrderInfo", MallHttpConsts.GET_RZ_ORDERINFO)
                 .params("uid", CommonAppConfig.getInstance().getUid())
                 .params("token", CommonAppConfig.getInstance().getToken())
@@ -357,7 +361,7 @@ public class MallHttpUtil {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
-        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token,  "&time=", time));
+        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&time=", time));
 //        String sign = MD5Util.getMD5(StringUtil.contact("uid=", uid, "&token=", token, "&orderid=", orderId, "&type=", payType, "&time=", time, "&", SALT));
         HttpClient.getInstance().get("Youmio.GoodsOrderPay", MallHttpConsts.BUYER_SQPAY_ORDER)
                 .params("uid", uid)
@@ -368,6 +372,7 @@ public class MallHttpUtil {
                 .params("sign", sign)
                 .execute(callback);
     }
+
     /**
      * 认证支付第一步
      */
@@ -952,6 +957,7 @@ public class MallHttpUtil {
                 .params("id", id)
                 .execute(callback);
     }
+
     /**
      * 获取商品包详情
      */
@@ -987,6 +993,7 @@ public class MallHttpUtil {
         }
         request.execute(callback);
     }
+
     /**
      * 批准升级
      */
@@ -1566,6 +1573,7 @@ public class MallHttpUtil {
 
     /**
      * 测试接口
+     *
      * @param callback
      */
     public static void getTest(HttpCallback callback) {
@@ -1584,15 +1592,16 @@ public class MallHttpUtil {
 
     public static void getYoumioOrderDetail(String orderId, HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.Goodsdetail", MallHttpConsts.GET_GOODS_DETAIL)
-                .params("id",orderId)
+                .params("id", orderId)
                 .execute(callback);
     }
 
     /**
      * U币流水
+     *
      * @param callback
      */
-    public static void GetUbrecoredList(int p,HttpCallback callback) {
+    public static void GetUbrecoredList(int p, HttpCallback callback) {
         CommonAppConfig appConfig = CommonAppConfig.getInstance();
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
@@ -1604,12 +1613,13 @@ public class MallHttpUtil {
     }
 
     /**
-     *可用米粒流水 锁仓记录
+     * 可用米粒流水 锁仓记录
+     *
      * @param p
      * @param type
      * @param callback
      */
-    public static void getScoreList(int p,String type, HttpCallback callback) {
+    public static void getScoreList(int p, String type, HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.GetscoreList", MallHttpConsts.GET_SCORE_LIST)
                 .params("uid", CommonAppConfig.getInstance().getUid())
                 .params("token", CommonAppConfig.getInstance().getToken())
@@ -1619,7 +1629,8 @@ public class MallHttpUtil {
     }
 
     /**
-     *用于米粒锁仓
+     * 用于米粒锁仓
+     *
      * @param money
      * @param callback
      */
@@ -1633,6 +1644,7 @@ public class MallHttpUtil {
 
     /**
      * 用于发送米粒
+     *
      * @param mMoney
      * @param mCode
      * @param callback
@@ -1643,6 +1655,41 @@ public class MallHttpUtil {
                 .params("token", CommonAppConfig.getInstance().getToken())
                 .params("code", mCode)
                 .params("money", mMoney)
+                .execute(callback);
+    }
+
+    /**
+     * 优米商城轮播图
+     * @param callback
+     */
+    public static void getShopBanner(HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetShopBanner", MallHttpConsts.GET_SHOP_BANNER)
+                .execute(callback);
+    }
+    /**
+     * 优米商城轮播图2
+     * @param callback
+     */
+    public static void getShopBanner2(HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetShopBanner2", MallHttpConsts.GET_SHOP_BANNER)
+                .execute(callback);
+    }
+    /**
+     * 一级商品分类数据
+     * @param callback
+     */
+    public static void getOneClass(HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetOneGoodsAllClass", MallHttpConsts.GET_SHOP_ONECLASS)
+                .execute(callback);
+    }
+
+    public static void getShopGoodsType(String type, String type_id, int pageNumber, String keywords, HttpCallback callback) {
+
+        HttpClient.getInstance().get("Shop.GetShopGoodsByType", MallHttpConsts.GET_SHOP_GOODS_TYPE)
+                .params("type",type)
+                .params("type_id",type_id)
+                .params("p",pageNumber)
+                .params("keywords",keywords)
                 .execute(callback);
     }
 }

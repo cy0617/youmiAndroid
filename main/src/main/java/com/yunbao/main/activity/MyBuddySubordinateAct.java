@@ -1,7 +1,6 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,10 +9,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
@@ -22,6 +17,7 @@ import com.yunbao.main.R;
 import com.yunbao.main.adapter.SubordinateAdapter;
 import com.yunbao.main.bean.SubordinateBean;
 import com.yunbao.main.http.MainHttpUtil;
+import com.yunbao.main.views.refreshlayout.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +30,7 @@ public class MyBuddySubordinateAct extends AbsActivity {
     private TextView tv_title;
     private Dialog mDialog;
     private SubordinateAdapter adapter;
-    private SmartRefreshLayout refreshlayout;
-    private boolean refreshType;
+    private RefreshLayout refreshLayout;
     private int page;
 
     @Override
@@ -52,8 +47,8 @@ public class MyBuddySubordinateAct extends AbsActivity {
         mDialog = DialogUitl.loadingDialog(mContext, "加载中...");
         btn_back = findViewById(R.id.btn_back);
         tv_title = findViewById(R.id.tv_title);
-        recyclerView = findViewById(R.id.recyclerView);
-        refreshlayout = findViewById(R.id.refreshLayout);
+        recyclerView = findViewById(R.id.refreshView);
+        refreshLayout = findViewById(R.id.refreshLayout);
         tv_title.setText(leve + "网红");
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -66,55 +61,32 @@ public class MyBuddySubordinateAct extends AbsActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubordinateAdapter(this, list);
         recyclerView.setAdapter(adapter);
-
-        refreshlayout.setEnableAutoLoadMore(true);
-        refreshlayout.setOnRefreshListener(new OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshType = true;
-                        list.clear();
-                        adapter.notifyDataSetChanged();
-                        queryData(leve,page);
-                        refreshLayout.finishRefresh();
-                        refreshLayout.resetNoMoreData();
-                    }
-                }, 2000);
+            public void onPullDownToRefresh() {
+                refreshLayout.pageNumber = 1;
+                queryData(leve);
+            }
+
+            @Override
+            public void onPullUpToRefresh() {
+                refreshLayout.pageNumber++;
+                queryData(leve);
             }
         });
-
-        refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (page>1){
-                            queryData(leve,page++);
-                            adapter.notifyDataSetChanged();
-                            refreshLayout.finishLoadMore();
-                        }else {
-                            refreshLayout.finishLoadMore();
-                        }
-                        refreshLayout.setEnableLoadMore(true);
-
-                    }
-                }, 2000);
-            }
-        });
-        refreshlayout.autoRefresh();
         if (mDialog != null) {
             mDialog.show();
         }
-        queryData(leve,page);
+        if (mDialog != null) {
+            mDialog.show();
+        }
+        queryData(leve);
 
     }
 
 
-    public void queryData(final String leve, int page) {
-        MainHttpUtil.getSubordinate(page, leve, new HttpCallback() {
+    public void queryData(final String leve) {
+        MainHttpUtil.getSubordinate(refreshLayout.pageNumber, leve, new HttpCallback() {
 
             @Override
             public void onSuccess(int code, String msg, String[] info) {
@@ -122,6 +94,9 @@ public class MyBuddySubordinateAct extends AbsActivity {
                     mDialog.dismiss();
                 }
                 if (code == 0) {
+                    if (refreshLayout.pageNumber == 1 && info.length > 0) {
+                        list.clear();
+                    }
                     for (int i = 0; i < info.length; i++) {
                         JSONObject obj = JSON.parseObject(info[i]);
                         SubordinateBean goodsBeanTwo = new SubordinateBean();
@@ -136,6 +111,7 @@ public class MyBuddySubordinateAct extends AbsActivity {
                 } else {
                     ToastUtil.show(msg);
                 }
+                refreshLayout.onLoad(info.length);
             }
 
             @Override
@@ -143,6 +119,7 @@ public class MyBuddySubordinateAct extends AbsActivity {
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
+                refreshLayout.onLoad(-1);
             }
         });
     }

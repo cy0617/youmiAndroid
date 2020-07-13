@@ -1106,10 +1106,19 @@
     <string name="mall_378">编辑商品</string>
     <string name="mall_379">讲解</string>
     <string name="mall_380">讲解中</string>
+
+
     <string name="realname_title">以下信息均为必填项，为保证您的利益，请如实填写</string>
     <string name="realname_tvname">真实姓名</string>
     <string name="realname_etname">请填写您的真实姓名</string>
     <string name="realname_tvnumber">身份证号</string>
     <string name="realname_etnumber">请填写您的身份证号</string>
     <string name="edit_search" >输入你要搜索的内容</string>
+
+    <string name="mall_381">老百姓</string>
+    <string name="mall_382">优品</string>
+    <string name="mall_383">爆团</string>
+    <string name="mall_384">秒抢</string>
+    <string name="mall_385">新品上线</string>
+
 </resources>

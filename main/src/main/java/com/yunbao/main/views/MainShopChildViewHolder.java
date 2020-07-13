@@ -1,10 +1,10 @@
 package com.yunbao.main.views;
 
-        import android.content.Context;
-        import android.view.ViewGroup;
+import android.content.Context;
+import android.view.ViewGroup;
 
-        import com.yunbao.common.views.AbsMainViewHolder;
-        import com.yunbao.main.R;
+import com.yunbao.common.views.AbsMainViewHolder;
+import com.yunbao.main.R;
 
 /**
  * 商圈
