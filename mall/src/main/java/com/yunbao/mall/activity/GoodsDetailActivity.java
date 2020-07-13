@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.Constants;
 import com.yunbao.common.activity.AbsActivity;
+import com.yunbao.common.bean.GoodsSpecBean;
 import com.yunbao.common.glide.ImgLoader;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DpUtil;
@@ -37,7 +37,6 @@ import com.yunbao.mall.adapter.GoodsDetailAdapter;
 import com.yunbao.mall.adapter.GoodsTitleAdapter;
 import com.yunbao.mall.bean.GoodsChooseSpecBean;
 import com.yunbao.mall.bean.GoodsCommentBean;
-import com.yunbao.common.bean.GoodsSpecBean;
 import com.yunbao.mall.dialog.GoodsCertDialogFragment;
 import com.yunbao.mall.dialog.GoodsSpecDialogFragment;
 import com.yunbao.mall.http.MallHttpConsts;
@@ -244,11 +243,9 @@ public class GoodsDetailActivity extends AbsActivity implements View.OnClickList
      * 获取商品详情，展示数据
      */
     private void getGoodsInfo() {
-        Log.e("eeeeeeeeeeeeeee", "onSuccess: " );
         MallHttpUtil.getGoodsInfo(mGoodsId, new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
-                Log.e("eeeeeeeeeeeeeee", "onSuccess: "+code );
                 if (code == 0 && info.length > 0) {
                     JSONObject obj = JSON.parseObject(info[0]);
                     JSONObject goodsInfo = obj.getJSONObject("goods_info");

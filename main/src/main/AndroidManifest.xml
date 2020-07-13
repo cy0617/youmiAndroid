@@ -2,10 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yunbao.main">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UsableMiLiActivity"></activity>
+        <activity android:name=".activity.YouMiShoppingActivity"></activity>
+        <activity android:name=".activity.MiLiSendActivity" />
+        <activity android:name=".activity.MiLiLockActivity" />
+        <activity android:name=".activity.ReceptionActivity" />
+        <activity android:name=".activity.UsableMiLiActivity" />
         <activity android:name=".activity.LockRiceActivity" />
         <activity android:name=".activity.MyUbActivity" />
         <activity

@@ -86,4 +86,6 @@ public class MallHttpConsts {
     public static final String GET_GOODS_DETAIL = "goodsDetail";
     public static final String GET_UBRECORED_LIST = "getUbrcoredList";
     public static final String GET_SCORE_LIST = "getCoreList";
+    public static final String GET_SEND_SCSCORE = "getSendScscore";
+    public static final String GET_SEND_KYCODE = "getSendKyCode";
 }

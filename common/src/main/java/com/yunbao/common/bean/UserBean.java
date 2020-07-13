@@ -52,14 +52,23 @@ public class UserBean implements Parcelable {
     private long dynamics;
     private long loves;
     private String gygp;
-    private String qmoney_code;
+    private String qian_code;
+    private String qr;
 
-    public String getQmoney_code() {
-        return qmoney_code;
+    public String getQr() {
+        return qr;
     }
 
-    public void setQmoney_code(String qmoney_code) {
-        this.qmoney_code = qmoney_code;
+    public void setQr(String qr) {
+        this.qr = qr;
+    }
+
+    public String getQian_code() {
+        return qian_code;
+    }
+
+    public void setQian_code(String qian_code) {
+        this.qian_code = qian_code;
     }
 
     public String getGygp() {
@@ -624,7 +633,6 @@ public class UserBean implements Parcelable {
         dest.writeLong(this.dynamics);
         dest.writeLong(this.loves);
         dest.writeString(this.gygp);
-        dest.writeString(this.qmoney_code);
     }
 
     protected UserBean(Parcel in) {
@@ -666,7 +674,6 @@ public class UserBean implements Parcelable {
         this.dynamics = in.readLong();
         this.loves = in.readLong();
         this.gygp = in.readString();
-        this.qmoney_code = in.readString();
     }
 
     public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {

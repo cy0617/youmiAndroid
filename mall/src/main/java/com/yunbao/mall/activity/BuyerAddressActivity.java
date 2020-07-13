@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -124,7 +123,7 @@ public class BuyerAddressActivity extends AbsActivity implements View.OnClickLis
     }
 
     /***
-     * eeeeeeeeeeeeeeeeeeeeeeeeeee
+     * 将地址传回去
      * @param bean
      */
     @Override
@@ -133,12 +132,14 @@ public class BuyerAddressActivity extends AbsActivity implements View.OnClickLis
 //        intent.putExtra(Constants.MALL_BUYER_ADDRESS, bean);
         intent.putExtra("name", bean.getName());
         intent.putExtra("phonenum", bean.getPhoneNum());
-        intent.putExtra("address", bean.getProvince() + bean.getCity() + bean.getZone() + bean.getAddress());
+        intent.putExtra("province", bean.getProvince());
+        intent.putExtra("city",  bean.getCity() );
+        intent.putExtra("zone", bean.getZone() );
+        intent.putExtra("address", bean.getAddress());
         //地址id传回去
         intent.putExtra("addressid",bean.getId());
         setResult(RESULT_OK, intent);
         finish();
-        Log.e("eeeeeeeeeeee", "onItemClick: "+bean.getProvince());
     }
 
     @Override

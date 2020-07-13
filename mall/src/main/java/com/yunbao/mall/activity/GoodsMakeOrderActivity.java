@@ -8,11 +8,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.yunbao.common.Constants;
 import com.yunbao.common.activity.AbsActivity;
+import com.yunbao.common.bean.GoodsSpecBean;
 import com.yunbao.common.glide.ImgLoader;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.CalculateUtil;
@@ -21,7 +23,6 @@ import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.common.utils.WordUtil;
 import com.yunbao.mall.R;
 import com.yunbao.mall.bean.BuyerAddressBean;
-import com.yunbao.common.bean.GoodsSpecBean;
 import com.yunbao.mall.dialog.GoodsPayDialogFragment;
 import com.yunbao.mall.http.MallHttpConsts;
 import com.yunbao.mall.http.MallHttpUtil;
@@ -30,6 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickListener, GoodsPayDialogFragment.ActionListener {
+
+    private LinearLayout ll_address;
 
     public static void forward(Context context, String shopName, String goodsId, String goodsName, GoodsSpecBean goodsSpecBean, int count, double postage) {
         Intent intent = new Intent(context, GoodsMakeOrderActivity.class);
@@ -42,6 +45,7 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
         context.startActivity(intent);
     }
 
+    private String addrsId = "";
     private TextView mName;
     private TextView mAddress;
     private TextView mShopName;
@@ -88,7 +92,7 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
         mGoodsNameVal = intent.getStringExtra(Constants.MALL_GOODS_NAME);
         mMoneySymbol = WordUtil.getString(R.string.money_symbol);
         mGoodsPriceVal = Double.parseDouble(specBean.getPrice());
-
+        ll_address = findViewById(R.id.ll_address);
         mName = findViewById(R.id.name);
         mAddress = findViewById(R.id.address);
         mShopName = findViewById(R.id.shop_name);
@@ -131,6 +135,8 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
                             break;
                         }
                     }
+                } else {
+                    ToastUtil.show(msg);
                 }
             }
         });
@@ -139,6 +145,8 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
     private void showAddress(BuyerAddressBean bean) {
         if (bean != null) {
             mBuyerAddressBean = bean;
+            addrsId = bean.getId();
+            String name = mBuyerAddressBean.getName();
             if (mName != null) {
                 mName.setText(StringUtil.contact(bean.getName(), "  ", bean.getPhoneNum()));
             }
@@ -183,16 +191,28 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
 
     private void chooseAddress() {
         Intent intent = new Intent(mContext, BuyerAddressActivity.class);
-        intent.putExtra(Constants.MALL_BUYER_ADDRESS, true);
-        startActivityForResult(intent, 100);
+//        intent.putExtra(Constants.MALL_BUYER_ADDRESS, true);
+        startActivityForResult(intent, 101);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == 100 && resultCode == RESULT_OK && intent != null) {
-            BuyerAddressBean bean = intent.getParcelableExtra(Constants.MALL_BUYER_ADDRESS);
-            showAddress(bean);
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+//            BuyerAddressBean bean = intent.getParcelableExtra(Constants.MALL_BUYER_ADDRESS);
+//            showAddress(bean);
+            ll_address.setVisibility(View.VISIBLE);
+            String name = intent.getStringExtra("name");
+            String phonenum = intent.getStringExtra("phonenum");
+            String addressid = intent.getStringExtra("addressid");
+            String province = intent.getStringExtra("province");
+            String city = intent.getStringExtra("city");
+            String zone = intent.getStringExtra("zone");
+            String address = intent.getStringExtra("address");
+//            //把地址id赋值给当前页面的地址id,提交数据的时候就有值
+            addrsId = addressid;
+            mAddress.setText(com.yunbao.common.utils.StringUtil.contact(province, " ", city, " ", zone, " ", address));
+            mName.setText(com.yunbao.common.utils.StringUtil.contact(name, " ", phonenum));
         }
     }
 
@@ -201,12 +221,14 @@ public class GoodsMakeOrderActivity extends AbsActivity implements View.OnClickL
             showPayDialog();
             return;
         }
-        if (mBuyerAddressBean == null) {
-            ToastUtil.show(R.string.mall_189);
+        if (com.yunbao.mall.utils.StringUtil.isEmpty(addrsId)) {
+            showToast(R.string.mall_189);
             return;
         }
+
         String msg = mMessage.getText().toString().trim();
-        MallHttpUtil.buyerCreateOrder(mBuyerAddressBean.getId(), mGoodsId, mSpecBean.getId(), mCountVal, msg,
+
+        MallHttpUtil.buyerCreateOrder(addrsId, mGoodsId, mSpecBean.getId(), mCountVal, msg,
                 new HttpCallback() {
                     @Override
                     public void onSuccess(int code, String msg, String[] info) {

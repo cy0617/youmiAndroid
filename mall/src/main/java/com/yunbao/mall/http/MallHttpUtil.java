@@ -465,7 +465,7 @@ public class MallHttpUtil {
         String uid = appConfig.getUid();
         String token = appConfig.getToken();
         String sign = MD5Util.getMD5(StringUtil.contact("time=", time, "&token=", token, "&uid=", uid, "&", SALT));
-        HttpClient.getInstance().get("Youmio.GetGoodsOrderInfo", MallHttpConsts.GET_BUYER_ORDER_DETAIL)
+        HttpClient.getInstance().get("Buyer.GetGoodsOrderInfo", MallHttpConsts.GET_BUYER_ORDER_DETAIL)
                 .params("time", time)
                 .params("token", token)
                 .params("uid", uid)
@@ -1603,12 +1603,46 @@ public class MallHttpUtil {
                 .execute(callback);
     }
 
+    /**
+     *可用米粒流水 锁仓记录
+     * @param p
+     * @param type
+     * @param callback
+     */
     public static void getScoreList(int p,String type, HttpCallback callback) {
         HttpClient.getInstance().get("Youmio.GetscoreList", MallHttpConsts.GET_SCORE_LIST)
                 .params("uid", CommonAppConfig.getInstance().getUid())
                 .params("token", CommonAppConfig.getInstance().getToken())
                 .params("type", type)
                 .params("p", p)
+                .execute(callback);
+    }
+
+    /**
+     *用于米粒锁仓
+     * @param money
+     * @param callback
+     */
+    public static void getSendscscore(String money, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Sendscscore", MallHttpConsts.GET_SEND_SCSCORE)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("money", money)
+                .execute(callback);
+    }
+
+    /**
+     * 用于发送米粒
+     * @param mMoney
+     * @param mCode
+     * @param callback
+     */
+    public static void getSendkycode(String mMoney, String mCode, HttpCallback callback) {
+        HttpClient.getInstance().get("Youmio.Sendkycode", MallHttpConsts.GET_SEND_KYCODE)
+                .params("uid", CommonAppConfig.getInstance().getUid())
+                .params("token", CommonAppConfig.getInstance().getToken())
+                .params("code", mCode)
+                .params("money", mMoney)
                 .execute(callback);
     }
 }

@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -101,7 +102,9 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
     private String mGoodLinks;
     protected EditText mEtGoodLinks;
 
-
+    private String three_classid;
+    private String two_classid;
+    private String one_classid;
     @Override
     public void init() {
         mGoodsClassName = findViewById(R.id.goods_class_name);
@@ -230,6 +233,9 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
             mSpecAdapter.refreshData(specList);
         } else {
             MallHttpUtil.getGoodsInfo(mGoodsId, new HttpCallback() {
+
+
+
                 @Override
                 public void onSuccess(int code, String msg, String[] info) {
                     if (code == 0 && info.length > 0) {
@@ -241,6 +247,9 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
                         mGoodsClassBean.setTwoClassId(goodsInfo.getString("two_classid"));
                         mGoodsClassBean.setId(goodsInfo.getString("three_classid"));
 
+                        one_classid = goodsInfo.getString("one_classid");
+                        two_classid = goodsInfo.getString("two_classid");
+                        three_classid = goodsInfo.getString("three_classid");
                         if (mGoodsClassName != null) {
                             mGoodsClassName.setText(goodsInfo.getString("three_class_name"));
                         }
@@ -331,21 +340,27 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
             submit();
         }
     }
-
+    private String oneClassId;
+    private String twoClassId;
     /**
      * 选择商品类型
      */
     private void chooseGoodsClass() {
 
         Intent intent = new Intent(mContext, ChooseGoodsClassActivity.class);
+
         mImageUtil.startActivityForResult(intent, new ActivityResultCallback() {
+
+
+
             @Override
             public void onSuccess(Intent intent) {
                 if (intent != null) {
                     mGoodsClassBean = intent.getParcelableExtra(Constants.MALL_GOODS_CLASS);
+                    oneClassId = intent.getStringExtra("oneClassId");
+                    twoClassId = intent.getStringExtra("twoClassId");
                     if (mGoodsClassName != null) {
                         mGoodsClassName.setText(mGoodsClassBean.getName());
-                        String name = mGoodsClassBean.getName();
                     }
                 }
             }
@@ -598,9 +613,10 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
         }
         String specs = JSON.toJSONString(specList);
         L.e("specs-------> " + specs);
+
         MallHttpUtil.setGoods(
-                mGoodsClassBean.getOneClassId(),
-                mGoodsClassBean.getTwoClassId(),
+                oneClassId,
+                twoClassId,
                 mGoodsClassBean.getId(),
                 mTitleVal,
                 mDetailVal,

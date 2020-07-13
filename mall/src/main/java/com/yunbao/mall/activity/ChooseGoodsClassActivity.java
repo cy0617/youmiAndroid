@@ -3,7 +3,6 @@ package com.yunbao.mall.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -33,7 +32,9 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
     private RecyclerView mRecyclerViewRight;
     private GoodsClassLeftAdapter mLeftAdapter;
     private GoodsClassRightAdapter mRightAdapter;
-
+    private GoodsClassTitleBean titleBean;
+    private String twoClassId;
+    private String oneClassId;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_choose_goods_class;
@@ -60,17 +61,18 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                     List<GoodsClassTitleBean> titleList = new ArrayList<>();
                     for (int i = 0, size = array.size(); i < size; i++) {
                         JSONObject obj = array.getJSONObject(i);
-                        GoodsClassTitleBean titleBean = new GoodsClassTitleBean();
-                        String oneClassId = obj.getString("gc_id");
-                        titleBean.setId(oneClassId);
+                        titleBean = new GoodsClassTitleBean();
+                        oneClassId = obj.getString("gc_id");
+
                         titleBean.setName(obj.getString("gc_name"));
+                        titleBean.setId(oneClassId);
                         List<GoodsClassBean> list = new ArrayList<>();
                         JSONArray twoArray = obj.getJSONArray("two_list");
                         for (int j = 0, size1 = twoArray.size(); j < size1; j++) {
                             JSONObject obj1 = twoArray.getJSONObject(j);
                             GoodsClassBean bean = new GoodsClassBean();
                             bean.setTitle(true);
-                            String twoClassId = obj1.getString("gc_id");
+                            twoClassId = obj1.getString("gc_id");
                             bean.setId(twoClassId);
                             bean.setName(obj1.getString("gc_name"));
                             list.add(bean);
@@ -85,9 +87,11 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                                 subBean.setTwoClassId(twoClassId);
                                 list.add(subBean);
                             }
+
                         }
                         titleBean.setList(list);
                         titleList.add(titleBean);
+
                     }
                     if (titleList.size() > 0) {
                         GoodsClassTitleBean bean0 = titleList.get(0);
@@ -97,6 +101,10 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                             mLeftAdapter.setOnItemClickListener(new OnItemClickListener<GoodsClassTitleBean>() {
                                 @Override
                                 public void onItemClick(GoodsClassTitleBean bean, int position) {
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra(Constants.MALL_GOODS_FIRSTCLASS, titleBean);
+//                                    Log.e("eeeeeeeeeee", "onItemClick: "+titleBean.getName() );
+
                                     if (mRightAdapter != null) {
                                         mRightAdapter.refreshData(bean.getList());
                                     }
@@ -124,7 +132,10 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
     public void onItemClick(GoodsClassBean bean, int position) {
         Intent intent = new Intent();
         String name = bean.getName();
-        Log.e("eeeeeeeeeeee", "onItemClick: "+name );
+
+        intent.putExtra("oneClassId", oneClassId);
+        intent.putExtra("twoClassId", twoClassId);
+
         intent.putExtra(Constants.MALL_GOODS_CLASS, bean);
         setResult(RESULT_OK, intent);
         finish();

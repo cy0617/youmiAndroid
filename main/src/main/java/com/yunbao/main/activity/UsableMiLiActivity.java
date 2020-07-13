@@ -1,6 +1,8 @@
 package com.yunbao.main.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -31,6 +33,7 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
     private RefreshLayout refreshLayout;
     private Dialog mDialog;
     private String mType;
+    private String ky_score;
 
     @Override
     protected int getLayoutId() {
@@ -41,16 +44,18 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.ll_jieshou) {
             //接收
-//            Intent intent = new Intent(this, UserInfoActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ReceptionActivity.class);
+            startActivity(intent);
         } else if (view.getId() == R.id.ll_suocang) {
-            //锁仓
-            //            Intent intent = new Intent(this, UserInfoActivity.class);
-//            startActivity(intent);
+//            锁仓
+            Intent intent = new Intent(this, MiLiLockActivity.class);
+            intent.putExtra("ky_score",ky_score);
+            startActivityForResult(intent, 100);
         } else if (view.getId() == R.id.ll_fasong) {
-//            //发送
-//            Intent intent = new Intent(this, RewardForPromotionAct.class);
-//            startActivity(intent);
+            //发送
+            Intent intent = new Intent(this, MiLiSendActivity.class);
+            intent.putExtra("ky_score",ky_score);
+            startActivity(intent);
         }
     }
 
@@ -87,8 +92,9 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
             }
         });
     }
+
     private void getData() {
-        String ky_score = CommonAppConfig.getInstance().getUserBean().getKy_score();
+        ky_score = CommonAppConfig.getInstance().getUserBean().getKy_score();
         tv_mili.setText(ky_score);
         MallHttpUtil.getScoreList(refreshLayout.pageNumber, "1", new HttpCallback() {
             @Override
@@ -126,11 +132,24 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
                 refreshLayout.onLoad(-1);
             }
         });
+        Intent intent = getIntent();
+        intent.putExtra("ky_score",mKy_score);
+        setResult(101,intent);
     }
 
     @Override
     public void myClick(int position, int type) {
         mType = list.get(position).getType();
     }
-
+private String mKy_score;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100){
+            if (resultCode==101){
+               mKy_score = data.getStringExtra("ky_score");
+                tv_mili.setText(mKy_score);
+            }
+        }
+    }
 }

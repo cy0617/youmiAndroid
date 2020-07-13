@@ -101,13 +101,13 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         public void onSuccess() {
             ToastUtil.show("支付成功");
             if (actType.equals("1")) {
-                //商圈
+                //商圈支付
                 EventBus.getDefault().post(new ImUnReadCountEvent("getUserInfo"));
                 setResult(333);
                 startActivity(new Intent(mContext, BuyRecordingAct.class));
                 finish();
             } else if (actType.equals("2")) {
-                //认证
+                //认证支付
                 isPay = true;
                 setResult(334);
                 buttonType = ACTION_YY;
@@ -194,13 +194,13 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
         }
 
         if (actType.equals("1")) {
-            //商圈
+            //商圈支付
             queryPayType("");
             queryShOrderInfo();
             ll_mili.setVisibility(View.VISIBLE);
             rz_money.setVisibility(View.GONE);
         } else if (actType.equals("2")) {
-            //认证
+            //认证支付
             queryPayType("rz");
 
             queryRzOrderInfo();
@@ -250,7 +250,6 @@ public class PayActivity extends AbsActivity implements MyClickInterface, Detect
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Log.e("eeeeeeeeeeeeee", "222222222222");
                     ToastUtil.show(msg);
                 }
             }

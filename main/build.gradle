@@ -62,4 +62,10 @@ dependencies {
     compile(name: 'meglive_still', ext: 'aar')
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     testCompile 'junit:junit:4.12'
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-vector-drawable:26.1.0'
+    /*添加依赖*/
+    implementation 'com.github.yuzhiqiang1993:zxing:2.0.0'
 }

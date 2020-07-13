@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.ReceptionActivity">
+
+    <include layout="@layout/view_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/s_shoukuanma" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:text="请转入米粒"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/iv_shoukuanma"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="233dp"
+            android:layout_height="34dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="320dp"
+            android:gravity="center"
+            android:textIsSelectable="true"
+            android:textColor="#ff333333"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/login_btn"
+        android:gravity="center"
+        android:text="复制地址"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>

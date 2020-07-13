@@ -2,6 +2,7 @@ package com.yunbao.main.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yunbao.common.bean.BuyRecordBean;
-import com.yunbao.common.utils.TimeUtil;
+import com.yunbao.common.utils.DateUtil;
 import com.yunbao.main.R;
 import com.yunbao.main.utils.MyClickInterface;
 
@@ -46,9 +47,15 @@ public class BuyRecordAdapter extends RecyclerView.Adapter<BuyRecordAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
 
-        viewHolder.tv_order_state.setText(list.get(position).getStatus_name());
 
-        String time = TimeUtil.getTimeYMDHMTwo(list.get(position).getAddtime());
+        Log.e("eeeeeeeeeeeeee", "onBindViewHolder: "+list.get(position).getStatus_name() );
+        String status = list.get(position).getStatus();
+        if (status.equals("0")){
+            viewHolder.tv_order_state.setText("买家待付款");
+        }else {
+            viewHolder.tv_order_state.setText(list.get(position).getStatus_name());
+        }
+        String time = DateUtil.getCurrentTime(list.get(position).getAddtime());
         viewHolder.tv_time.setText(time);
         Glide.with(mContext)
                 .load(list.get(position).getSpec_thumb())

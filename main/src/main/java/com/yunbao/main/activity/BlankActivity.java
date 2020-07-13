@@ -183,13 +183,19 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&resultCode==100){
-            Bundle extras = data.getExtras();
-            String code1 = extras.getString("code");
-            String msg1 = extras.getString("msg");
-            if (Integer.valueOf(code1)==0){
-                ToastUtil.show(msg1);
+        if (requestCode==1){
+            if (resultCode==100){
+                Bundle extras = data.getExtras();
+                String code1 = extras.getString("code");
+                String msg1 = extras.getString("msg");
+                if (Integer.valueOf(code1)==0){
+                    ToastUtil.show(msg1);
+                }
+            }else if (requestCode==101){
+                String ky_score = data.getStringExtra("ky_score");
+                tv_mili.setText(ky_score);
             }
+
         }
     }
 
@@ -222,9 +228,11 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
             startActivity(new Intent(BlankActivity.this,LockRiceActivity.class));
         }else if (view.getId()==R.id.ll_keyongmili){
             //可用米粒
-            startActivity(new Intent(BlankActivity.this,UsableMiLiActivity.class));
+//            Intent intent = new Intent(BlankActivity.this, UsableMiLiActivity.class);
+//            startActivityForResult(intent,101);
         }
     }
+
 
 
     /**

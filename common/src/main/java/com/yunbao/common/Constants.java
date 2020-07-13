@@ -283,4 +283,5 @@ public class Constants {
     public static final String AUTH_PAY = "authpay://";
     public static final String RECORD_ID = "record_id";
     public static final String LIKE_VIDEO = "like_video";
+    public static final String MALL_GOODS_FIRSTCLASS = "mallGoodsFirstClass";
 }

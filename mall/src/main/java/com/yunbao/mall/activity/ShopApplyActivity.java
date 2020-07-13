@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -535,6 +536,7 @@ public class ShopApplyActivity extends AbsActivity {
                                                         finish();
                                                     }
                                                     ToastUtil.show(msg);
+                                                    Log.e("eeeeeeeeeeeeeeeeee", "onSuccess:11111111111 "+msg );
                                                 }
                                             }
                                     );

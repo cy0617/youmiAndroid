@@ -11,7 +11,6 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
@@ -332,7 +331,7 @@ public class ThreeDistributActivity extends AbsActivity implements View.OnClickL
                 }
                 mShareImageFile = new File(dir, Constants.SHARE_QR_CODE_FILE);
                 boolean result = BitmapUtil.getInstance().saveBitmap(bitmap, mShareImageFile);
-                Log.e("eeeeeeeeeeeeeeeeeeeee", "run: "+mShareImageFile );
+
                 if (result) {
                     if (bitmap != null && !bitmap.isRecycled()) {
                         bitmap.recycle();

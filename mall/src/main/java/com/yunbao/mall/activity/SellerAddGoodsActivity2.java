@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -240,6 +241,7 @@ public class SellerAddGoodsActivity2 extends AbsActivity {
 
                         mGoodsClassBean = new GoodsClassBean();
                         mGoodsClassBean.setOneClassId(goodsInfo.getString("one_classid"));
+
                         mGoodsClassBean.setTwoClassId(goodsInfo.getString("two_classid"));
                         mGoodsClassBean.setId(goodsInfo.getString("three_classid"));
 
@@ -337,17 +339,21 @@ public class SellerAddGoodsActivity2 extends AbsActivity {
             submit();
         }
     }
-
     /**
      * 选择商品类型
      */
     private void chooseGoodsClass() {
         Intent intent = new Intent(mContext, ChooseGoodsClassActivity.class);
         mImageUtil.startActivityForResult(intent, new ActivityResultCallback() {
+
             @Override
             public void onSuccess(Intent intent) {
                 if (intent != null) {
                     mGoodsClassBean = intent.getParcelableExtra(Constants.MALL_GOODS_CLASS);
+                    String oneClassId = mGoodsClassBean.getOneClassId();
+                    String twoClassId = mGoodsClassBean.getTwoClassId();
+                    Log.e("wwwwwwwwwwwww", "onSuccess: "+oneClassId );
+                    Log.e("wwwwwwwwwwwww", "onSuccess: "+twoClassId );
                     if (mGoodsClassName != null) {
                         mGoodsClassName.setText(mGoodsClassBean.getName());
                     }

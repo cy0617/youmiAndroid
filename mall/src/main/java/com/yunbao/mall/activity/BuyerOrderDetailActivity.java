@@ -287,7 +287,7 @@ public class BuyerOrderDetailActivity extends AbsActivity {
                         }
                         int bottomViewId = 0;
                         if (orderStatus == Constants.MALL_ORDER_STATUS_CLOSE) {//-1已关闭
-                            bottomViewId = R.layout.view_buyer_order_bottom_close;
+//                            bottomViewId = R.layout.view_buyer_order_bottom_close;
                         } else if (orderStatus == Constants.MALL_ORDER_STATUS_WAIT_PAY) {//0待付款
                             bottomViewId = R.layout.view_buyer_order_bottom_0;
                         } else if (orderStatus == Constants.MALL_ORDER_STATUS_WAIT_RECEIVE) {//2待收货

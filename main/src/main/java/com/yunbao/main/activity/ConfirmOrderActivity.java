@@ -75,7 +75,7 @@ public class ConfirmOrderActivity extends AbsActivity {
         rl_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(ConfirmOrderActivity.this, BuyerAddressActivity.class),101);
+                startActivityForResult(new Intent(ConfirmOrderActivity.this, BuyerAddressActivity.class), 101);
 //                BuyerAddressActivity.forward(mContext);
             }
         });
@@ -154,13 +154,12 @@ public class ConfirmOrderActivity extends AbsActivity {
 
 
     public void showAddress(BuyerAddressBean bean) {
-        Log.e("eeeeeeeeeeeeeeeeeeeee", "showAddress: 隐藏");
         ll_addrs.setVisibility(View.VISIBLE);
         tv_no_addrs.setVisibility(View.GONE);
         addrsId = bean.getId();
         tv_addrs_name.setText(bean.getName());
         tv_addrs_phone.setText(bean.getPhoneNum());
-        tv_addrs_text.setText(bean.getProvince() + bean.getCity() + bean.getZone() + bean.getAddress());
+        tv_addrs_text.setText(com.yunbao.common.utils.StringUtil.contact(bean.getProvince(), " ", bean.getCity(), " ", bean.getZone(), " ", bean.getAddress()));
 
     }
 
@@ -239,19 +238,25 @@ public class ConfirmOrderActivity extends AbsActivity {
             if (resultCode == 333) {
                 setResult(333);
                 finish();
-            }else if(resultCode == RESULT_OK){
+            } else if (resultCode == RESULT_OK) {
                 ll_addrs.setVisibility(View.VISIBLE);
                 tv_no_addrs.setVisibility(View.GONE);
                 String name = data.getStringExtra("name");
                 String phonenum = data.getStringExtra("phonenum");
-                String address = data.getStringExtra("address");
+//                String address = data.getStringExtra("address");
                 String addressid = data.getStringExtra("addressid");
+                String province = data.getStringExtra("province");
+                String city = data.getStringExtra("city");
+                String zone = data.getStringExtra("zone");
+                String address = data.getStringExtra("address");
+
+
                 //把地址id赋值给当前页面的地址id,提交数据的时候就有值
                 addrsId = addressid;
-                Log.e("address", "onActivityResult: "+address);
+                Log.e("address", "onActivityResult: " + address);
                 tv_addrs_name.setText(name);
                 tv_addrs_phone.setText(phonenum);
-                tv_addrs_text.setText(address);
+                tv_addrs_text.setText(com.yunbao.common.utils.StringUtil.contact(province, " ", city, " ", zone, " ", address));
             }
         }
 
