@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
+import com.yunbao.common.Constants;
 import com.yunbao.common.glide.ImgLoader;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.ToastUtil;
@@ -34,6 +36,7 @@ import com.yunbao.main.bean.ShopBannerBean;
 import com.yunbao.main.bean.ShopGoodsTypeBean;
 import com.yunbao.main.bean.ShopOneClassBean;
 import com.yunbao.main.views.refreshlayout.RefreshLayout;
+import com.yunbao.mall.activity.GoodsDetailActivity;
 import com.yunbao.mall.http.MallHttpUtil;
 
 import java.util.ArrayList;
@@ -139,7 +142,17 @@ public class AllMallFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+
         getRecyData("hit", type_id, keywords);
+        shopListAdapter.setActionListener(new ShopListAdapter.ActionListener() {
+            @Override
+            public void onClick(int position) {
+                String id = shopGoodsTypeBeans.get(position).getId();
+                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                intent.putExtra(Constants.MALL_GOODS_ID,id);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getOneClassData() {
@@ -199,6 +212,7 @@ public class AllMallFragment extends Fragment implements View.OnClickListener {
                         for (int j = 0; j < list.size(); j++) {
                             JSONObject jsonObject = list.getJSONObject(j);
                             ShopGoodsTypeBean shopGoodsTypeBean = new ShopGoodsTypeBean();
+                            shopGoodsTypeBean.setId(jsonObject.getString("id"));
                             shopGoodsTypeBean.setName(jsonObject.getString("name"));
                             shopGoodsTypeBean.setThumb(jsonObject.getString("thumb"));
                             shopGoodsTypeBean.setPrice(jsonObject.getString("price"));
