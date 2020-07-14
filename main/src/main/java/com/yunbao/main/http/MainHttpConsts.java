@@ -78,4 +78,9 @@ public class MainHttpConsts {
     public static final String GET_SHI_PIN = "getShiPin";
     public static final String GET_QIAN_DAO = "getQianDao";
     public static final String GET_SHANGJIN = "getShangJIn";
+    //获取一级商品分类
+    public static final String GET_ONE_GOODS_ALL_CLASS = "Shop.GetOneGoodsAllClass";
+
+    //商城搜索接口
+    public static final String GET_SHOP_GOODS_BY_TYPE = "Shop.GetShopGoodsByType";
 }

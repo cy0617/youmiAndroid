@@ -3,9 +3,6 @@ package com.yunbao.main.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,17 +11,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.yunbao.common.activity.AbsActivity;
-import com.yunbao.common.bean.BuyRecordBean;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
-import com.yunbao.main.http.MainHttpUtil;
-import com.yunbao.main.utils.StringUtil;
 import com.yunbao.main.views.QuantityView;
 import com.yunbao.mall.http.MallHttpUtil;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class GoodsDetailsActivity extends AbsActivity {
@@ -35,7 +28,6 @@ public class GoodsDetailsActivity extends AbsActivity {
     private QuantityView quantityView;
     private String goodsId;
     private Dialog mDialog;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_goods_details;
@@ -43,6 +35,7 @@ public class GoodsDetailsActivity extends AbsActivity {
 
     @Override
     protected void main() {
+
         goodsId = getIntent().getStringExtra("goodsId");
         iv_back = findViewById(R.id.iv_back);
         iv_goods_img = findViewById(R.id.iv_goods_img);
@@ -118,6 +111,7 @@ public class GoodsDetailsActivity extends AbsActivity {
                 }
             }
         });
+
     }
 
     @Override

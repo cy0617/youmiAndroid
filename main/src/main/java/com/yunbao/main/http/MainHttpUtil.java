@@ -960,6 +960,50 @@ public class MainHttpUtil {
                 .params("p", p)
                 .execute(callback);
     }
+    /**
+     * 商城搜索
+     *
+     * @param type
+     * @param p
+     * @param keywords
+     * @param callback
+     */
+    public static void getShopGoodsByType(String type, int p, String keywords, HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetShopGoodsByType", MainHttpConsts.GET_SHOP_GOODS_BY_TYPE)
+                .params("type", type)
+                .params("p", p)
+                .params("keywords", keywords)
+                .execute(callback);
+    }
+
+    /**
+     * 首页商城搜索
+     *
+     * @param type
+     * @param p
+     * @param typeId
+     * @param callback
+     */
+    public static void getShopGoodsByType(String type, String typeId, int p, HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetShopGoodsByType", MainHttpConsts.GET_SHOP_GOODS_BY_TYPE)
+                .params("type", type)
+                .params("type_id", typeId)
+                .params("p", p)
+                .execute(callback);
+    }
+
+
+
+    /**
+     * 获取一级商品分类(含全部)
+     *
+     * @param callback
+     */
+    public static void getOneGoodsAllClass(HttpCallback callback) {
+        HttpClient.getInstance().get("Shop.GetOneGoodsAllClass", MainHttpConsts.GET_ONE_GOODS_ALL_CLASS)
+                .execute(callback);
+    }
+
 }
 
 

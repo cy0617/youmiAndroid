@@ -1121,4 +1121,12 @@
     <string name="mall_384">秒抢</string>
     <string name="mall_385">新品上线</string>
 
+
+    <string name="sales">销量</string>
+    <string name="price">价格</string>
+    <string name="new_product">新品</string>
+    <string name="selection_good_products">精选好货 尽在优米</string>
+    <string name="enter_want_search">输入你要搜索的内容</string>
+    <string name="enter_search_content">请输入搜索内容</string>
+
 </resources>

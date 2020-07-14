@@ -33,8 +33,6 @@ public class ShangQuanActivity extends AbsActivity implements MyClickInterface {
     private ImageView iv_title_right;
 
 
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_shang_quan;

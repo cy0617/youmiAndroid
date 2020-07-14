@@ -61,7 +61,6 @@ import com.yunbao.main.views.BonusViewHolder;
 import com.yunbao.main.views.MainHomeViewHolder;
 import com.yunbao.main.views.MainMeViewHolder;
 import com.yunbao.main.views.MainMessageViewHolder;
-import com.yunbao.main.views.MainShopViewHolder;
 import com.yunbao.video.activity.VideoRecordActivity;
 import com.yunbao.video.utils.VideoStorge;
 
@@ -198,11 +197,11 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
 
         //20200514
         mRedPoint = (TextView) findViewById(R.id.red_point);
-        FrameLayout.LayoutParams lp= (FrameLayout.LayoutParams) mRedPoint.getLayoutParams();
-        int screenWidth=ScreenDimenUtil.getInstance().getScreenWdith();
-        int itemW=(screenWidth-DpUtil.dp2px(60))/4;
-        int left= (int) (itemW*2.5f+DpUtil.dp2px(60)+DpUtil.dp2px(6));
-        lp.setMargins(left,DpUtil.dp2px(3),0,0);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRedPoint.getLayoutParams();
+        int screenWidth = ScreenDimenUtil.getInstance().getScreenWdith();
+        int itemW = (screenWidth - DpUtil.dp2px(60)) / 4;
+        int left = (int) (itemW * 2.5f + DpUtil.dp2px(60) + DpUtil.dp2px(6));
+        lp.setMargins(left, DpUtil.dp2px(3), 0, 0);
         mRedPoint.setLayoutParams(lp);
         String unReadCount = ImMessageUtil.getInstance().getAllUnReadMsgCount();
         setUnReadCount(unReadCount);
@@ -484,9 +483,9 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
 //            if (mActiveViewHolder != null) {
 //                mActiveViewHolder.setUnReadCount(unReadCount);
 //            }
-            if(unReadCount.equals("getUserInfo")){
+            if (unReadCount.equals("getUserInfo")) {
                 getBaseUserInfo();
-            }else{
+            } else {
                 setUnReadCount(unReadCount);
             }
         }
@@ -514,6 +513,7 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
             }
         });
     }
+
     private FragmentManager fragmentManager;
 
     private void loadPageData(int position, boolean needlLoadData) {
@@ -532,7 +532,7 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
                     mHomeViewHolder.setAppBarLayoutListener(this);
                     vh = mHomeViewHolder;
                 } else if (position == 1) {
-                    mShopViewHolder = new MainShopViewHolder(mContext, parent);
+                    mShopViewHolder = new MainShopViewHolder(mContext, parent, getSupportFragmentManager());
                     vh = mShopViewHolder;
                 } else if (position == 2) {
                     mMessageViewHolder = new MainMessageViewHolder(mContext, parent);
@@ -573,7 +573,7 @@ public class MainActivity extends AbsActivity implements MainAppBarLayoutListene
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("asfqweqweqweqeqw",requestCode+"------------"+resultCode);
+        Log.e("asfqweqweqweqeqw", requestCode + "------------" + resultCode);
     }
 
     @Override

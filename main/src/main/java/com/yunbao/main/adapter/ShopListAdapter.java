@@ -35,7 +35,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ShopListAdapter.ViewHolder viewHolder, int i) {
         Glide.with(mContext).load(list.get(i).getThumb()).into(viewHolder.iv_image);
         viewHolder.tv_name.setText(list.get(i).getName());
-        viewHolder.tv_price.setText(list.get(i).getPrice());
+        viewHolder.tv_price.setText("￥"+list.get(i).getPrice());
     }
 
     @Override
