@@ -33,10 +33,10 @@ public class MiLiLockActivity extends AbsActivity implements View.OnClickListene
         tv_score = findViewById(R.id.tv_score);
         intent = getIntent();
         ky_score = intent.getStringExtra("ky_score");
+//        ky_score = CommonAppConfig.getInstance().getUserBean().getKy_score();
         tv_score.setText(ky_score);
         findViewById(R.id.btn_submit).setOnClickListener(this);
-
-
+        findViewById(R.id.iv_title_right).setOnClickListener(this);
     }
 
 
@@ -45,7 +45,7 @@ public class MiLiLockActivity extends AbsActivity implements View.OnClickListene
         if (view.getId() == R.id.btn_submit) {
             mMoney = et_money.getText().toString();
 
-            if (mMoney.equals("")&&mMoney==null) {
+            if (mMoney.equals("")) {
                 ToastUtil.show("请输入金额");
             } else {
                 char c = mMoney.charAt(0);
@@ -56,6 +56,8 @@ public class MiLiLockActivity extends AbsActivity implements View.OnClickListene
                     suocangDialog();
                 }
             }
+        }else if (view.getId()== R.id.iv_title_right){
+            startActivity(new Intent(MiLiLockActivity.this, LockRiceActivity.class));
         }
     }
 
@@ -82,13 +84,13 @@ public class MiLiLockActivity extends AbsActivity implements View.OnClickListene
                 if (code == 0) {
                     et_money.setText("");
                     ToastUtil.show(msg);
-                    Double aDouble1 = Double.valueOf(ky_score);
+                    Double aDouble1 = Double.valueOf(tv_score.getText().toString());
                     Double aDouble = Double.valueOf(mMoney);
                     double v = aDouble1 - aDouble;
                     String s = String.valueOf(v);
                     tv_score.setText(s);
                     intent.putExtra("ky_score", s);
-                    setResult(101, intent);
+                    setResult(101, MiLiLockActivity.this.intent);
                 }
             }
         });

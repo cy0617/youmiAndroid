@@ -158,9 +158,9 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
                                                         JSONObject data = obj.getJSONObject("data");
                                                         JSONObject date = data.getJSONObject("data");
                                                         Intent intent = new Intent(BlankActivity.this, QianDaoPlayActivity.class);
-                                                        intent.putExtra("min",date.getString("min"));
-                                                        intent.putExtra("thumb",date.getString("thumb"));
-                                                        startActivityForResult(intent,1);
+                                                        intent.putExtra("min", date.getString("min"));
+                                                        intent.putExtra("thumb", date.getString("thumb"));
+                                                        startActivityForResult(intent, 1);
 
 
                                                     }
@@ -180,22 +180,22 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
         queryUserLeveTwo();
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1){
-            if (resultCode==100){
+        if (requestCode == 1) {
+            if (resultCode == 100) {
                 Bundle extras = data.getExtras();
                 String code1 = extras.getString("code");
                 String msg1 = extras.getString("msg");
-                if (Integer.valueOf(code1)==0){
+                if (Integer.valueOf(code1) == 0) {
                     ToastUtil.show(msg1);
                 }
-            }else if (requestCode==101){
+            } else if (resultCode == 101) {
                 String ky_score = data.getStringExtra("ky_score");
                 tv_mili.setText(ky_score);
             }
-
         }
     }
 
@@ -220,19 +220,19 @@ public class BlankActivity extends AbsActivity implements View.OnClickListener {
             //otc
         } else if (view.getId() == R.id.ll_accelerator) {
             //加速器
-        }else if (view.getId()==R.id.ll_shangjin){
+        } else if (view.getId() == R.id.ll_shangjin) {
             //赏金
-            startActivity(new Intent(BlankActivity.this,MyBountyActivity.class));
-        }else if (view.getId()==R.id.ll_suocang){
+            startActivity(new Intent(BlankActivity.this, MyBountyActivity.class));
+        } else if (view.getId() == R.id.ll_suocang) {
             //锁仓米粒
-            startActivity(new Intent(BlankActivity.this,LockRiceActivity.class));
-        }else if (view.getId()==R.id.ll_keyongmili){
+            startActivity(new Intent(BlankActivity.this, LockRiceActivity.class));
+        } else if (view.getId() == R.id.ll_keyongmili) {
             //可用米粒
 //            Intent intent = new Intent(BlankActivity.this, UsableMiLiActivity.class);
-//            startActivityForResult(intent,101);
+//            intent.putExtra("ky_score",tv_mili.getText().toString());
+//            startActivityForResult(intent,1);
         }
     }
-
 
 
     /**

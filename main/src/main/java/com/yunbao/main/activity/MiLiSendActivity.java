@@ -1,6 +1,10 @@
 package com.yunbao.main.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,12 +46,11 @@ public class MiLiSendActivity extends AbsActivity implements View.OnClickListene
         findViewById(R.id.iv_saoyisao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MiLiSendActivity.this, CaptureActivity.class);
+
                 /*ZxingConfig是配置类  可以设置是否显示底部布局，闪光灯，相册，是否播放提示音  震动等动能
                  * 也可以不传这个参数
                  * 不传的话  默认都为默认不震动  其他都为true
                  * */
-
                 //ZxingConfig config = new ZxingConfig();
                 //config.setShowbottomLayout(true);//底部布局（包括闪光灯和相册）
                 //config.setPlayBeep(true);//是否播放提示音
@@ -55,7 +58,22 @@ public class MiLiSendActivity extends AbsActivity implements View.OnClickListene
                 //config.setShowAlbum(true);//是否显示相册
                 //config.setShowFlashLight(true);//是否显示闪光灯
                 //intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
-                startActivityForResult(intent, 100);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    // 检查该权限是否已经获取
+                    int i = ContextCompat.checkSelfPermission(MiLiSendActivity.this, Manifest.permission.CAMERA);
+                    if (i != PackageManager.PERMISSION_GRANTED) {
+                        // 如果没有授予该权限，就去提示用户请求
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, 321);
+                        // ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 321);
+                    } else {
+                        // 第二次进入直接打开相机
+                        Intent intent = new Intent(MiLiSendActivity.this, CaptureActivity.class);
+                        startActivityForResult(intent, 100);
+                    }
+                } else {
+                    Intent intent = new Intent(MiLiSendActivity.this, CaptureActivity.class);
+                    startActivityForResult(intent, 100);
+                }
             }
         });
     }
@@ -63,17 +81,27 @@ public class MiLiSendActivity extends AbsActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_submit) {
+
             mMoney = et_money.getText().toString();
-            char c = mMoney.charAt(0);
-            String s = String.valueOf(c);
-            if (s.equals("0")){
-                ToastUtil.show("请输入正确的金额");
-            }else {
-                sendDialog();
+
+            if (mMoney.equals("")) {
+                ToastUtil.show("请输入金额");
+            } else {
+                if (et_address.getText().toString().equals("")){
+                    ToastUtil.show("请输入地址");
+                }else {
+                    char c = mMoney.charAt(0);
+                    String s = String.valueOf(c);
+                    if (s.equals("0")) {
+                        ToastUtil.show("请输入正确的金额");
+                    } else {
+                        sendDialog();
+                    }
+                }
             }
+
         }
     }
-
 
 
     @Override
@@ -114,7 +142,7 @@ public class MiLiSendActivity extends AbsActivity implements View.OnClickListene
                     et_money.setText("");
                     et_address.setText("");
                     ToastUtil.show(msg);
-                    Double aDouble1 = Double.valueOf(ky_score);
+                    Double aDouble1 = Double.valueOf(tv_score.getText().toString());
                     Double aDouble = Double.valueOf(mMoney);
                     double v = aDouble1 - aDouble;
                     String s = String.valueOf(v);

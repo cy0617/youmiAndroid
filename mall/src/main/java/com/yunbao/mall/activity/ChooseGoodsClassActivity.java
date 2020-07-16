@@ -3,6 +3,7 @@ package com.yunbao.mall.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -35,10 +36,17 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
     private GoodsClassTitleBean titleBean;
     private String twoClassId;
     private String oneClassId;
+
+    private ArrayList<GoodsClassBean> list;
+    private List<GoodsClassTitleBean> titleList;
+    private String name;
+    private String id;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_choose_goods_class;
     }
+
     @Override
     protected void main() {
         setTitle(WordUtil.getString(R.string.mall_077));
@@ -52,29 +60,26 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
         MallHttpUtil.getGoodsClass(new HttpCallback() {
 
 
-
-
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {
                     JSONArray array = JSON.parseArray(Arrays.toString(info));
-                    List<GoodsClassTitleBean> titleList = new ArrayList<>();
+                    titleList = new ArrayList<>();
                     for (int i = 0, size = array.size(); i < size; i++) {
                         JSONObject obj = array.getJSONObject(i);
                         titleBean = new GoodsClassTitleBean();
-                        oneClassId = obj.getString("gc_id");
-
                         titleBean.setName(obj.getString("gc_name"));
-                        titleBean.setId(oneClassId);
-                        List<GoodsClassBean> list = new ArrayList<>();
+                        titleBean.setId(obj.getString("gc_id"));
+                        oneClassId = obj.getString("gc_id");
+                        list = new ArrayList<>();
                         JSONArray twoArray = obj.getJSONArray("two_list");
                         for (int j = 0, size1 = twoArray.size(); j < size1; j++) {
                             JSONObject obj1 = twoArray.getJSONObject(j);
                             GoodsClassBean bean = new GoodsClassBean();
                             bean.setTitle(true);
-                            twoClassId = obj1.getString("gc_id");
-                            bean.setId(twoClassId);
+                            bean.setId(obj1.getString("gc_id"));
                             bean.setName(obj1.getString("gc_name"));
+                            twoClassId = obj1.getString("gc_id");
                             list.add(bean);
                             JSONArray threeArray = obj1.getJSONArray("three_list");
                             for (int k = 0, size2 = threeArray.size(); k < size2; k++) {
@@ -87,7 +92,6 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                                 subBean.setTwoClassId(twoClassId);
                                 list.add(subBean);
                             }
-
                         }
                         titleBean.setList(list);
                         titleList.add(titleBean);
@@ -101,11 +105,11 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                             mLeftAdapter.setOnItemClickListener(new OnItemClickListener<GoodsClassTitleBean>() {
                                 @Override
                                 public void onItemClick(GoodsClassTitleBean bean, int position) {
-//                                    Intent intent = new Intent();
-//                                    intent.putExtra(Constants.MALL_GOODS_FIRSTCLASS, titleBean);
-//                                    Log.e("eeeeeeeeeee", "onItemClick: "+titleBean.getName() );
+
+                                    titleBean=bean;
 
                                     if (mRightAdapter != null) {
+
                                         mRightAdapter.refreshData(bean.getList());
                                     }
                                     if (mRecyclerViewRight != null) {
@@ -125,17 +129,20 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
                 }
             }
         });
-
     }
 
     @Override
     public void onItemClick(GoodsClassBean bean, int position) {
         Intent intent = new Intent();
-        String name = bean.getName();
 
-        intent.putExtra("oneClassId", bean.getOneClassId());
-        intent.putExtra("twoClassId", bean.getTwoClassId());
+        name = titleBean.getName();
+        id = titleBean.getId();
 
+        intent.putExtra("oneName",name );
+        intent.putExtra("oneClassId", id);
+
+        Log.e("eeeeeeeeeeeee", "onItemClick: "+ name);
+        Log.e("eeeeeeeeeeeee", "onItemClick: "+ id);
         intent.putExtra(Constants.MALL_GOODS_CLASS, bean);
         setResult(RESULT_OK, intent);
         finish();

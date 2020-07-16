@@ -48,6 +48,7 @@ import com.yunbao.mall.adapter.AddGoodsTitleAdapter;
 import com.yunbao.mall.bean.AddGoodsImageBean;
 import com.yunbao.mall.bean.AddGoodsSpecBean;
 import com.yunbao.mall.bean.GoodsClassBean;
+import com.yunbao.mall.bean.GoodsClassTitleBean;
 import com.yunbao.mall.http.MallHttpConsts;
 import com.yunbao.mall.http.MallHttpUtil;
 
@@ -91,6 +92,7 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
     private CheckBox mCheckBox;
     private View mGroupPostage;
     private GoodsClassBean mGoodsClassBean;//商品类型
+    private GoodsClassTitleBean mGoodsClassTitleBean;//商品类型
     private ProcessImageUtil mImageUtil;
     private Runnable mPremissionVideoCallback;//选择视频
     private UploadStrategy mUploadStrategy;
@@ -102,9 +104,7 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
     private String mGoodLinks;
     protected EditText mEtGoodLinks;
 
-    private String three_classid;
-    private String two_classid;
-    private String one_classid;
+
     @Override
     public void init() {
         mGoodsClassName = findViewById(R.id.goods_class_name);
@@ -235,7 +235,6 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
             MallHttpUtil.getGoodsInfo(mGoodsId, new HttpCallback() {
 
 
-
                 @Override
                 public void onSuccess(int code, String msg, String[] info) {
                     if (code == 0 && info.length > 0) {
@@ -247,9 +246,6 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
                         mGoodsClassBean.setTwoClassId(goodsInfo.getString("two_classid"));
                         mGoodsClassBean.setId(goodsInfo.getString("three_classid"));
 
-                        one_classid = goodsInfo.getString("one_classid");
-                        two_classid = goodsInfo.getString("two_classid");
-                        three_classid = goodsInfo.getString("three_classid");
                         if (mGoodsClassName != null) {
                             mGoodsClassName.setText(goodsInfo.getString("three_class_name"));
                         }
@@ -340,8 +336,10 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
             submit();
         }
     }
+
     private String oneClassId;
     private String twoClassId;
+
     /**
      * 选择商品类型
      */
@@ -351,16 +349,18 @@ public abstract class AbsSellerAddGoodsViewHolder extends AbsMainViewHolder impl
 
         mImageUtil.startActivityForResult(intent, new ActivityResultCallback() {
 
-
-
             @Override
             public void onSuccess(Intent intent) {
                 if (intent != null) {
                     mGoodsClassBean = intent.getParcelableExtra(Constants.MALL_GOODS_CLASS);
+                    String name = intent.getStringExtra("oneName");
                     oneClassId = intent.getStringExtra("oneClassId");
-                    twoClassId = intent.getStringExtra("twoClassId");
+
+                    twoClassId = mGoodsClassBean.getId();
                     if (mGoodsClassName != null) {
                         mGoodsClassName.setText(mGoodsClassBean.getName());
+                        Log.e("eeeeeeeeeeee", "onSuccess: " + name + "     " + mGoodsClassBean.getName());
+                        Log.e("eeeeeeeeeeee", "onSuccess: " + oneClassId + twoClassId);
                     }
                 }
             }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.yunbao.common.CommonAppConfig;
 import com.yunbao.common.activity.AbsActivity;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.DialogUitl;
@@ -49,19 +48,21 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
         } else if (view.getId() == R.id.ll_suocang) {
 //            锁仓
             Intent intent = new Intent(this, MiLiLockActivity.class);
-            intent.putExtra("ky_score",ky_score);
+            intent.putExtra("ky_score", tv_mili.getText().toString());
             startActivityForResult(intent, 100);
         } else if (view.getId() == R.id.ll_fasong) {
             //发送
             Intent intent = new Intent(this, MiLiSendActivity.class);
-            intent.putExtra("ky_score",ky_score);
-            startActivity(intent);
+            intent.putExtra("ky_score", tv_mili.getText().toString());
+            startActivityForResult(intent, 100);
         }
     }
 
     @Override
     protected void main() {
         setTitle("可用米粒");
+        Intent intent = getIntent();
+        ky_score = intent.getStringExtra("ky_score");
         tv_mili = findViewById(R.id.tv_mili);
         findViewById(R.id.ll_jieshou).setOnClickListener(this);
         findViewById(R.id.ll_fasong).setOnClickListener(this);
@@ -94,7 +95,7 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
     }
 
     private void getData() {
-        ky_score = CommonAppConfig.getInstance().getUserBean().getKy_score();
+
         tv_mili.setText(ky_score);
         MallHttpUtil.getScoreList(refreshLayout.pageNumber, "1", new HttpCallback() {
             @Override
@@ -132,23 +133,26 @@ public class UsableMiLiActivity extends AbsActivity implements View.OnClickListe
                 refreshLayout.onLoad(-1);
             }
         });
-        Intent intent = getIntent();
-        intent.putExtra("ky_score",mKy_score);
-        setResult(101,intent);
+
     }
 
     @Override
     public void myClick(int position, int type) {
         mType = list.get(position).getType();
     }
-private String mKy_score;
+
+    private String mKy_score;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==100){
-            if (resultCode==101){
-               mKy_score = data.getStringExtra("ky_score");
+        if (requestCode == 100) {
+            if (resultCode == 101) {
+                mKy_score = data.getStringExtra("ky_score");
                 tv_mili.setText(mKy_score);
+                Intent intent = getIntent();
+                intent.putExtra("ky_score", mKy_score);
+                setResult(101, intent);
             }
         }
     }
