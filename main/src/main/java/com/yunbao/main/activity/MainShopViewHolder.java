@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.yunbao.common.views.AbsMainViewHolder;
 import com.yunbao.main.R;
 import com.yunbao.main.bean.GetOneGoodsAllBean;
 import com.yunbao.main.http.MainHttpUtil;
+import com.yunbao.main.utils.ScaleTransitionPagerTitleView;
 import com.yunbao.main.utils.StringUtil;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -31,6 +33,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
@@ -232,6 +235,7 @@ public class MainShopViewHolder extends AbsMainViewHolder {
                     viewPager.setAdapter(adapter);
 
                     commonNavigator = new CommonNavigator(mContext);
+                    commonNavigator.setScrollPivotX(0.15f);
                     commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
                         @Override
@@ -241,10 +245,11 @@ public class MainShopViewHolder extends AbsMainViewHolder {
 
                         @Override
                         public IPagerTitleView getTitleView(Context context, final int index) {
-                            SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
-                            //simplePagerTitleView.getPaint().setFakeBoldText(true);
+
+                            SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                            simplePagerTitleView.getPaint().setFakeBoldText(true);
                             simplePagerTitleView.setText(mTitleList.get(index).getGc_name());
-                            simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.black_text));
+                            simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.light_gray_text));
                             simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.text_color_eb7946));
                             simplePagerTitleView.setTextSize(16);
                             simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +258,7 @@ public class MainShopViewHolder extends AbsMainViewHolder {
                                     viewPager.setCurrentItem(index);
                                 }
                             });
-                            return simplePagerTitleView;
+                          return simplePagerTitleView;
                         }
 
                         @Override

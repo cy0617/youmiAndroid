@@ -29,11 +29,13 @@ import com.yunbao.common.glide.ImgLoader;
 import com.yunbao.common.http.HttpCallback;
 import com.yunbao.common.utils.ToastUtil;
 import com.yunbao.main.R;
+import com.yunbao.main.adapter.AllMallAdapter;
 import com.yunbao.main.adapter.ShopListAdapter;
 import com.yunbao.main.adapter.ShopOneClassAdapter;
 import com.yunbao.main.bean.ShopBannerBean;
 import com.yunbao.main.bean.ShopGoodsTypeBean;
 import com.yunbao.main.bean.ShopOneClassBean;
+import com.yunbao.main.utils.MyClickInterface;
 import com.yunbao.main.views.refreshlayout.RefreshLayout;
 import com.yunbao.mall.activity.GoodsDetailActivity;
 import com.yunbao.mall.http.MallHttpUtil;
@@ -45,136 +47,79 @@ import java.util.regex.Pattern;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllMallFragment extends Fragment implements View.OnClickListener {
+public class AllMallFragment extends Fragment implements MyClickInterface {
 
-    private Banner banner;
-    private ArrayList<ShopBannerBean> shopBannerList;
-    private ArrayList<ShopBannerBean> shopBannerList2;
-    private List<ShopOneClassBean> shopOneClassList;
+    private String shopType = "hit";//new最新， hot热销，hit首页
+    private ArrayList<ShopBannerBean> shopBannerList = new ArrayList<>();//banner
+    private ArrayList<ShopBannerBean> shopBannerList2 = new ArrayList<>();//中部图片
+    private ArrayList<ShopGoodsTypeBean> shopGoodsTypeBeans = new ArrayList<>();//商品列表
     private RecyclerView recyclerview;
     private RefreshLayout refreshLayout;
-    private RecyclerView one_recy;
-    private ShopOneClassAdapter shopOneClassAdapter;
-    private ImageView iv_xinpin;
-    private ImageView iv_rexiao;
+    private AllMallAdapter adapter;
 
-    private String type = "";
-    private String type_id = "";
-    private String keywords = "";
-    private ArrayList<ShopGoodsTypeBean> shopGoodsTypeBeans;
-    private ShopListAdapter shopListAdapter;
-    private Pattern httpPattern;
 
     //初始化正则
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_mall, container, false);
         init(view);
         return view;
     }
 
     private void init(View view) {
-        iv_xinpin = view.findViewById(R.id.iv_xinpin);
-        iv_rexiao = view.findViewById(R.id.iv_rexiao);
+
         recyclerview = view.findViewById(R.id.recyclerView);
-        view.findViewById(R.id.rl_hot).setOnClickListener(this);
-        view.findViewById(R.id.rl_new).setOnClickListener(this);
-        banner = view.findViewById(R.id.banner);
         refreshLayout = view.findViewById(R.id.refreshLayout);
-        one_recy = view.findViewById(R.id.oneclassrecy);
-        LinearLayout llBusinessDistrict = view.findViewById(R.id.ll_business_district);
 
-        llBusinessDistrict.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ShangQuanActivity.class));
-            }
-        });
+        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new AllMallAdapter(getContext(), getActivity(), shopBannerList, shopBannerList2, shopGoodsTypeBeans, this);
+        recyclerview.setAdapter(adapter);
 
-        shopBannerList = new ArrayList<>();
-        shopBannerList2 = new ArrayList<>();
-        shopOneClassList = new ArrayList<>();
-        shopGoodsTypeBeans = new ArrayList<>();
-
-
-        getOneClassData();
         getBanner();
         getBanner2();
-        /**
-         * 轮播图点击
-         */
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
+        getRecyData(shopType, null, null);
 
-                String url = shopBannerList.get(position).getUrl();
-                httpPattern = Pattern
-                        .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\\\/])+$");
-                if (httpPattern.matcher(url).matches()) {
-                    Uri uri = Uri.parse(url);//要跳转的网址
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getActivity(),GoodsDetailsActivity.class);
-                    intent.putExtra("goodsId",url);
-                    startActivity(intent);
-                }
 
-            }
-        });
-        shopListAdapter = new ShopListAdapter(shopGoodsTypeBeans, getActivity());
-        recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerview.setAdapter(shopListAdapter);
         refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onPullDownToRefresh() {
                 refreshLayout.pageNumber = 1;
-                getRecyData(type, type_id, keywords);
+                adapter.isCreateBanner = false;
+                adapter.updUi();
+                shopType = "hit";
+                getBanner2();
+                getRecyData(shopType, null, null);
             }
 
             @Override
             public void onPullUpToRefresh() {
                 refreshLayout.pageNumber++;
-                getRecyData(type, type_id, keywords);
+                getRecyData(shopType, null, null);
             }
         });
 
-
-        getRecyData("hit", type_id, keywords);
-        shopListAdapter.setActionListener(new ShopListAdapter.ActionListener() {
-            @Override
-            public void onClick(int position) {
-                String id = shopGoodsTypeBeans.get(position).getId();
-                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
-                intent.putExtra(Constants.MALL_GOODS_ID,id);
-                startActivity(intent);
-            }
-        });
     }
 
-    private void getOneClassData() {
-        one_recy.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        shopOneClassAdapter = new ShopOneClassAdapter(getContext(), shopOneClassList);
-        one_recy.setAdapter(shopOneClassAdapter);
-        MallHttpUtil.getOneClass(new HttpCallback() {
+    private void getBanner() {
+        MallHttpUtil.getShopBanner(new HttpCallback() {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {
+                    shopBannerList.clear();
                     for (int i = 0; i < info.length; i++) {
                         JSONObject obj = JSON.parseObject(info[i]);
-
-                        ShopOneClassBean shopOneClassBean = new ShopOneClassBean();
-                        shopOneClassBean.setGc_name(obj.getString("gc_name"));
-                        shopOneClassList.add(shopOneClassBean);
+                        ShopBannerBean shopBannerBean = new ShopBannerBean();
+                        shopBannerBean.setImage(obj.getString("image"));
+                        shopBannerBean.setUrl(obj.getString("url"));
+                        shopBannerList.add(shopBannerBean);
                     }
-                    shopOneClassAdapter.notifyDataSetChanged();
-                } else {
-                    ToastUtil.show(msg);
+                    adapter.isCreateBanner = true;
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
+
     }
 
     private void getBanner2() {
@@ -183,14 +128,14 @@ public class AllMallFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(int code, String msg, String[] info) {
                 if (code == 0 && info.length > 0) {
+                    shopBannerList2.clear();
                     for (int i = 0; i < info.length; i++) {
                         JSONObject obj = JSON.parseObject(info[i]);
                         ShopBannerBean shopBannerBean = new ShopBannerBean();
                         shopBannerBean.setImage(obj.getString("image"));
                         shopBannerList2.add(shopBannerBean);
                     }
-                    Glide.with(getContext()).load(shopBannerList2.get(0).getImage()).into(iv_xinpin);
-                    Glide.with(getContext()).load(shopBannerList2.get(1).getImage()).into(iv_rexiao);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -217,8 +162,8 @@ public class AllMallFragment extends Fragment implements View.OnClickListener {
                             shopGoodsTypeBean.setPrice(jsonObject.getString("price"));
                             shopGoodsTypeBeans.add(shopGoodsTypeBean);
                         }
-                        shopListAdapter.notifyDataSetChanged();
                     }
+                    adapter.notifyDataSetChanged();
                 } else {
                     ToastUtil.show(msg);
                 }
@@ -232,45 +177,17 @@ public class AllMallFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void getBanner() {
-        MallHttpUtil.getShopBanner(new HttpCallback() {
-
-            @Override
-            public void onSuccess(int code, String msg, String[] info) {
-                if (code == 0 && info.length > 0) {
-                    for (int i = 0; i < info.length; i++) {
-                        JSONObject obj = JSON.parseObject(info[i]);
-                        ShopBannerBean shopBannerBean = new ShopBannerBean();
-                        shopBannerBean.setImage(obj.getString("image"));
-                        shopBannerBean.setUrl(obj.getString("url"));
-                        shopBannerList.add(shopBannerBean);
-                    }
-                    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-                    banner.setImages(shopBannerList);
-                    banner.setImageLoader(new ImageLoader() {
-                        @Override
-                        public void displayImage(Context context, Object path, ImageView imageView) {
-                            ImgLoader.display(getActivity(), ((ShopBannerBean) path).getImage(), imageView);
-                        }
-                    });
-                    banner.setBannerAnimation(Transformer.Default);
-                    banner.setDelayTime(3000);
-                    banner.isAutoPlay(true);
-                    banner.setIndicatorGravity(BannerConfig.CENTER);
-                    banner.start();
-                }
-            }
-        });
-
-    }
-
     @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.rl_hot) {
-            getRecyData("hot", type_id, keywords);
-        } else if (view.getId() == R.id.rl_new) {
-            getRecyData("new", type_id, keywords);
+    public void myClick(int position, int type) {
+        switch (type) {
+            case 1:
+                shopType = "new";
+                getRecyData(shopType, null, null);
+                break;
+            case 2:
+                shopType = "hot";
+                getRecyData(shopType, null, null);
+                break;
         }
     }
-
 }

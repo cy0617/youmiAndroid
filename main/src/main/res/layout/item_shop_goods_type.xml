@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_shop_goods_type"
-    android:layout_margin="5dp"
     android:id="@+id/ll_item"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_shop_goods_type"
+    android:orientation="vertical">
+
     <ImageView
         android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:layout_width="160dp"
-        android:layout_height="170dp"/>
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/tv_name"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
-        android:textColor="#333333"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="#333333" />
 
     <TextView
         android:id="@+id/tv_price"
-        android:textSize="15sp"
-        android:layout_marginLeft="10dp"
-        android:textColor="#EB7946"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginLeft="10dp"
+        android:textColor="#EB7946"
+        android:textSize="15sp" />
 </LinearLayout>

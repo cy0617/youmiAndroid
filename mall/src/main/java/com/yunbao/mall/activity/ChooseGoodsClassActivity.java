@@ -133,8 +133,8 @@ public class ChooseGoodsClassActivity extends AbsActivity implements OnItemClick
         Intent intent = new Intent();
         String name = bean.getName();
 
-        intent.putExtra("oneClassId", oneClassId);
-        intent.putExtra("twoClassId", twoClassId);
+        intent.putExtra("oneClassId", bean.getOneClassId());
+        intent.putExtra("twoClassId", bean.getTwoClassId());
 
         intent.putExtra(Constants.MALL_GOODS_CLASS, bean);
         setResult(RESULT_OK, intent);

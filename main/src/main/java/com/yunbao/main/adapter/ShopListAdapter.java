@@ -27,14 +27,13 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
 
     @NonNull
     @Override
-    public ShopListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shop_goods_type, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopListAdapter.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Glide.with(mContext).load(list.get(i).getThumb()).into(viewHolder.iv_image);
         viewHolder.tv_name.setText(list.get(i).getName());
         viewHolder.tv_price.setText("￥" + list.get(i).getPrice());

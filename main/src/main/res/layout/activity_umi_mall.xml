@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/shape_white_f9_color"
     android:orientation="vertical">
 
     <LinearLayout
@@ -60,7 +59,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
@@ -69,7 +67,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp" />
 
 </LinearLayout>
